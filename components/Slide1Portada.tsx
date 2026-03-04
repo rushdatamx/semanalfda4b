@@ -60,9 +60,9 @@ export default function Slide1Portada() {
           <div className="bg-white rounded-xl border border-red-100 shadow-sm p-4 flex flex-col items-center justify-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
             <AlertTriangle className="w-6 h-6 text-red-500 mb-2" />
-            <p className="text-3xl font-extrabold text-red-600">85</p>
+            <p className="text-3xl font-extrabold text-red-600">101</p>
             <p className="text-xs text-gray-500 font-medium mt-1">Restock urgente</p>
-            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">74 tiendas · &lt;15 días</span>
+            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">88 tiendas · &lt;15 días</span>
           </div>
 
           <div className="bg-white rounded-xl border border-amber-100 shadow-sm p-4 flex flex-col items-center justify-center relative overflow-hidden">
@@ -139,7 +139,7 @@ export default function Slide1Portada() {
         <div className="bg-green-50 border border-green-200 rounded-xl p-2.5 flex items-center gap-3">
           <span className="bg-green-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0">CLAVE</span>
           <p className="text-xs text-gray-700">
-            Caen unidades (-9.7%) pero <strong className="text-green-600">el valor estimado crece +7.1%</strong> gracias al mix de producto — Chicharrón ($58) gana participación. 26 plazas crecen, 25 caen.
+            Caen unidades (-9.7%) pero <strong className="text-green-600">el valor estimado crece +7.1%</strong> gracias al mix de producto — Chicharrón ($58) gana participación.
           </p>
         </div>
       </div>

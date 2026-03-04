@@ -33,7 +33,7 @@ export default function Slide5Acciones() {
                 <h4 className="text-sm font-bold text-gray-900">Resurtido urgente</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p><strong className="text-red-700">85 combinaciones</strong> tienda-producto en 74 tiendas con &lt;15 días de cobertura</p>
+                <p><strong className="text-red-700">101 combinaciones</strong> tienda-producto en 88 tiendas con &lt;15 días de cobertura</p>
                 <p>Más urgentes: MTAI (3 días), MTHD (3 días), LRCT (3 días)</p>
                 <p>SKUs más afectados: Rodajitas y Classic White</p>
               </div>
@@ -73,7 +73,7 @@ export default function Slide5Acciones() {
                 <h4 className="text-sm font-bold text-gray-900">Impulsar Chicharrón</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p>Chicharrón es <strong className="text-green-700">#1 en valor estimado (37%)</strong> con solo 23% de unidades</p>
+                <p>Chicharrón es <strong className="text-green-700">#1 en valor estimado (38%)</strong> con solo 25% de unidades</p>
                 <p>Precio PVP $58 vs $22-47 de los demás — el de mayor rendimiento por pieza</p>
                 <p>Impulsar exhibición y rotación para maximizar venta en pesos</p>
               </div>
@@ -86,7 +86,7 @@ export default function Slide5Acciones() {
                 <h4 className="text-sm font-bold text-gray-900">Replicar plazas exitosas</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p><strong className="text-green-700">8 plazas creciendo YoY</strong> — León +55%, México Centro +48%, Mérida +17%</p>
+                <p><strong className="text-green-700">7 plazas creciendo YoY</strong> — León +55%, México Centro +48%, Mérida +23%</p>
                 <p>Identificar qué están haciendo bien y replicar en las 10 plazas que caen</p>
                 <p>Foco en MTY Oriente (-16%) que sigue siendo la #1 en volumen</p>
               </div>

@@ -18,7 +18,7 @@ const plazaData = [
   { plaza: "Cancún", u25: 330, u26: 287, var: -13.0 },
   { plaza: "Chihuahua", u25: 271, u26: 285, var: 5.2 },
   { plaza: "Hermosillo", u25: 400, u26: 284, var: -29.0 },
-  { plaza: "Mérida", u25: 219, u26: 256, var: 16.9 },
+  { plaza: "Mérida", u25: 225, u26: 277, var: 23.1 },
   { plaza: "México Centro", u25: 139, u26: 206, var: 48.2 },
   { plaza: "BCS", u25: 215, u26: 194, var: -9.8 },
   { plaza: "Mazatlán", u25: 286, u26: 189, var: -33.9 },
@@ -150,8 +150,8 @@ export default function Slide2Plazas() {
         <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 flex items-start gap-3">
           <span className="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0 mt-0.5">INSIGHT</span>
           <p className="text-sm text-gray-700">
-            <strong>8 plazas en crecimiento</strong> lideradas por León (+55%), México Centro (+48%) y Mérida (+17%).
-            <strong className="text-red-600"> 10 plazas caen</strong> — las más críticas: Reynosa (-53%), Nuevo Laredo (-35%), Mazatlán (-34%).
+            <strong>7 plazas en crecimiento</strong> lideradas por León (+55%), México Centro (+48%) y Mérida (+23%).
+            <strong className="text-red-600"> 10 plazas caen</strong> — las más críticas: Nuevo Laredo (-35%), Mazatlán (-34%), Puebla (-31%).
             <strong> MTY Oriente sigue siendo la #1</strong> pero cayó -16%.
           </p>
         </div>
