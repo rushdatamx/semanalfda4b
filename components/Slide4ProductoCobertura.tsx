@@ -3,10 +3,10 @@ import Image from "next/image";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const pieData = [
-  { name: "Chicharrón de Cerdo 75g", uds: 1568, estMxn: 90944, pctVal: "36.7%", pctUds: "23.4%", pvp: 58, color: "#ea580c" },
-  { name: "Rodajitas Spicy Limón 30g", uds: 2307, estMxn: 63443, pctVal: "25.6%", pctUds: "34.4%", pvp: 27.5, color: "#fb923c" },
-  { name: "Street Elote 125g", uds: 1228, estMxn: 57716, pctVal: "23.3%", pctUds: "18.3%", pvp: 47, color: "#fdba74" },
-  { name: "Classic White 25g", uds: 1598, estMxn: 35955, pctVal: "14.5%", pctUds: "23.8%", pvp: 22.5, color: "#fed7aa" },
+  { name: "Chicharrón de Cerdo 75g", uds: 1432, estMxn: 83056, pctVal: "38.3%", pctUds: "24.8%", pvp: 58, color: "#ea580c" },
+  { name: "Street Elote 125g", uds: 1109, estMxn: 52123, pctVal: "24.1%", pctUds: "19.2%", pvp: 47, color: "#fdba74" },
+  { name: "Rodajitas Spicy Limón 30g", uds: 1755, estMxn: 48262, pctVal: "22.3%", pctUds: "30.4%", pvp: 27.5, color: "#fb923c" },
+  { name: "Classic White 25g", uds: 1473, estMxn: 33142, pctVal: "15.3%", pctUds: "25.5%", pvp: 22.5, color: "#fed7aa" },
 ];
 
 const totalUds = pieData.reduce((sum, p) => sum + p.uds, 0);
@@ -30,7 +30,7 @@ export default function Slide4ProductoCobertura() {
       <div className="flex items-center gap-3 px-8 pt-5 pb-3">
         <Image src="/4buddies-logo.jpeg" alt="4BUDDIES" width={48} height={24} className="rounded" />
         <h2 className="text-xl font-bold text-orange-900">Producto + Cobertura</h2>
-        <span className="text-xs text-orange-400 ml-auto">EF 2026 (Ene-Feb) · Inventario al 1 Mar 2026</span>
+        <span className="text-xs text-orange-400 ml-auto">EF 2026 · Solo 410 tiendas catalogadas</span>
       </div>
 
       <div className="flex gap-5 px-8 flex-1 overflow-hidden">
@@ -124,7 +124,7 @@ export default function Slide4ProductoCobertura() {
           <div className="bg-orange-600 rounded-xl p-4 text-white">
             <p className="text-sm font-bold mb-1">Chicharrón = #1 en valor estimado</p>
             <p className="text-xs opacity-90">
-              Con solo 23% de las unidades, aporta <strong>37% del valor</strong> (~$91K MXN est.) gracias a su precio ($58).
+              Con solo 25% de las unidades, aporta <strong>38% del valor</strong> (~$83K MXN est.) gracias a su precio ($58).
               Priorizar crecimiento de Chicharrón maximiza el valor por unidad vendida.
             </p>
           </div>

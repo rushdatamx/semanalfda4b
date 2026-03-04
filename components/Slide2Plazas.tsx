@@ -43,7 +43,7 @@ export default function Slide2Plazas() {
       <div className="flex items-center gap-3 px-8 pt-5 pb-3">
         <Image src="/4buddies-logo.jpeg" alt="4BUDDIES" width={48} height={24} className="rounded" />
         <h2 className="text-xl font-bold text-orange-900">Desempeño por Plaza — Ene-Feb YoY</h2>
-        <span className="text-xs text-orange-400 ml-auto">Top 18 plazas por venta 2026</span>
+        <span className="text-xs text-orange-400 ml-auto">Solo 410 tiendas catalogadas</span>
       </div>
 
       <div className="flex gap-4 px-8 flex-1 overflow-hidden pb-4">
