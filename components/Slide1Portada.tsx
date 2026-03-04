@@ -64,18 +64,18 @@ export default function Slide1Portada() {
           <div className="bg-white rounded-xl border border-red-100 shadow-sm p-4 flex flex-col items-center justify-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
             <AlertTriangle className="w-6 h-6 text-red-500 mb-2" />
-            <p className="text-3xl font-extrabold text-red-600">120</p>
+            <p className="text-3xl font-extrabold text-red-600">85</p>
             <p className="text-xs text-gray-500 font-medium mt-1">Restock urgente</p>
-            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">&lt;15 días cobertura</span>
+            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">74 tiendas · &lt;15 días</span>
           </div>
 
-          {/* Bloqueadas */}
-          <div className="bg-white rounded-xl border border-red-100 shadow-sm p-4 flex flex-col items-center justify-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-red-500" />
-            <ShieldOff className="w-6 h-6 text-red-500 mb-2" />
-            <p className="text-3xl font-extrabold text-red-600">128</p>
-            <p className="text-xs text-gray-500 font-medium mt-1">Posiciones bloqueadas</p>
-            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">No Disponible a Compra</span>
+          {/* Anaquel */}
+          <div className="bg-white rounded-xl border border-amber-100 shadow-sm p-4 flex flex-col items-center justify-center relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-amber-500" />
+            <ShieldOff className="w-6 h-6 text-amber-500 mb-2" />
+            <p className="text-3xl font-extrabold text-amber-600">578</p>
+            <p className="text-xs text-gray-500 font-medium mt-1">Problema de anaquel</p>
+            <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full mt-2">Con stock, sin venta Feb</span>
           </div>
         </div>
 

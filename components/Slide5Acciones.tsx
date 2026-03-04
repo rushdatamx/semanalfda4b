@@ -11,7 +11,10 @@ export default function Slide5Acciones() {
       <div className="flex items-center gap-3 px-8 pt-5 pb-4">
         <Image src="/4buddies-logo.jpeg" alt="4BUDDIES" width={48} height={24} className="rounded" />
         <h2 className="text-xl font-bold text-orange-900">Acciones para el Comprador</h2>
-        <span className="text-xs text-orange-400 ml-auto">Semana del 4 Mar 2026</span>
+        <div className="ml-auto flex items-center gap-2">
+          <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full">Solo tiendas catalogadas (410)</span>
+          <span className="text-xs text-orange-400">Semana del 4 Mar 2026</span>
+        </div>
       </div>
 
       {/* 3 Action Blocks */}
@@ -30,9 +33,9 @@ export default function Slide5Acciones() {
                 <h4 className="text-sm font-bold text-gray-900">Resurtido urgente</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p><strong className="text-red-700">120 combinaciones</strong> tienda-producto con &lt;15 días de cobertura</p>
-                <p>SKUs más afectados: Street Elote y Classic White</p>
-                <p>Priorizar: MTLV (2 días), CLRS (3 días), MTJE (3 días)</p>
+                <p><strong className="text-red-700">85 combinaciones</strong> tienda-producto en 74 tiendas con &lt;15 días de cobertura</p>
+                <p>Más urgentes: MTAI (3 días), MTHD (3 días), LRCT (3 días)</p>
+                <p>SKUs más afectados: Rodajitas y Classic White</p>
               </div>
             </div>
 
@@ -40,18 +43,18 @@ export default function Slide5Acciones() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full">2</span>
-                <h4 className="text-sm font-bold text-gray-900">Desbloquear posiciones</h4>
+                <h4 className="text-sm font-bold text-gray-900">4 tiendas catalogadas sin venta</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p>Necesitamos <strong className="text-red-700">desbloquear 128 posiciones</strong> marcadas &quot;No Disponible a Compra&quot;</p>
-                <p>Zona Norte tiene 42 bloqueadas (la más afectada)</p>
-                <p>Impacto est.: recuperar ~200 uds/mes (~$7K MXN est. PVP)</p>
+                <p><strong className="text-red-700">4 tiendas</strong> del catálogo no registraron ninguna venta en Ene-Feb 2026</p>
+                <p>Verificar si tienen inventario o problema de surtido</p>
+                <p>Revisar con promotor o CEDIS correspondiente</p>
               </div>
             </div>
           </div>
           <div className="bg-red-50 px-5 py-3 border-t border-red-200">
             <p className="text-[11px] text-red-800 font-medium">
-              Solicitar revisión esta semana con comprador FDA
+              Solicitar resurtido prioritario esta semana
             </p>
           </div>
         </div>
@@ -67,12 +70,12 @@ export default function Slide5Acciones() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
-                <h4 className="text-sm font-bold text-gray-900">Catalogar tiendas activas</h4>
+                <h4 className="text-sm font-bold text-gray-900">Impulsar Chicharrón</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p>Proponemos <strong className="text-green-700">catalogar 161 tiendas</strong> que ya están vendiendo sin catálogo formal</p>
-                <p>Representan <strong>17% de la venta total</strong></p>
-                <p>Top: SAME Las Mercedes (313 uds), VRLP Los Alpes (173 uds)</p>
+                <p>Chicharrón es <strong className="text-green-700">#1 en valor estimado (37%)</strong> con solo 23% de unidades</p>
+                <p>Precio PVP $58 vs $22-47 de los demás — el de mayor rendimiento por pieza</p>
+                <p>Impulsar exhibición y rotación para maximizar venta en pesos</p>
               </div>
             </div>
 
@@ -80,12 +83,12 @@ export default function Slide5Acciones() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full">4</span>
-                <h4 className="text-sm font-bold text-gray-900">Expandir 3 SKUs</h4>
+                <h4 className="text-sm font-bold text-gray-900">Replicar plazas exitosas</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p>Solicitar <strong className="text-green-700">alta de 3 SKUs en ~200 tiendas</strong> para igualar cobertura de Rodajitas (94%)</p>
-                <p>Classic White, Chicharrón y Street Elote están en ~500 vs 695</p>
-                <p>Potencial: <strong>+660 uds/mes</strong> (~$25K MXN est. PVP)</p>
+                <p><strong className="text-green-700">8 plazas creciendo YoY</strong> — León +55%, México Centro +48%, Mérida +17%</p>
+                <p>Identificar qué están haciendo bien y replicar en las 10 plazas que caen</p>
+                <p>Foco en MTY Oriente (-16%) que sigue siendo la #1 en volumen</p>
               </div>
             </div>
           </div>
@@ -107,12 +110,12 @@ export default function Slide5Acciones() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full">5</span>
-                <h4 className="text-sm font-bold text-gray-900">Sobre-existencia (SE45)</h4>
+                <h4 className="text-sm font-bold text-gray-900">Problema de anaquel</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p><strong className="text-amber-700">289 posiciones</strong> con 393 uds envejeciendo &gt;45 días</p>
-                <p>Rodajitas es el más afectado (167 uds)</p>
-                <p>Riesgo de que FDA solicite devolución</p>
+                <p><strong className="text-amber-700">578 posiciones</strong> con inventario pero $0 venta en Feb 2026</p>
+                <p>Producto en tienda pero sin rotación — posible mala exhibición</p>
+                <p>Coordinar revisión con promotor en tiendas prioritarias</p>
               </div>
             </div>
 
@@ -120,12 +123,12 @@ export default function Slide5Acciones() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded-full">6</span>
-                <h4 className="text-sm font-bold text-gray-900">Problemas de anaquel</h4>
+                <h4 className="text-sm font-bold text-gray-900">Sobre-existencia (SE45)</h4>
               </div>
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
-                <p><strong className="text-amber-700">1,219 posiciones</strong> con inventario pero $0 venta en 15 días</p>
-                <p>Coordinar revisión de exhibición con promotor</p>
-                <p>Solicitar reubicación en tiendas prioritarias</p>
+                <p><strong className="text-amber-700">83 posiciones</strong> con 99 uds envejeciendo &gt;45 días en 73 tiendas</p>
+                <p>Rodajitas: 24 pos (31 uds), Classic White: 23 pos (27 uds)</p>
+                <p>Riesgo bajo pero monitorear para evitar devolución</p>
               </div>
             </div>
           </div>
@@ -142,7 +145,7 @@ export default function Slide5Acciones() {
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 flex items-center gap-3">
           <span className="bg-gray-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0">NOTA</span>
           <p className="text-xs text-gray-600">
-            Detalle por tienda en Excels adjuntos. <em>* Valores en MXN son estimados basados en precio punto de venta, no datos de facturación oficial.</em>
+            Datos exclusivamente de las 410 tiendas catalogadas. Detalle por tienda en Excels adjuntos. <em>* Valores MXN son estimados basados en precio PVP.</em>
           </p>
         </div>
       </div>

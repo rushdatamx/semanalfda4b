@@ -13,13 +13,13 @@ const totalUds = pieData.reduce((sum, p) => sum + p.uds, 0);
 const totalMxn = pieData.reduce((sum, p) => sum + p.estMxn, 0);
 
 const coverage = [
-  { sku: "Rodajitas Spicy Limón 30g", tiendas: 695, pctCov: 94, color: "#fb923c" },
-  { sku: "Classic White 25g", tiendas: 498, pctCov: 68, color: "#fed7aa" },
-  { sku: "Street Elote 125g", tiendas: 502, pctCov: 68, color: "#fdba74" },
-  { sku: "Chicharrón de Cerdo 75g", tiendas: 495, pctCov: 67, color: "#ea580c" },
+  { sku: "Rodajitas Spicy Limón 30g", tiendas: 410, pctCov: 100, color: "#fb923c" },
+  { sku: "Classic White 25g", tiendas: 410, pctCov: 100, color: "#fed7aa" },
+  { sku: "Street Elote 125g", tiendas: 410, pctCov: 100, color: "#fdba74" },
+  { sku: "Chicharrón de Cerdo 75g", tiendas: 410, pctCov: 100, color: "#ea580c" },
 ];
 
-const maxTiendas = 736;
+const maxTiendas = 410; // Solo tiendas catalogadas
 
 export default function Slide4ProductoCobertura() {
   return (
@@ -130,46 +130,39 @@ export default function Slide4ProductoCobertura() {
           </div>
 
           <div className="bg-white rounded-xl border border-orange-100 shadow-sm p-5 flex-1 flex flex-col">
-            <h3 className="text-sm font-bold text-orange-800 mb-1">Cobertura por SKU</h3>
-            <p className="text-[11px] text-gray-500 mb-4">Tiendas con inventario de 736 totales en sistema</p>
+            <h3 className="text-sm font-bold text-orange-800 mb-1">Cobertura en tiendas catalogadas</h3>
+            <p className="text-[11px] text-gray-500 mb-4">410 tiendas catalogadas — los 4 SKUs están dados de alta</p>
 
             <div className="space-y-4 flex-1">
-              {coverage.map((c, i) => {
-                const gap = maxTiendas - c.tiendas;
-                return (
-                  <div key={i}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-bold text-gray-800">{c.sku}</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-extrabold" style={{ color: c.color }}>{c.tiendas}</span>
-                        <span className="text-[10px] text-gray-400">/ {maxTiendas}</span>
-                      </div>
+              {coverage.map((c, i) => (
+                <div key={i}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-bold text-gray-800">{c.sku}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-extrabold" style={{ color: c.color }}>{c.tiendas}</span>
+                      <span className="text-[10px] text-gray-400">/ {maxTiendas}</span>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-3.5 relative overflow-hidden">
-                      <div
-                        className="h-3.5 rounded-full transition-all"
-                        style={{ width: `${c.pctCov}%`, backgroundColor: c.color }}
-                      />
-                      <span className="absolute right-2 top-0 text-[10px] font-bold text-gray-500">
-                        {c.pctCov}%
-                      </span>
-                    </div>
-                    {gap > 100 && (
-                      <p className="text-[10px] text-gray-500 mt-0.5">
-                        Gap: <strong className="text-orange-600">{gap} tiendas</strong> sin este SKU
-                      </p>
-                    )}
                   </div>
-                );
-              })}
+                  <div className="w-full bg-gray-100 rounded-full h-3.5 relative overflow-hidden">
+                    <div
+                      className="h-3.5 rounded-full transition-all"
+                      style={{ width: `${c.pctCov}%`, backgroundColor: c.color }}
+                    />
+                    <span className="absolute right-2 top-0 text-[10px] font-bold text-gray-500">
+                      {c.pctCov}%
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Gap summary */}
+            {/* Status */}
             <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-2.5">
               <div className="flex items-start gap-2">
-                <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">ACCIÓN</span>
+                <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">OK</span>
                 <p className="text-xs text-gray-700">
-                  Solicitar alta de <strong>3 SKUs en ~200 tiendas</strong>. Priorizar <strong className="text-orange-700">Chicharrón</strong> por mayor valor unitario ($58 vs $22-47).
+                  Los <strong>4 SKUs están dados de alta</strong> en las 410 tiendas catalogadas. Cobertura al 100%.
+                  El foco debe ser <strong className="text-orange-700">rotar Chicharrón</strong> por mayor valor unitario.
                 </p>
               </div>
             </div>
