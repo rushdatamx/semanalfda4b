@@ -45,7 +45,7 @@ export default function Slide5Acciones() {
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
                 <p>Necesitamos <strong className="text-red-700">desbloquear 128 posiciones</strong> marcadas &quot;No Disponible a Compra&quot;</p>
                 <p>Zona Norte tiene 42 bloqueadas (la más afectada)</p>
-                <p>Impacto: recuperar ~200 uds/mes de venta perdida</p>
+                <p>Impacto est.: recuperar ~200 uds/mes (~$7K MXN est. PVP)</p>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function Slide5Acciones() {
               <div className="space-y-1.5 text-xs text-gray-600 pl-6">
                 <p>Solicitar <strong className="text-green-700">alta de 3 SKUs en ~200 tiendas</strong> para igualar cobertura de Rodajitas (94%)</p>
                 <p>Classic White, Chicharrón y Street Elote están en ~500 vs 695</p>
-                <p>Potencial: <strong>+660 uds/mes</strong> incrementales</p>
+                <p>Potencial: <strong>+660 uds/mes</strong> (~$25K MXN est. PVP)</p>
               </div>
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function Slide5Acciones() {
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 flex items-center gap-3">
           <span className="bg-gray-700 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0">NOTA</span>
           <p className="text-xs text-gray-600">
-            Detalle granular por tienda disponible en los Excels adjuntos: <strong>semanal_FDA_4BUDDIES.xlsx</strong> y <strong>alertas_FDA_4BUDDIES.xlsx</strong>
+            Detalle por tienda en Excels adjuntos. <em>* Valores en MXN son estimados basados en precio punto de venta, no datos de facturación oficial.</em>
           </p>
         </div>
       </div>

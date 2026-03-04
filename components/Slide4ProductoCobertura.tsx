@@ -3,22 +3,23 @@ import Image from "next/image";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const pieData = [
-  { name: "Rodajitas Spicy Limón 30g", value: 2307, pct: "34.4%", color: "#ea580c" },
-  { name: "Classic White 25g", value: 1598, pct: "23.8%", color: "#fb923c" },
-  { name: "Chicharrón de Cerdo 75g", value: 1568, pct: "23.4%", color: "#fdba74" },
-  { name: "Street Elote 125g", value: 1228, pct: "18.3%", color: "#fed7aa" },
+  { name: "Chicharrón de Cerdo 75g", uds: 1568, estMxn: 90944, pctVal: "36.7%", pctUds: "23.4%", pvp: 58, color: "#ea580c" },
+  { name: "Rodajitas Spicy Limón 30g", uds: 2307, estMxn: 63443, pctVal: "25.6%", pctUds: "34.4%", pvp: 27.5, color: "#fb923c" },
+  { name: "Street Elote 125g", uds: 1228, estMxn: 57716, pctVal: "23.3%", pctUds: "18.3%", pvp: 47, color: "#fdba74" },
+  { name: "Classic White 25g", uds: 1598, estMxn: 35955, pctVal: "14.5%", pctUds: "23.8%", pvp: 22.5, color: "#fed7aa" },
 ];
 
-const totalUds = pieData.reduce((sum, p) => sum + p.value, 0);
+const totalUds = pieData.reduce((sum, p) => sum + p.uds, 0);
+const totalMxn = pieData.reduce((sum, p) => sum + p.estMxn, 0);
 
 const coverage = [
-  { sku: "Rodajitas Spicy Limón 30g", tiendas: 695, pctCov: 94, color: "#ea580c" },
-  { sku: "Classic White 25g", tiendas: 498, pctCov: 68, color: "#fb923c" },
-  { sku: "Street Elote 125g", tiendas: 502, pctCov: 68, color: "#fed7aa" },
-  { sku: "Chicharrón de Cerdo 75g", tiendas: 495, pctCov: 67, color: "#fdba74" },
+  { sku: "Rodajitas Spicy Limón 30g", tiendas: 695, pctCov: 94, color: "#fb923c" },
+  { sku: "Classic White 25g", tiendas: 498, pctCov: 68, color: "#fed7aa" },
+  { sku: "Street Elote 125g", tiendas: 502, pctCov: 68, color: "#fdba74" },
+  { sku: "Chicharrón de Cerdo 75g", tiendas: 495, pctCov: 67, color: "#ea580c" },
 ];
 
-const maxTiendas = 736; // Total stores in inventory
+const maxTiendas = 736;
 
 export default function Slide4ProductoCobertura() {
   return (
@@ -33,69 +34,85 @@ export default function Slide4ProductoCobertura() {
       </div>
 
       <div className="flex gap-5 px-8 flex-1 overflow-hidden">
-        {/* Left: Pie Chart + participation table */}
-        <div className="w-[520px] flex flex-col gap-4">
-          {/* Pie */}
-          <div className="bg-white rounded-xl border border-orange-100 shadow-sm p-4 flex items-center gap-4 h-[260px]">
-            <div className="w-[220px] h-[220px]">
+        {/* Left: Pie Chart (by MXN) + participation table */}
+        <div className="w-[540px] flex flex-col gap-4">
+          {/* Pie - now by estimated MXN */}
+          <div className="bg-white rounded-xl border border-orange-100 shadow-sm p-4 flex items-center gap-4 h-[240px]">
+            <div className="w-[200px] h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={pieData}
-                    dataKey="value"
+                    dataKey="estMxn"
                     nameKey="name"
                     cx="50%"
                     cy="50%"
-                    outerRadius={95}
-                    innerRadius={45}
+                    outerRadius={88}
+                    innerRadius={42}
                     paddingAngle={3}
                   >
                     {pieData.map((entry, i) => (
                       <Cell key={i} fill={entry.color} stroke="white" strokeWidth={2} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(v: number) => `${v.toLocaleString()} uds`} />
+                  <Tooltip formatter={(v: number) => `$${v.toLocaleString()} MXN est.`} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <div className="flex-1 space-y-3">
-              <div className="text-center mb-2">
-                <p className="text-3xl font-extrabold text-gray-900">{totalUds.toLocaleString()}</p>
-                <p className="text-xs text-gray-500">Uds EF 2026</p>
+            <div className="flex-1">
+              <div className="text-center mb-3">
+                <p className="text-2xl font-extrabold text-gray-900">${(totalMxn / 1000).toFixed(0)}K</p>
+                <p className="text-[10px] text-gray-400">Est. PVP · EF 2026</p>
+                <p className="text-xs text-gray-500 mt-0.5">{totalUds.toLocaleString()} uds</p>
               </div>
               {pieData.map((p, i) => (
-                <div key={i} className="flex items-center gap-2 text-xs">
-                  <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: p.color }} />
-                  <span className="text-gray-700 truncate flex-1">{p.name.split(" ").slice(0, 3).join(" ")}</span>
-                  <span className="font-bold text-gray-800">{p.pct}</span>
+                <div key={i} className="flex items-center gap-2 text-xs mb-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: p.color }} />
+                  <span className="text-gray-700 truncate flex-1">{p.name.split(" ").slice(0, 2).join(" ")}</span>
+                  <span className="font-bold text-gray-800">{p.pctVal}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Product table */}
+          {/* Product table with UDS + MXN */}
           <div className="bg-white rounded-xl border border-orange-100 shadow-sm p-4 flex-1">
-            <h3 className="text-sm font-bold text-orange-800 mb-3">Participación EF 2026</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-orange-800">Participación EF 2026</h3>
+              <span className="text-[9px] text-gray-400 italic">* Estimado PVP, no dato oficial</span>
+            </div>
             <table className="w-full text-xs">
               <thead>
                 <tr className="bg-orange-600 text-white">
                   <th className="p-2 text-left rounded-tl-lg">Producto</th>
+                  <th className="p-2 text-right">PVP</th>
                   <th className="p-2 text-right">Uds</th>
-                  <th className="p-2 text-right">Part.</th>
-                  <th className="p-2 text-right rounded-tr-lg">Tiendas</th>
+                  <th className="p-2 text-right">% Uds</th>
+                  <th className="p-2 text-right">Est. MXN*</th>
+                  <th className="p-2 text-right rounded-tr-lg">% Valor</th>
                 </tr>
               </thead>
               <tbody>
                 {pieData.map((p, i) => (
                   <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
                     <td className="p-2 font-medium">{p.name}</td>
-                    <td className="p-2 text-right font-bold">{p.value.toLocaleString()}</td>
-                    <td className="p-2 text-right">{p.pct}</td>
-                    <td className="p-2 text-right text-gray-600">
-                      {coverage.find((c) => c.sku === p.name)?.tiendas || "—"}
+                    <td className="p-2 text-right text-gray-500">${p.pvp}</td>
+                    <td className="p-2 text-right">{p.uds.toLocaleString()}</td>
+                    <td className="p-2 text-right text-gray-500">{p.pctUds}</td>
+                    <td className="p-2 text-right font-bold">${(p.estMxn / 1000).toFixed(1)}K</td>
+                    <td className="p-2 text-right">
+                      <span className={`font-bold ${i === 0 ? "text-orange-700" : "text-gray-700"}`}>{p.pctVal}</span>
                     </td>
                   </tr>
                 ))}
+                <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
+                  <td className="p-2">Total</td>
+                  <td className="p-2"></td>
+                  <td className="p-2 text-right">{totalUds.toLocaleString()}</td>
+                  <td className="p-2 text-right">100%</td>
+                  <td className="p-2 text-right">${(totalMxn / 1000).toFixed(0)}K</td>
+                  <td className="p-2 text-right">100%</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -103,33 +120,42 @@ export default function Slide4ProductoCobertura() {
 
         {/* Right: Coverage with progress bars */}
         <div className="flex-1 flex flex-col gap-4">
+          {/* Key insight */}
+          <div className="bg-orange-600 rounded-xl p-4 text-white">
+            <p className="text-sm font-bold mb-1">Chicharrón = #1 en valor estimado</p>
+            <p className="text-xs opacity-90">
+              Con solo 23% de las unidades, aporta <strong>37% del valor</strong> (~$91K MXN est.) gracias a su precio ($58).
+              Priorizar crecimiento de Chicharrón maximiza el valor por unidad vendida.
+            </p>
+          </div>
+
           <div className="bg-white rounded-xl border border-orange-100 shadow-sm p-5 flex-1 flex flex-col">
             <h3 className="text-sm font-bold text-orange-800 mb-1">Cobertura por SKU</h3>
-            <p className="text-[11px] text-gray-500 mb-5">Tiendas con inventario de 736 totales en sistema</p>
+            <p className="text-[11px] text-gray-500 mb-4">Tiendas con inventario de 736 totales en sistema</p>
 
-            <div className="space-y-5 flex-1">
+            <div className="space-y-4 flex-1">
               {coverage.map((c, i) => {
                 const gap = maxTiendas - c.tiendas;
                 return (
                   <div key={i}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="text-sm font-bold text-gray-800">{c.sku}</span>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-gray-800">{c.sku}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-lg font-extrabold" style={{ color: c.color }}>{c.tiendas}</span>
-                        <span className="text-xs text-gray-400">/ {maxTiendas}</span>
+                        <span className="text-sm font-extrabold" style={{ color: c.color }}>{c.tiendas}</span>
+                        <span className="text-[10px] text-gray-400">/ {maxTiendas}</span>
                       </div>
                     </div>
-                    <div className="w-full bg-gray-100 rounded-full h-4 relative overflow-hidden">
+                    <div className="w-full bg-gray-100 rounded-full h-3.5 relative overflow-hidden">
                       <div
-                        className="h-4 rounded-full transition-all"
+                        className="h-3.5 rounded-full transition-all"
                         style={{ width: `${c.pctCov}%`, backgroundColor: c.color }}
                       />
-                      <span className="absolute right-2 top-0.5 text-[10px] font-bold text-gray-500">
+                      <span className="absolute right-2 top-0 text-[10px] font-bold text-gray-500">
                         {c.pctCov}%
                       </span>
                     </div>
                     {gap > 100 && (
-                      <p className="text-[10px] text-gray-500 mt-1">
+                      <p className="text-[10px] text-gray-500 mt-0.5">
                         Gap: <strong className="text-orange-600">{gap} tiendas</strong> sin este SKU
                       </p>
                     )}
@@ -139,11 +165,11 @@ export default function Slide4ProductoCobertura() {
             </div>
 
             {/* Gap summary */}
-            <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-3">
+            <div className="mt-3 bg-green-50 border border-green-200 rounded-lg p-2.5">
               <div className="flex items-start gap-2">
-                <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">OPORTUNIDAD</span>
+                <span className="bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 mt-0.5">ACCIÓN</span>
                 <p className="text-xs text-gray-700">
-                  <strong>3 SKUs</strong> están en ~500 tiendas vs Rodajitas en 695. Solicitar alta en <strong className="text-green-700">~200 tiendas</strong> para igualar cobertura — potencial de <strong>+660 uds/mes</strong> incrementales.
+                  Solicitar alta de <strong>3 SKUs en ~200 tiendas</strong>. Priorizar <strong className="text-orange-700">Chicharrón</strong> por mayor valor unitario ($58 vs $22-47).
                 </p>
               </div>
             </div>
@@ -151,8 +177,10 @@ export default function Slide4ProductoCobertura() {
         </div>
       </div>
 
-      {/* Bottom space */}
-      <div className="h-5" />
+      {/* Disclaimer */}
+      <div className="px-8 pb-4 pt-1">
+        <p className="text-[8px] text-gray-300 text-right italic">* Valor estimado basado en precio punto de venta. No representa dato de facturación oficial.</p>
+      </div>
     </div>
   );
 }

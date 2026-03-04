@@ -47,7 +47,8 @@ export default function Slide1Portada() {
             <TrendingDown className="w-6 h-6 text-orange-500 mb-2" />
             <p className="text-3xl font-extrabold text-gray-900">6,704</p>
             <p className="text-xs text-gray-500 font-medium mt-1">Uds vendidas EF 2026</p>
-            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-2">-17.8% vs EF 25</span>
+            <p className="text-[10px] text-gray-400 mt-0.5">~$248K MXN est. PVP</p>
+            <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-full mt-1">-17.8% uds · -3.0% valor</span>
           </div>
 
           {/* Tiendas */}
@@ -135,19 +136,20 @@ export default function Slide1Portada() {
             <div className="flex-1 bg-red-50 rounded-lg p-2 text-center">
               <p className="text-[10px] text-gray-500">Ene YoY</p>
               <p className="text-sm font-bold text-red-600">-20.9%</p>
-              <p className="text-[9px] text-gray-400">4,392 → 3,473</p>
+              <p className="text-[9px] text-gray-400">4,392 → 3,473 uds</p>
             </div>
             <div className="flex-1 bg-red-50 rounded-lg p-2 text-center">
               <p className="text-[10px] text-gray-500">Feb YoY</p>
               <p className="text-sm font-bold text-red-600">-14.1%</p>
-              <p className="text-[9px] text-gray-400">3,760 → 3,231</p>
+              <p className="text-[9px] text-gray-400">3,760 → 3,231 uds</p>
             </div>
             <div className="flex-1 bg-orange-50 rounded-lg p-2 text-center">
-              <p className="text-[10px] text-gray-500">YTD</p>
-              <p className="text-sm font-bold text-red-600">-17.8%</p>
-              <p className="text-[9px] text-gray-400">8,152 → 6,704</p>
+              <p className="text-[10px] text-gray-500">YTD Est. PVP</p>
+              <p className="text-sm font-bold text-red-600">-3.0%</p>
+              <p className="text-[9px] text-gray-400">$256K → $248K MXN</p>
             </div>
           </div>
+          <p className="text-[8px] text-gray-300 text-right mt-1 italic">* Estimado basado en precio punto de venta</p>
         </div>
       </div>
 
