@@ -1,22 +1,18 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import Slide1Portada from "@/components/Slide1Portada";
-import Slide2SellOut from "@/components/Slide2SellOut";
-import Slide3Alertas from "@/components/Slide3Alertas";
-import Slide4Oportunidades from "@/components/Slide4Oportunidades";
-import Slide5Productos from "@/components/Slide5Productos";
-import Slide6ZonaTiendas from "@/components/Slide6ZonaTiendas";
-import Slide7PlanAccion from "@/components/Slide7PlanAccion";
+import Slide2Plazas from "@/components/Slide2Plazas";
+import Slide3Sucursales from "@/components/Slide3Sucursales";
+import Slide4ProductoCobertura from "@/components/Slide4ProductoCobertura";
+import Slide5Acciones from "@/components/Slide5Acciones";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
   { component: Slide1Portada, title: "Portada" },
-  { component: Slide2SellOut, title: "Sell-Out" },
-  { component: Slide3Alertas, title: "Alertas" },
-  { component: Slide4Oportunidades, title: "Oportunidades" },
-  { component: Slide5Productos, title: "Productos" },
-  { component: Slide6ZonaTiendas, title: "Zonas + Tiendas" },
-  { component: Slide7PlanAccion, title: "Plan de Acción" },
+  { component: Slide2Plazas, title: "Plazas" },
+  { component: Slide3Sucursales, title: "Sucursales" },
+  { component: Slide4ProductoCobertura, title: "Producto" },
+  { component: Slide5Acciones, title: "Acciones" },
 ];
 
 export default function Home() {
