@@ -223,7 +223,7 @@ function Slide1() {
         <p className="text-lg text-orange-600 font-medium mt-1">4BUDDIES x Farmacias del Ahorro</p>
         <p className="text-sm text-orange-400 mt-2">YTD 2026 (Ene — Abr 26) vs 2025 | Solo tiendas catalogadas (410)</p>
         <p className="text-xs text-orange-500 mt-1 font-medium bg-orange-100 px-4 py-1 rounded-full">
-          Abril aún no cierra (al día 26 de 30) — proyección: ~2,618 uds (+15.3% vs Abr 2025)
+          Abril aún no cierra (al día 26 de 30) — lleva las mismas uds que todo Abr 2025, con 4 días por delante
         </p>
       </div>
 
@@ -402,7 +402,7 @@ function Slide2() {
               </tbody>
             </table>
           </div>
-          <p className="text-[10px] text-orange-400 mt-2">* Abril 2026 parcial (al día 26 de 30) — proyección cierre: ~2,618 uds (+15.3% vs Abr 2025) | Est PVP = estimado a precio de venta al público</p>
+          <p className="text-[10px] text-orange-400 mt-2">* Abril 2026 parcial (al día 26 de 30) — lleva prácticamente las mismas uds que todo Abr 2025, con 4 días aún por delante | Est PVP = estimado a precio de venta al público</p>
         </div>
       </div>
 
@@ -412,8 +412,8 @@ function Slide2() {
           <span className="font-semibold text-orange-900">Insight:</span> Los 4 SKUs core crecen{" "}
           <span className="font-bold text-green-700">+5.7%</span> YTD en unidades y{" "}
           <span className="font-bold text-green-700">+6.4%</span> en valor estimado.
-          Ene-Mar 2026 superan a 2025. Abril aún no cierra (al día 26): lleva 2,269 uds vs 2,270 del 2025 completo —{" "}
-          <span className="font-bold text-green-700">proyección a cierre: ~2,618 uds (+15.3%)</span>.
+          Ene-Mar 2026 superan a 2025. Abril aún no cierra (al día 26): lleva 2,269 uds vs 2,270 de todo Abr 2025 —{" "}
+          <span className="font-bold text-green-700">con 4 días por delante, cerrará por arriba del año pasado</span>.
         </div>
       </div>
     </div>
