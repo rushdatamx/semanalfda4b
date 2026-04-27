@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "4BUDDIES x FDA — Reporte Semanal",
-  description: "Reporte semanal de 4BUDDIES en Farmacias del Ahorro",
+  title: "4BUDDIES × FDA — Salud del Negocio YTD 2026",
+  description: "Presentación ejecutiva YTD 2026 — 4BUDDIES en Farmacias del Ahorro",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
