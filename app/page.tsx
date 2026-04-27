@@ -712,6 +712,223 @@ function Slide4() {
 }
 
 /* ================================================================
+   SLIDE 5 — Zona Norte: Desabasto por Tienda
+   ================================================================ */
+
+const NORTE_RESTOCK = [
+  { tienda: "JZPT", nombre: "Plaza Las Torres", plaza: "Chihuahua", producto: "Classic White 25g", stock: 0, vtaDia: 0.1, dias: 0 },
+  { tienda: "MTVL", nombre: "Valle Alto", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 0, vtaDia: 0.2, dias: 0 },
+  { tienda: "MTHA", nombre: "Harley Carr", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 0, vtaDia: 0.1, dias: 0 },
+  { tienda: "CIPO", nombre: "Politécnico", plaza: "Chihuahua", producto: "Chicharrón de Cerdo 75g", stock: 0, vtaDia: 0.2, dias: 0 },
+  { tienda: "MTRH", nombre: "Río Rhin", plaza: "Monterrey Pte", producto: "Street Elote 125g", stock: 1, vtaDia: 0.2, dias: 4.3 },
+  { tienda: "MTCS", nombre: "Calzada San Pedro", plaza: "Monterrey Ote", producto: "Street Elote 125g", stock: 1, vtaDia: 0.2, dias: 5.0 },
+  { tienda: "MTHD", nombre: "Obispado", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.4, dias: 5.5 },
+  { tienda: "MTCW", nombre: "Corporativo", plaza: "Monterrey Ote", producto: "Street Elote 125g", stock: 2, vtaDia: 0.4, dias: 5.5 },
+  { tienda: "MTRS", nombre: "Roberto Garza Sada", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 1, vtaDia: 0.2, dias: 6.0 },
+  { tienda: "MTHA", nombre: "Harley Carr", plaza: "Monterrey Ote", producto: "Street Elote 125g", stock: 2, vtaDia: 0.3, dias: 7.5 },
+  { tienda: "MTRS", nombre: "Roberto Garza Sada", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 3, vtaDia: 0.4, dias: 7.5 },
+  { tienda: "MTEU", nombre: "Revolución", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 1, vtaDia: 0.1, dias: 7.5 },
+  { tienda: "MTHD", nombre: "Obispado", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 2, vtaDia: 0.2, dias: 8.6 },
+  { tienda: "LRCT", nombre: "Crucerito", plaza: "Nuevo Laredo", producto: "Rodajitas 30g", stock: 5, vtaDia: 0.5, dias: 9.4 },
+  { tienda: "JZLR", nombre: "La Raza", plaza: "Chihuahua", producto: "Chicharrón de Cerdo 75g", stock: 1, vtaDia: 0.1, dias: 10.0 },
+  { tienda: "CHRC", nombre: "Puente Real", plaza: "Saltillo", producto: "Rodajitas 30g", stock: 1, vtaDia: 0.1, dias: 10.0 },
+  { tienda: "MTNE", nombre: "Nueva España", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.2, dias: 10.0 },
+  { tienda: "MTOA", nombre: "Arboleda", plaza: "Monterrey Ote", producto: "Chicharrón de Cerdo 75g", stock: 2, vtaDia: 0.2, dias: 10.0 },
+  { tienda: "MTCM", nombre: "Cumbres", plaza: "Monterrey Pte", producto: "Street Elote 125g", stock: 3, vtaDia: 0.3, dias: 10.0 },
+  { tienda: "MTBV", nombre: "Plus Suchiate", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 2, vtaDia: 0.2, dias: 10.0 },
+  { tienda: "MTHD", nombre: "Obispado", plaza: "Monterrey Ote", producto: "Street Elote 125g", stock: 2, vtaDia: 0.2, dias: 10.0 },
+  { tienda: "SAFT", nombre: "Fernando Torres", plaza: "San Luis Potosí", producto: "Street Elote 125g", stock: 1, vtaDia: 0.1, dias: 10.0 },
+  { tienda: "TIJR", nombre: "Rosarito II", plaza: "Tijuana", producto: "Classic White 25g", stock: 1, vtaDia: 0.1, dias: 10.0 },
+  { tienda: "LRDG", nombre: "Degollado", plaza: "Nuevo Laredo", producto: "Rodajitas 30g", stock: 6, vtaDia: 0.6, dias: 10.6 },
+  { tienda: "MTCA", nombre: "Calzada", plaza: "Monterrey Ote", producto: "Street Elote 125g", stock: 4, vtaDia: 0.4, dias: 10.9 },
+  { tienda: "DGFV", nombre: "Francisco Villa", plaza: "Durango", producto: "Street Elote 125g", stock: 3, vtaDia: 0.3, dias: 11.2 },
+  { tienda: "MTSP", nombre: "San Pedro", plaza: "Monterrey Ote", producto: "Classic White 25g", stock: 2, vtaDia: 0.2, dias: 12.0 },
+  { tienda: "RNVH", nombre: "Vista Hermosa", plaza: "Reynosa", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.2, dias: 12.0 },
+  { tienda: "CICM", nombre: "Campestre", plaza: "Chihuahua", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.2, dias: 12.0 },
+  { tienda: "MTVL", nombre: "Valle Alto", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.2, dias: 12.0 },
+  { tienda: "MTPF", nombre: "Plaza Fiesta", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 2, vtaDia: 0.2, dias: 12.0 },
+  { tienda: "MTTO", nombre: "Las Torres", plaza: "Monterrey Ote", producto: "Rodajitas 30g", stock: 3, vtaDia: 0.2, dias: 12.9 },
+  { tienda: "MTM1", nombre: "Miguel de la Madrid", plaza: "Monterrey Pte", producto: "Chicharrón de Cerdo 75g", stock: 3, vtaDia: 0.2, dias: 12.9 },
+  { tienda: "SAPD", nombre: "Pedregal", plaza: "San Luis Potosí", producto: "Chicharrón de Cerdo 75g", stock: 4, vtaDia: 0.3, dias: 13.3 },
+  { tienda: "TICO", nombre: "Cochimie", plaza: "Tijuana", producto: "Street Elote 125g", stock: 4, vtaDia: 0.3, dias: 13.3 },
+];
+
+function Slide5() {
+  const criticos = NORTE_RESTOCK.filter((r) => r.dias < 7);
+  const urgentes = NORTE_RESTOCK.filter((r) => r.dias >= 7 && r.dias <= 14);
+
+  // Resumen por producto
+  const byProd: Record<string, { count: number; zero: number }> = {};
+  NORTE_RESTOCK.forEach((r) => {
+    if (!byProd[r.producto]) byProd[r.producto] = { count: 0, zero: 0 };
+    byProd[r.producto].count++;
+    if (r.stock === 0) byProd[r.producto].zero++;
+  });
+
+  return (
+    <div className="w-[1280px] aspect-video bg-gradient-to-br from-orange-50 to-orange-100 flex flex-col">
+      <Header
+        title="Zona Norte — Desabasto por Tienda"
+        subtitle="35 posiciones con <15 días de cobertura | Estas tiendas necesitan resurtido inmediato"
+      />
+
+      <div className="flex-1 grid grid-cols-3 gap-4 px-8 py-3">
+        {/* Columna 1: Críticos (0-6 días) */}
+        <div className="bg-white rounded-xl shadow border-2 border-red-300 p-3 flex flex-col">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-bold flex items-center gap-1">
+              <AlertTriangle className="w-3 h-3" /> CRÍTICO
+            </span>
+            <span className="text-[10px] text-gray-500">0-6 días cobertura</span>
+          </div>
+          <div className="overflow-auto flex-1">
+            <table className="w-full text-[11px]">
+              <thead>
+                <tr className="bg-red-600 text-white">
+                  <th className="py-1 px-1.5 text-left rounded-tl-lg">Tienda</th>
+                  <th className="py-1 px-1.5 text-left">Plaza</th>
+                  <th className="py-1 px-1.5 text-left">Producto</th>
+                  <th className="py-1 px-1.5 text-right">Stock</th>
+                  <th className="py-1 px-1.5 text-right rounded-tr-lg">Días</th>
+                </tr>
+              </thead>
+              <tbody>
+                {criticos.map((r, i) => (
+                  <tr key={`c-${i}`} className={i % 2 === 0 ? "bg-red-50/50" : ""}>
+                    <td className="py-1 px-1.5 font-medium text-gray-800">{r.nombre}</td>
+                    <td className="py-1 px-1.5 text-gray-600">{r.plaza}</td>
+                    <td className="py-1 px-1.5 text-gray-700">{r.producto}</td>
+                    <td className="py-1 px-1.5 text-right">
+                      {r.stock === 0 ? (
+                        <span className="font-bold text-red-700">0</span>
+                      ) : (
+                        <span className="text-gray-700">{r.stock}</span>
+                      )}
+                    </td>
+                    <td className="py-1 px-1.5 text-right font-bold text-red-700">{r.dias.toFixed(0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[10px] text-red-500 mt-2 font-medium">
+            {criticos.filter((r) => r.stock === 0).length} posiciones con stock CERO — sin producto en anaquel
+          </p>
+        </div>
+
+        {/* Columna 2: Urgentes (7-14 días) */}
+        <div className="bg-white rounded-xl shadow border-2 border-yellow-300 p-3 flex flex-col">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-2 py-0.5 rounded-full bg-yellow-100 text-yellow-700 text-xs font-bold flex items-center gap-1">
+              <Package className="w-3 h-3" /> URGENTE
+            </span>
+            <span className="text-[10px] text-gray-500">7-14 días cobertura</span>
+          </div>
+          <div className="overflow-auto flex-1">
+            <table className="w-full text-[11px]">
+              <thead>
+                <tr className="bg-yellow-500 text-white">
+                  <th className="py-1 px-1.5 text-left rounded-tl-lg">Tienda</th>
+                  <th className="py-1 px-1.5 text-left">Plaza</th>
+                  <th className="py-1 px-1.5 text-left">Producto</th>
+                  <th className="py-1 px-1.5 text-right">Stock</th>
+                  <th className="py-1 px-1.5 text-right rounded-tr-lg">Días</th>
+                </tr>
+              </thead>
+              <tbody>
+                {urgentes.map((r, i) => (
+                  <tr key={`u-${i}`} className={i % 2 === 0 ? "bg-yellow-50/50" : ""}>
+                    <td className="py-1 px-1.5 font-medium text-gray-800">{r.nombre}</td>
+                    <td className="py-1 px-1.5 text-gray-600">{r.plaza}</td>
+                    <td className="py-1 px-1.5 text-gray-700">{r.producto}</td>
+                    <td className="py-1 px-1.5 text-right text-gray-700">{r.stock}</td>
+                    <td className="py-1 px-1.5 text-right font-bold text-yellow-700">{r.dias.toFixed(0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Columna 3: Resumen */}
+        <div className="flex flex-col gap-3">
+          {/* Resumen por producto */}
+          <div className="bg-white rounded-xl shadow border border-orange-200 p-3 flex-1">
+            <h4 className="text-xs font-bold text-orange-900 mb-2">Resumen por Producto</h4>
+            <div className="space-y-2">
+              {Object.entries(byProd).map(([prod, data]) => (
+                <div key={prod} className="flex items-center justify-between text-xs">
+                  <span className="text-gray-700 truncate mr-2">{prod}</span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {data.zero > 0 && (
+                      <span className="px-1.5 py-0.5 rounded bg-red-100 text-red-700 text-[10px] font-bold">
+                        {data.zero} sin stock
+                      </span>
+                    )}
+                    <span className="px-1.5 py-0.5 rounded bg-yellow-100 text-yellow-700 text-[10px] font-bold">
+                      {data.count} alertas
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 pt-2 border-t border-orange-100">
+              <div className="flex items-center justify-between text-xs font-bold">
+                <span className="text-orange-900">TOTAL NORTE</span>
+                <span className="text-red-700">{NORTE_RESTOCK.length} posiciones</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Plazas afectadas */}
+          <div className="bg-white rounded-xl shadow border border-orange-200 p-3">
+            <h4 className="text-xs font-bold text-orange-900 mb-2">Plazas más afectadas</h4>
+            <div className="space-y-1.5 text-xs">
+              {[
+                { plaza: "Monterrey Ote", count: NORTE_RESTOCK.filter((r) => r.plaza === "Monterrey Ote").length },
+                { plaza: "Chihuahua", count: NORTE_RESTOCK.filter((r) => r.plaza === "Chihuahua").length },
+                { plaza: "Monterrey Pte", count: NORTE_RESTOCK.filter((r) => r.plaza === "Monterrey Pte").length },
+                { plaza: "Nuevo Laredo", count: NORTE_RESTOCK.filter((r) => r.plaza === "Nuevo Laredo").length },
+              ].map((p) => (
+                <div key={p.plaza} className="flex items-center justify-between">
+                  <span className="text-gray-700">{p.plaza}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-16 h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-red-400 rounded-full"
+                        style={{ width: `${(p.count / 20) * 100}%` }}
+                      />
+                    </div>
+                    <span className="font-bold text-red-700 w-5 text-right">{p.count}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Accionable */}
+          <div className="bg-red-50 rounded-xl border border-red-200 px-3 py-2.5">
+            <p className="text-xs font-bold text-red-800 mb-1">Acción requerida:</p>
+            <p className="text-[11px] text-red-700">
+              Solicitar resurtido prioritario de estos SKUs en las tiendas listadas.
+              Monterrey concentra la mayoría de alertas — coordinar con CEDIS MTNA.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Barra inferior */}
+      <div className="px-8 pb-4">
+        <div className="bg-white/70 rounded-xl px-6 py-2.5 text-sm text-gray-700">
+          <span className="font-semibold text-orange-900">Norte = 37.5% de la venta total.</span>{" "}
+          Si no se resurte, se pierde venta en la zona más importante. Las 4 posiciones con stock cero ya están perdiendo venta diaria.
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================
    MAIN — Carousel
    ================================================================ */
 
@@ -720,6 +937,7 @@ const slides = [
   { component: Slide2, title: "Sell-Out" },
   { component: Slide3, title: "Productos" },
   { component: Slide4, title: "Alertas" },
+  { component: Slide5, title: "Norte" },
 ];
 
 export default function Home() {
