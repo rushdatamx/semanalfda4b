@@ -470,7 +470,7 @@ function Slide3() {
 
         {/* Tabla salud — 3 cols */}
         <div className="col-span-3 bg-white rounded-xl shadow border border-orange-200 p-4 flex flex-col">
-          <h3 className="text-sm font-bold text-orange-900 mb-2">Salud por Producto</h3>
+          <h3 className="text-sm font-bold text-orange-900 mb-2">Venta por Producto</h3>
           <div className="overflow-auto flex-1">
             <table className="w-full text-xs">
               <thead>
@@ -479,10 +479,7 @@ function Slide3() {
                   <th className="py-2 px-2 text-right">YTD 25</th>
                   <th className="py-2 px-2 text-right">YTD 26</th>
                   <th className="py-2 px-2 text-right">Var%</th>
-                  <th className="py-2 px-2 text-right">Stock</th>
-                  <th className="py-2 px-2 text-right">Vta/día</th>
-                  <th className="py-2 px-2 text-right">Días Cob</th>
-                  <th className="py-2 px-2 text-center rounded-tr-lg">Estado</th>
+                  <th className="py-2 px-2 text-right rounded-tr-lg">Mix%</th>
                 </tr>
               </thead>
               <tbody>
@@ -499,12 +496,7 @@ function Slide3() {
                     <td className="py-2 px-2 text-right">
                       <VarBadge v={p.var} />
                     </td>
-                    <td className="py-2 px-2 text-right text-gray-700">{fmtU(p.stock)}</td>
-                    <td className="py-2 px-2 text-right text-gray-700">{p.vtaDia.toFixed(1)}</td>
-                    <td className="py-2 px-2 text-right font-semibold text-orange-900">{p.diasCob}</td>
-                    <td className="py-2 px-2 text-center">
-                      <EstadoBadge dias={p.diasCob} />
-                    </td>
+                    <td className="py-2 px-2 text-right font-semibold text-orange-900">{p.mix}%</td>
                   </tr>
                 ))}
                 {/* Total */}
@@ -515,12 +507,7 @@ function Slide3() {
                   <td className="py-2 px-2 text-right">
                     <VarBadge v={KPI.varYtd} />
                   </td>
-                  <td className="py-2 px-2 text-right text-orange-900">{fmtU(KPI.stockTotal)}</td>
-                  <td className="py-2 px-2 text-right text-orange-900">90.0</td>
-                  <td className="py-2 px-2 text-right text-orange-900">{KPI.diasCobGlobal}</td>
-                  <td className="py-2 px-2 text-center">
-                    <EstadoBadge dias={KPI.diasCobGlobal} />
-                  </td>
+                  <td className="py-2 px-2 text-right text-orange-900">100%</td>
                 </tr>
               </tbody>
             </table>
