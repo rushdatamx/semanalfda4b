@@ -218,14 +218,14 @@ function Slide2() {
         <div className="bg-white rounded-xl shadow border-2 border-orange-400 p-4">
           <p className="text-[11px] text-orange-600 font-medium mb-1">Venta MXN YTD 2026</p>
           <p className="text-3xl font-extrabold text-orange-900">{fmtPVP(KPI.estMxn26)}</p>
-          <p className="text-xs text-gray-500 mt-1">vs {fmtPVP(KPI.estMxn25)} en 2025</p>
-          <div className="mt-2"><VarBadge v={KPI.varMxn} /></div>
+          <p className="text-xs text-gray-500 mt-1">precio anaquel × uds</p>
+          <p className="text-[10px] text-gray-400 mt-2">incluye ajuste promo Mayo</p>
         </div>
         <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
-          <p className="text-[11px] text-orange-500 font-medium mb-1">Δ MXN vs 2025</p>
-          <p className="text-3xl font-extrabold text-green-700">+{fmtPVP(KPI.deltaMxn)}</p>
-          <p className="text-xs text-gray-500 mt-1">venta incremental</p>
-          <p className="text-[10px] text-green-600 mt-2 font-semibold">a precio anaquel</p>
+          <p className="text-[11px] text-orange-500 font-medium mb-1">SKUs core activos</p>
+          <p className="text-3xl font-extrabold text-orange-900">4 / 4</p>
+          <p className="text-xs text-gray-500 mt-1">todos crecen vs 2025</p>
+          <p className="text-[10px] text-green-600 mt-2 font-semibold">portafolio sano</p>
         </div>
         <div className="bg-white rounded-xl shadow border border-green-300 p-4">
           <p className="text-[11px] text-green-600 font-medium mb-1">Penetración tiendas</p>
@@ -239,7 +239,7 @@ function Slide2() {
       <div className="flex gap-3 flex-1 min-h-0">
         {/* Tabla pivote mensual */}
         <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
-          <p className="text-sm font-bold text-orange-900 mb-2">Pivote Mensual — Unidades y MXN | 2026 vs 2025</p>
+          <p className="text-sm font-bold text-orange-900 mb-2">Pivote Mensual — Unidades y MXN 2026 vs Uds 2025</p>
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-orange-600 text-white">
@@ -247,38 +247,33 @@ function Slide2() {
                 <th className="p-1.5 text-right">Uds 2026</th>
                 <th className="p-1.5 text-right">MXN 2026</th>
                 <th className="p-1.5 text-right">Uds 2025</th>
-                <th className="p-1.5 text-right">MXN 2025</th>
-                <th className="p-1.5 text-right rounded-tr-lg">Var MXN</th>
+                <th className="p-1.5 text-right rounded-tr-lg">Var Uds</th>
               </tr>
             </thead>
             <tbody>
-              {PIVOTE_MENSUAL.map((m, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                  <td className="p-1.5 font-semibold">{m.mes}</td>
-                  <td className="p-1.5 text-right">{fmtU(m.u26)}</td>
-                  <td className="p-1.5 text-right font-bold">{fmtPVP(m.mxn26)}</td>
-                  <td className="p-1.5 text-right text-gray-500">{fmtU(m.u25)}</td>
-                  <td className="p-1.5 text-right text-gray-500">{fmtPVP(m.mxn25)}</td>
-                  <td className="p-1.5 text-right"><VarBadge v={m.varMxn} /></td>
-                </tr>
-              ))}
+              {PIVOTE_MENSUAL.map((m, i) => {
+                const varUds = ((m.u26 - m.u25) / m.u25) * 100;
+                return (
+                  <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
+                    <td className="p-1.5 font-semibold">{m.mes}</td>
+                    <td className="p-1.5 text-right font-bold">{fmtU(m.u26)}</td>
+                    <td className="p-1.5 text-right font-bold text-orange-900">{fmtPVP(m.mxn26)}</td>
+                    <td className="p-1.5 text-right text-gray-500">{fmtU(m.u25)}</td>
+                    <td className="p-1.5 text-right"><VarBadge v={varUds} /></td>
+                  </tr>
+                );
+              })}
               <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
-                <td className="p-1.5">YTD 26</td>
+                <td className="p-1.5">YTD</td>
                 <td className="p-1.5 text-right">{fmtU(KPI.udsYtd26)}</td>
                 <td className="p-1.5 text-right">{fmtPVP(KPI.estMxn26)}</td>
                 <td className="p-1.5 text-right">{fmtU(KPI.udsYtd25)}</td>
-                <td className="p-1.5 text-right">{fmtPVP(KPI.estMxn25)}</td>
-                <td className="p-1.5 text-right"><VarBadge v={KPI.varMxn} /></td>
-              </tr>
-              <tr className="bg-orange-50 text-gray-600 italic">
-                <td className="p-1.5 text-[11px]">2025 full</td>
-                <td className="p-1.5 text-right text-[11px]" colSpan={3}>12 meses cerrados: {fmtU(FULL_2025.uds)} uds | {fmtPVP(FULL_2025.mxn)}</td>
-                <td className="p-1.5 text-right text-[10px]" colSpan={2}>referencia anual</td>
+                <td className="p-1.5 text-right"><VarBadge v={KPI.varUds} /></td>
               </tr>
             </tbody>
           </table>
           <p className="text-[10px] text-gray-400 mt-2">
-            *May = 1-25 comparable día por día | MXN ajustado por promo en Mayo 2026 (2x$30 Classic White + 20% desc otros 3 SKUs)
+            *May = 1-25 comparable día por día | MXN 2026 ajustado por promo en Mayo (2x$30 Classic White + 20% desc otros 3 SKUs)
           </p>
         </div>
 
@@ -314,7 +309,7 @@ function Slide2() {
             <div className="space-y-0.5 text-gray-700">
               <p>• <strong>Classic White</strong> <span className="text-green-700 font-bold">+23.6%</span></p>
               <p>• <strong>Chicharrón</strong> <span className="text-green-700 font-bold">+22.1%</span></p>
-              <p className="text-[10px] text-gray-500 mt-1">Motores del valor incremental ({fmtPVP(28896+12645)})</p>
+              <p className="text-[10px] text-gray-500 mt-1">Motores del crecimiento del portafolio</p>
             </div>
           </div>
         </div>
