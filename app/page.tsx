@@ -19,8 +19,9 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  ComposedChart,
-  Line,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 import Image from "next/image";
 
@@ -56,6 +57,18 @@ const PRODUCTOS_YTD = [
   { corto: "Classic White",  uds26: 3441, uds25: 2783, varYtd: 23.6, pctTotal: 24.7, mxn26: 75262,  mxn25: 62618,  varMxn: 20.2 },
   { corto: "Street Elote",   uds26: 2869, uds25: 2668, varYtd: 7.5,  pctTotal: 20.6, mxn26: 128987, mxn25: 125396, varMxn: 2.9 },
 ];
+
+const PIVOTE_MENSUAL = [
+  { mes: "Ene",  u26: 2994, mxn26: 112588, u25: 2879, mxn25: 108589, varMxn: 3.7 },
+  { mes: "Feb",  u26: 2775, mxn26: 103996, u25: 2510, mxn25: 93590,  varMxn: 11.1 },
+  { mes: "Mar",  u26: 2867, mxn26: 106976, u25: 2656, mxn25: 99173,  varMxn: 7.9 },
+  { mes: "Abr",  u26: 2714, mxn26: 104108, u25: 2270, mxn25: 84993,  varMxn: 22.5 },
+  { mes: "May*", u26: 2565, mxn26: 79649,  u25: 1946, mxn25: 74922,  varMxn: 6.3 },
+];
+
+const FULL_2025 = { uds: 31729, mxn: 1190816 };
+
+const PIE_COLORS = ["#ea580c", "#f97316", "#fb923c", "#fdba74"];
 
 const PROMO_DATA = [
   { sku: "Street Elote 125g", mec: "20% desc",   may25: 413, abr26: 473, may26: 623, lift: 50.8, pvp: 47.0 },
@@ -222,54 +235,89 @@ function Slide2() {
         </div>
       </div>
 
-      {/* Productos */}
-      <div className="bg-white rounded-xl shadow border border-orange-200 p-4 flex-1 min-h-0">
-        <p className="text-sm font-bold text-orange-900 mb-2">Venta por Producto — YTD 2026 vs 2025</p>
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="bg-orange-600 text-white">
-              <th className="p-2 text-left rounded-tl-lg">Producto</th>
-              <th className="p-2 text-right">Uds 26</th>
-              <th className="p-2 text-right">Uds 25</th>
-              <th className="p-2 text-right">Var Uds</th>
-              <th className="p-2 text-right">MXN 26</th>
-              <th className="p-2 text-right">MXN 25</th>
-              <th className="p-2 text-right">Δ MXN</th>
-              <th className="p-2 text-right rounded-tr-lg">Var MXN</th>
-            </tr>
-          </thead>
-          <tbody>
-            {PRODUCTOS_YTD.map((p, i) => (
-              <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                <td className="p-2 font-semibold">{p.corto}</td>
-                <td className="p-2 text-right">{fmtU(p.uds26)}</td>
-                <td className="p-2 text-right text-gray-500">{fmtU(p.uds25)}</td>
-                <td className="p-2 text-right"><VarBadge v={p.varYtd} /></td>
-                <td className="p-2 text-right font-bold">{fmtPVP(p.mxn26)}</td>
-                <td className="p-2 text-right text-gray-500">{fmtPVP(p.mxn25)}</td>
-                <td className="p-2 text-right text-green-700 font-semibold">+{fmtPVP(p.mxn26 - p.mxn25)}</td>
-                <td className="p-2 text-right"><VarBadge v={p.varMxn} /></td>
+      {/* Pivote mensual + Pie */}
+      <div className="flex gap-3 flex-1 min-h-0">
+        {/* Tabla pivote mensual */}
+        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
+          <p className="text-sm font-bold text-orange-900 mb-2">Pivote Mensual — Unidades y MXN | 2026 vs 2025</p>
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="bg-orange-600 text-white">
+                <th className="p-1.5 text-left rounded-tl-lg">Mes</th>
+                <th className="p-1.5 text-right">Uds 2026</th>
+                <th className="p-1.5 text-right">MXN 2026</th>
+                <th className="p-1.5 text-right">Uds 2025</th>
+                <th className="p-1.5 text-right">MXN 2025</th>
+                <th className="p-1.5 text-right rounded-tr-lg">Var MXN</th>
               </tr>
-            ))}
-            <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
-              <td className="p-2">TOTAL YTD</td>
-              <td className="p-2 text-right">{fmtU(KPI.udsYtd26)}</td>
-              <td className="p-2 text-right">{fmtU(KPI.udsYtd25)}</td>
-              <td className="p-2 text-right"><VarBadge v={KPI.varUds} /></td>
-              <td className="p-2 text-right">{fmtPVP(KPI.estMxn26)}</td>
-              <td className="p-2 text-right">{fmtPVP(KPI.estMxn25)}</td>
-              <td className="p-2 text-right text-green-700">+{fmtPVP(KPI.deltaMxn)}</td>
-              <td className="p-2 text-right"><VarBadge v={KPI.varMxn} /></td>
-            </tr>
-          </tbody>
-        </table>
-        <p className="text-[10px] text-gray-400 mt-2">
-          MXN = uds × precio anaquel. En Mayo 2026 aplicamos precio promocional: 2x$30 a transacciones pares de Classic White, 20% desc al resto de SKUs core.
-        </p>
-      </div>
+            </thead>
+            <tbody>
+              {PIVOTE_MENSUAL.map((m, i) => (
+                <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
+                  <td className="p-1.5 font-semibold">{m.mes}</td>
+                  <td className="p-1.5 text-right">{fmtU(m.u26)}</td>
+                  <td className="p-1.5 text-right font-bold">{fmtPVP(m.mxn26)}</td>
+                  <td className="p-1.5 text-right text-gray-500">{fmtU(m.u25)}</td>
+                  <td className="p-1.5 text-right text-gray-500">{fmtPVP(m.mxn25)}</td>
+                  <td className="p-1.5 text-right"><VarBadge v={m.varMxn} /></td>
+                </tr>
+              ))}
+              <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
+                <td className="p-1.5">YTD 26</td>
+                <td className="p-1.5 text-right">{fmtU(KPI.udsYtd26)}</td>
+                <td className="p-1.5 text-right">{fmtPVP(KPI.estMxn26)}</td>
+                <td className="p-1.5 text-right">{fmtU(KPI.udsYtd25)}</td>
+                <td className="p-1.5 text-right">{fmtPVP(KPI.estMxn25)}</td>
+                <td className="p-1.5 text-right"><VarBadge v={KPI.varMxn} /></td>
+              </tr>
+              <tr className="bg-orange-50 text-gray-600 italic">
+                <td className="p-1.5 text-[11px]">2025 full</td>
+                <td className="p-1.5 text-right text-[11px]" colSpan={3}>12 meses cerrados: {fmtU(FULL_2025.uds)} uds | {fmtPVP(FULL_2025.mxn)}</td>
+                <td className="p-1.5 text-right text-[10px]" colSpan={2}>referencia anual</td>
+              </tr>
+            </tbody>
+          </table>
+          <p className="text-[10px] text-gray-400 mt-2">
+            *May = 1-25 comparable día por día | MXN ajustado por promo en Mayo 2026 (2x$30 Classic White + 20% desc otros 3 SKUs)
+          </p>
+        </div>
 
-      <div className="mt-3 bg-green-50 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
-        <strong>✓ Highlight:</strong> +{fmtPVP(KPI.deltaMxn)} de venta incremental vs 2025 (+10% MXN). Chicharrón y Classic White son los motores de valor del portafolio.
+        {/* Pie chart + insight crecimiento */}
+        <div className="w-[360px] bg-white rounded-xl shadow border border-orange-200 p-3 flex flex-col">
+          <p className="text-sm font-bold text-orange-900 mb-1">Participación por Producto</p>
+          <p className="text-[10px] text-orange-500 mb-1">% Unidades YTD 2026</p>
+          <div className="flex-1 min-h-0">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={PRODUCTOS_YTD.map(p => ({ name: p.corto, value: p.uds26 }))}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={75}
+                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                  labelLine={{ strokeWidth: 1 }}
+                  fontSize={10}
+                >
+                  {PRODUCTOS_YTD.map((_, i) => (
+                    <Cell key={i} fill={PIE_COLORS[i]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-2 bg-green-50 border border-green-300 rounded p-2 text-[11px]">
+            <p className="font-bold text-green-700 mb-1">🚀 Mayor crecimiento YoY</p>
+            <div className="space-y-0.5 text-gray-700">
+              <p>• <strong>Classic White</strong> <span className="text-green-700 font-bold">+23.6%</span></p>
+              <p>• <strong>Chicharrón</strong> <span className="text-green-700 font-bold">+22.1%</span></p>
+              <p className="text-[10px] text-gray-500 mt-1">Motores del valor incremental ({fmtPVP(28896+12645)})</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
