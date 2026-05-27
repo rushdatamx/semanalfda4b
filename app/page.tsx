@@ -33,7 +33,10 @@ const KPI = {
   udsYtd26: 13915,
   udsYtd25: 12261,
   varUds: 13.5,
-  estPvp26: 526414,
+  estMxn26: 507318,
+  estMxn25: 461268,
+  varMxn: 10.0,
+  deltaMxn: 46050,
   tiendasActivas: 409,
   tiendasCatalogadas: 410,
   liftPromo: 31.8,
@@ -48,10 +51,10 @@ const VENTAS_MES = [
 ];
 
 const PRODUCTOS_YTD = [
-  { corto: "Rodajitas",      uds26: 4162, uds25: 3991, varYtd: 4.3,  pctTotal: 29.9 },
-  { corto: "Chicharrón",     uds26: 3443, uds25: 2819, varYtd: 22.1, pctTotal: 24.7 },
-  { corto: "Classic White",  uds26: 3441, uds25: 2783, varYtd: 23.6, pctTotal: 24.7 },
-  { corto: "Street Elote",   uds26: 2869, uds25: 2668, varYtd: 7.5,  pctTotal: 20.6 },
+  { corto: "Rodajitas",      uds26: 4162, uds25: 3991, varYtd: 4.3,  pctTotal: 29.9, mxn26: 110671, mxn25: 109752, varMxn: 0.8 },
+  { corto: "Chicharrón",     uds26: 3443, uds25: 2819, varYtd: 22.1, pctTotal: 24.7, mxn26: 192398, mxn25: 163502, varMxn: 17.7 },
+  { corto: "Classic White",  uds26: 3441, uds25: 2783, varYtd: 23.6, pctTotal: 24.7, mxn26: 75262,  mxn25: 62618,  varMxn: 20.2 },
+  { corto: "Street Elote",   uds26: 2869, uds25: 2668, varYtd: 7.5,  pctTotal: 20.6, mxn26: 128987, mxn25: 125396, varMxn: 2.9 },
 ];
 
 const PROMO_DATA = [
@@ -144,9 +147,9 @@ function Slide1() {
           <div className="mt-1"><VarBadge v={KPI.varUds} /></div>
         </div>
         <div className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[170px]">
-          <p className="text-xs text-orange-500 font-medium mb-1">Est. PVP YTD</p>
-          <p className="text-2xl font-extrabold text-orange-900">{fmtPVP(KPI.estPvp26)}</p>
-          <span className="text-[10px] text-gray-400">precio anaquel estimado</span>
+          <p className="text-xs text-orange-500 font-medium mb-1">Venta MXN YTD</p>
+          <p className="text-2xl font-extrabold text-orange-900">{fmtPVP(KPI.estMxn26)}</p>
+          <div className="mt-1"><VarBadge v={KPI.varMxn} /></div>
         </div>
         <div className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[170px]">
           <p className="text-xs text-orange-500 font-medium mb-1">Tiendas activas</p>
@@ -188,7 +191,7 @@ function Slide2() {
         </h2>
       </div>
       <p className="text-xs text-orange-500 mb-3">
-        Ene 1 → May 25 comparable | 410 tiendas catalogadas | 4 SKUs core
+        Ene 1 → May 25 comparable | 410 tiendas catalogadas | 4 SKUs core | Venta MXN ajustada por promo de Mayo
       </p>
 
       {/* KPIs row */}
@@ -199,23 +202,23 @@ function Slide2() {
           <p className="text-xs text-gray-500 mt-1">vs {fmtU(KPI.udsYtd25)} en 2025</p>
           <div className="mt-2"><VarBadge v={KPI.varUds} /></div>
         </div>
-        <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
-          <p className="text-[11px] text-orange-500 font-medium mb-1">Estimado PVP YTD</p>
-          <p className="text-3xl font-extrabold text-orange-900">{fmtPVP(KPI.estPvp26)}</p>
-          <p className="text-xs text-gray-500 mt-1">precio anaquel × uds</p>
-          <p className="text-[10px] text-gray-400 mt-2">referencial, no facturación</p>
+        <div className="bg-white rounded-xl shadow border-2 border-orange-400 p-4">
+          <p className="text-[11px] text-orange-600 font-medium mb-1">Venta MXN YTD 2026</p>
+          <p className="text-3xl font-extrabold text-orange-900">{fmtPVP(KPI.estMxn26)}</p>
+          <p className="text-xs text-gray-500 mt-1">vs {fmtPVP(KPI.estMxn25)} en 2025</p>
+          <div className="mt-2"><VarBadge v={KPI.varMxn} /></div>
         </div>
         <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
-          <p className="text-[11px] text-orange-500 font-medium mb-1">Penetración tiendas</p>
-          <p className="text-3xl font-extrabold text-orange-900">99.8%</p>
-          <p className="text-xs text-gray-500 mt-1">{KPI.tiendasActivas} de {KPI.tiendasCatalogadas}</p>
-          <p className="text-[10px] text-green-600 mt-2 font-semibold">solo 1 tienda sin venta</p>
+          <p className="text-[11px] text-orange-500 font-medium mb-1">Δ MXN vs 2025</p>
+          <p className="text-3xl font-extrabold text-green-700">+{fmtPVP(KPI.deltaMxn)}</p>
+          <p className="text-xs text-gray-500 mt-1">venta incremental</p>
+          <p className="text-[10px] text-green-600 mt-2 font-semibold">a precio anaquel</p>
         </div>
         <div className="bg-white rounded-xl shadow border border-green-300 p-4">
-          <p className="text-[11px] text-green-600 font-medium mb-1">Velocidad May vs Abr</p>
-          <p className="text-3xl font-extrabold text-green-700">+16.4%</p>
-          <p className="text-xs text-gray-500 mt-1">{fmtU(PROMO_TOTAL.abr26)} → {fmtU(PROMO_TOTAL.may26)} uds</p>
-          <p className="text-[10px] text-green-600 mt-2 font-semibold">aceleración con promo</p>
+          <p className="text-[11px] text-green-600 font-medium mb-1">Penetración tiendas</p>
+          <p className="text-3xl font-extrabold text-green-700">99.8%</p>
+          <p className="text-xs text-gray-500 mt-1">{KPI.tiendasActivas} de {KPI.tiendasCatalogadas} activas</p>
+          <p className="text-[10px] text-green-600 mt-2 font-semibold">solo 1 sin venta</p>
         </div>
       </div>
 
@@ -226,24 +229,26 @@ function Slide2() {
           <thead>
             <tr className="bg-orange-600 text-white">
               <th className="p-2 text-left rounded-tl-lg">Producto</th>
-              <th className="p-2 text-right">YTD 2026</th>
-              <th className="p-2 text-right">YTD 2025</th>
-              <th className="p-2 text-right">Var YoY</th>
-              <th className="p-2 text-right">% Part</th>
-              <th className="p-2 text-right rounded-tr-lg">Lectura</th>
+              <th className="p-2 text-right">Uds 26</th>
+              <th className="p-2 text-right">Uds 25</th>
+              <th className="p-2 text-right">Var Uds</th>
+              <th className="p-2 text-right">MXN 26</th>
+              <th className="p-2 text-right">MXN 25</th>
+              <th className="p-2 text-right">Δ MXN</th>
+              <th className="p-2 text-right rounded-tr-lg">Var MXN</th>
             </tr>
           </thead>
           <tbody>
             {PRODUCTOS_YTD.map((p, i) => (
               <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
                 <td className="p-2 font-semibold">{p.corto}</td>
-                <td className="p-2 text-right font-bold">{fmtU(p.uds26)}</td>
+                <td className="p-2 text-right">{fmtU(p.uds26)}</td>
                 <td className="p-2 text-right text-gray-500">{fmtU(p.uds25)}</td>
                 <td className="p-2 text-right"><VarBadge v={p.varYtd} /></td>
-                <td className="p-2 text-right">{p.pctTotal}%</td>
-                <td className="p-2 text-right text-gray-600">
-                  {p.varYtd > 20 ? "Acelera fuerte" : p.varYtd > 5 ? "Crece sano" : "Estable, espacio para crecer"}
-                </td>
+                <td className="p-2 text-right font-bold">{fmtPVP(p.mxn26)}</td>
+                <td className="p-2 text-right text-gray-500">{fmtPVP(p.mxn25)}</td>
+                <td className="p-2 text-right text-green-700 font-semibold">+{fmtPVP(p.mxn26 - p.mxn25)}</td>
+                <td className="p-2 text-right"><VarBadge v={p.varMxn} /></td>
               </tr>
             ))}
             <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
@@ -251,15 +256,20 @@ function Slide2() {
               <td className="p-2 text-right">{fmtU(KPI.udsYtd26)}</td>
               <td className="p-2 text-right">{fmtU(KPI.udsYtd25)}</td>
               <td className="p-2 text-right"><VarBadge v={KPI.varUds} /></td>
-              <td className="p-2 text-right">100%</td>
-              <td className="p-2 text-right text-green-700">Crecimiento sólido</td>
+              <td className="p-2 text-right">{fmtPVP(KPI.estMxn26)}</td>
+              <td className="p-2 text-right">{fmtPVP(KPI.estMxn25)}</td>
+              <td className="p-2 text-right text-green-700">+{fmtPVP(KPI.deltaMxn)}</td>
+              <td className="p-2 text-right"><VarBadge v={KPI.varMxn} /></td>
             </tr>
           </tbody>
         </table>
+        <p className="text-[10px] text-gray-400 mt-2">
+          MXN = uds × precio anaquel. En Mayo 2026 aplicamos precio promocional: 2x$30 a transacciones pares de Classic White, 20% desc al resto de SKUs core.
+        </p>
       </div>
 
       <div className="mt-3 bg-green-50 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
-        <strong>✓ Highlight:</strong> Los 4 SKUs core crecen vs 2025. Chicharrón (+22.1%) y Classic White (+23.6%) son los motores del crecimiento.
+        <strong>✓ Highlight:</strong> +{fmtPVP(KPI.deltaMxn)} de venta incremental vs 2025 (+10% MXN). Chicharrón y Classic White son los motores de valor del portafolio.
       </div>
     </div>
   );
@@ -516,49 +526,28 @@ function Slide5() {
           </ResponsiveContainer>
         </div>
 
-        {/* Insight + Plan */}
+        {/* Insights simples */}
         <div className="w-[440px] flex flex-col gap-3">
-          <div className="bg-white rounded-xl shadow border-2 border-green-400 p-3">
-            <p className="text-xs font-bold text-green-700 mb-1.5 flex items-center gap-1">
-              <Zap size={14} /> La hipótesis positiva
+          <div className="bg-white rounded-xl shadow border-2 border-green-400 p-4 flex-1 flex flex-col justify-center">
+            <p className="text-sm font-bold text-green-700 mb-3 flex items-center gap-1">
+              <Zap size={16} /> Lo que vemos
             </p>
-            <p className="text-[11px] text-gray-700 leading-relaxed">
-              Tenemos <strong>{fmtU(ACTIVACION.uds)} unidades</strong> ya en piso esperando rotar.
-              La promoción de mayo demostró que <strong>cuando se activa el producto, sí se vende (+31.8%)</strong>.
-            </p>
-            <p className="text-[11px] text-gray-700 leading-relaxed mt-2">
-              Si replicamos esa activación con foco en exhibición en las <strong>{ACTIVACION.tiendas} tiendas dormidas</strong>,
-              <strong className="text-green-700"> la próxima promoción podría duplicar el lift</strong> sin requerir compra adicional.
-            </p>
+            <div className="space-y-3 text-sm text-gray-800">
+              <p>El producto <strong>ya está en piso</strong>.</p>
+              <p>La promo demostró que <strong>cuando se activa, vende</strong>.</p>
+              <p className="text-green-700 font-semibold">→ Activamos exhibición = lift mayor en julio.</p>
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow border border-orange-200 p-3 flex-1">
-            <p className="text-xs font-bold text-orange-900 mb-2">Plan propuesto para próxima promo</p>
-            <div className="space-y-1.5 text-[11px]">
-              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
-                <span className="text-orange-600 font-bold">1</span>
-                <p><strong>Foco Occidente + Noroeste</strong> (59% del stock dormido). Coordinar visita en piso.</p>
-              </div>
-              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
-                <span className="text-orange-600 font-bold">2</span>
-                <p><strong>Repetir mecánica ganadora</strong>: 20% desc en SKU premium + 2x$30 en 25g.</p>
-              </div>
-              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
-                <span className="text-orange-600 font-bold">3</span>
-                <p><strong>Apoyar exhibición</strong> en las 303 tiendas dormidas con material PoP.</p>
-              </div>
-              <div className="flex items-start gap-2 bg-green-50 p-1.5 rounded border border-green-300">
-                <span className="text-green-700 font-bold">4</span>
-                <p><strong>Stock CEDIS suficiente</strong> ({fmtU(ACTIVACION.stockCedis)} uds) → no requiere compra adicional para activar.</p>
-              </div>
+          <div className="bg-orange-600 text-white rounded-xl shadow p-4">
+            <p className="text-xs font-bold mb-2">Próximos pasos</p>
+            <div className="space-y-1.5 text-sm">
+              <p>• Revisión en piso: <strong>Occidente + Noroeste</strong></p>
+              <p>• Repetir mecánica ganadora en próxima promo</p>
+              <p>• Stock CEDIS suficiente, <strong>no hay que comprar</strong></p>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="mt-3 bg-orange-600 text-white rounded-lg px-4 py-2.5 text-xs">
-        <strong>🚀 Mensaje clave:</strong> Si activamos las {ACTIVACION.tiendas} tiendas dormidas en la próxima promoción,
-        la combinación <em>promo + activación de piso</em> puede llevarnos de +31.8% a un lift histórico para 4BUDDIES en FDA.
       </div>
     </div>
   );
