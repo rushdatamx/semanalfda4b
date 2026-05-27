@@ -4,13 +4,11 @@ import {
   ChevronLeft,
   ChevronRight,
   TrendingUp,
-  TrendingDown,
-  Store,
-  MapPin,
-  ArrowUpRight,
-  ArrowDownRight,
+  Sparkles,
   Target,
   Zap,
+  ArrowUpRight,
+  ArrowDownRight,
 } from "lucide-react";
 import {
   BarChart,
@@ -21,187 +19,75 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
+  ComposedChart,
+  Line,
 } from "recharts";
 import Image from "next/image";
 
 /* ================================================================
-   DATA CONSTANTS — FDA Mayo 2026 (solo venta, sin inventario)
-   Datos: Ene 2024 – Abr 2026 | Solo 410 tiendas catalogadas
+   DATA CONSTANTS — FDA Cierre al 25-May 2026
+   Solo 410 tiendas catalogadas | Solo 4 SKUs core
    ================================================================ */
 
 const KPI = {
-  udsYtd26: 11350,
-  udsYtd25: 10315,
-  varUds: 10.0,
-  estPvp26: 427669,
+  udsYtd26: 13915,
+  udsYtd25: 12261,
+  varUds: 13.5,
+  estPvp26: 526414,
   tiendasActivas: 409,
   tiendasCatalogadas: 410,
+  liftPromo: 31.8,
 };
 
 const VENTAS_MES = [
-  { mes: "Ene", u2025: 2879, u2026: 2994 },
-  { mes: "Feb", u2025: 2510, u2026: 2775 },
-  { mes: "Mar", u2025: 2656, u2026: 2867 },
-  { mes: "Abr", u2025: 2270, u2026: 2714 },
-  { mes: "May", u2025: 2489, u2026: 0 },
-  { mes: "Jun", u2025: 2576, u2026: 0 },
-  { mes: "Jul", u2025: 2675, u2026: 0 },
-  { mes: "Ago", u2025: 2520, u2026: 0 },
-  { mes: "Sep", u2025: 2622, u2026: 0 },
-  { mes: "Oct", u2025: 2769, u2026: 0 },
-  { mes: "Nov", u2025: 3049, u2026: 0 },
-  { mes: "Dic", u2025: 2714, u2026: 0 },
+  { mes: "Ene", u2025: 2879, u2026: 2994, var: 4.0 },
+  { mes: "Feb", u2025: 2510, u2026: 2775, var: 10.6 },
+  { mes: "Mar", u2025: 2656, u2026: 2867, var: 7.9 },
+  { mes: "Abr", u2025: 2270, u2026: 2714, var: 19.6 },
+  { mes: "May*", u2025: 1946, u2026: 2565, var: 31.8 },
 ];
 
-const PRODUCTOS = [
-  {
-    nombre: "Rodajitas Spicy Limón 30g",
-    corto: "Rodajitas",
-    upc: "7500462860042",
-    uds26: 3474,
-    uds25: 3394,
-    var: 2.4,
-    pctTotal: 30.6,
-    tend3m: [909, 921, 798],
-    precioPvp: 27.5,
-  },
-  {
-    nombre: "Chicharrón de Cerdo 75g",
-    corto: "Chicharrón",
-    upc: "7503028921317",
-    uds26: 2814,
-    uds25: 2311,
-    var: 21.8,
-    pctTotal: 24.8,
-    tend3m: [681, 667, 715],
-    precioPvp: 58.0,
-  },
-  {
-    nombre: "Palomitas Classic White 25g",
-    corto: "Classic White",
-    upc: "7500462417833",
-    uds26: 2816,
-    uds25: 2355,
-    var: 19.6,
-    pctTotal: 24.8,
-    tend3m: [661, 700, 643],
-    precioPvp: 22.5,
-  },
-  {
-    nombre: "Palomitas Street Elote 125g",
-    corto: "Street Elote",
-    upc: "7500462860004",
-    uds26: 2246,
-    uds25: 2255,
-    var: -0.4,
-    pctTotal: 19.8,
-    tend3m: [524, 579, 558],
-    precioPvp: 47.0,
-  },
+const PRODUCTOS_YTD = [
+  { corto: "Rodajitas",      uds26: 4162, uds25: 3991, varYtd: 4.3,  pctTotal: 29.9 },
+  { corto: "Chicharrón",     uds26: 3443, uds25: 2819, varYtd: 22.1, pctTotal: 24.7 },
+  { corto: "Classic White",  uds26: 3441, uds25: 2783, varYtd: 23.6, pctTotal: 24.7 },
+  { corto: "Street Elote",   uds26: 2869, uds25: 2668, varYtd: 7.5,  pctTotal: 20.6 },
 ];
 
-const PIE_PRODUCTOS = PRODUCTOS.map((p) => ({ name: p.corto, value: p.uds26 }));
-const PIE_COLORS = ["#ea580c", "#f97316", "#fb923c", "#fdba74"];
-
-const ZONAS = [
-  { zona: "NORTE", u25: 4353, u26: 4231, var: -2.8 },
-  { zona: "OCCIDENTE", u25: 1736, u26: 1958, var: 12.8 },
-  { zona: "PENINSULA", u25: 1292, u26: 1613, var: 24.8 },
-  { zona: "PACIFICO", u25: 1760, u26: 1227, var: -30.3 },
-  { zona: "METRO", u25: 564, u26: 840, var: 48.9 },
-  { zona: "NOROESTE", u25: 0, u26: 824, var: 0 },
-  { zona: "CENTRO - SUR", u25: 610, u26: 560, var: -8.2 },
-  { zona: "SUR", u25: 0, u26: 97, var: 0 },
+const PROMO_DATA = [
+  { sku: "Street Elote 125g", mec: "20% desc",   may25: 413, abr26: 473, may26: 623, lift: 50.8, pvp: 47.0 },
+  { sku: "Classic White 25g", mec: "2x$30",      may25: 428, abr26: 516, may26: 625, lift: 46.0, pvp: 22.5 },
+  { sku: "Chicharrón 75g",    mec: "20% desc",   may25: 508, abr26: 587, may26: 629, lift: 23.8, pvp: 58.0 },
+  { sku: "Rodajitas 30g",     mec: "20% desc",   may25: 597, abr26: 627, may26: 688, lift: 15.2, pvp: 27.5 },
 ];
 
-const TOP20_TIENDAS = [
-  { tienda: "CLOUTHIER", code: "LGCL", zona: "OCCIDENTE", plaza: "LEON", uds: 140, estPvp: 4549 },
-  { tienda: "CELENES", code: "CLCL", zona: "PACIFICO", plaza: "CULIACAN", uds: 124, estPvp: 3514 },
-  { tienda: "MEDITERRANEO", code: "MAME", zona: "PACIFICO", plaza: "MAZATLAN", uds: 117, estPvp: 4846 },
-  { tienda: "OBISPADO", code: "MTHD", zona: "NORTE", plaza: "MTY ORIENTE", uds: 114, estPvp: 3795 },
-  { tienda: "CORPORATIVO", code: "MTCW", zona: "NORTE", plaza: "MTY ORIENTE", uds: 97, estPvp: 3425 },
-  { tienda: "GLORIETA CALZADA", code: "MTGT", zona: "NORTE", plaza: "MTY ORIENTE", uds: 93, estPvp: 3272 },
-  { tienda: "PROL CAMPESTRE", code: "LGPC", zona: "OCCIDENTE", plaza: "LEON", uds: 88, estPvp: 2556 },
-  { tienda: "ROBERTO GARZA SADA", code: "MTRS", zona: "NORTE", plaza: "MTY ORIENTE", uds: 87, estPvp: 2739 },
-  { tienda: "DZITYA REAL MONTEJO", code: "MEDZ", zona: "PENINSULA", plaza: "MERIDA", uds: 82, estPvp: 2621 },
-  { tienda: "CALZADA", code: "MTCA", zona: "NORTE", plaza: "NUEVA 2025", uds: 82, estPvp: 2893 },
-  { tienda: "LUIS BARRAGAN", code: "MXBN", zona: "METRO", plaza: "MEXICO CENTRO", uds: 81, estPvp: 3635 },
-  { tienda: "COLOSIO", code: "CNCL", zona: "PENINSULA", plaza: "CANCUN", uds: 80, estPvp: 3376 },
-  { tienda: "UMA", code: "MTUA", zona: "NORTE", plaza: "MTY ORIENTE", uds: 79, estPvp: 2501 },
-  { tienda: "PLAZA 404", code: "MTP4", zona: "NORTE", plaza: "MTY ORIENTE", uds: 76, estPvp: 2566 },
-  { tienda: "VALLE ALTO", code: "MTVL", zona: "NORTE", plaza: "MTY ORIENTE", uds: 76, estPvp: 2458 },
-  { tienda: "VASCONCELOS PONIENTE", code: "MTVP", zona: "NORTE", plaza: "MTY ORIENTE", uds: 72, estPvp: 2344 },
-  { tienda: "COCOYOLES AQUA", code: "MECY", zona: "PENINSULA", plaza: "MERIDA", uds: 67, estPvp: 2968 },
-  { tienda: "RICARDO MARGAIN", code: "MTAI", zona: "NORTE", plaza: "MONTERREY", uds: 64, estPvp: 2166 },
-  { tienda: "ANTONIO ROSALES", code: "CLAR", zona: "PACIFICO", plaza: "CULIACAN", uds: 63, estPvp: 2472 },
-  { tienda: "DEGOLLADO", code: "LRDG", zona: "NORTE", plaza: "NUEVO LAREDO", uds: 63, estPvp: 1979 },
-];
-
-const OPORTUNIDADES = {
-  tiendasNoCatVendiendo: 266,
-  udsNoCat: 1928,
-  pctNoCat: 14.5,
-  top5NoCat: [
-    { tienda: "LAS MERCEDES", code: "SAME", uds: 125 },
-    { tienda: "EJERCITO", code: "JZEJ", uds: 56 },
-    { tienda: "COSTA AZUL", code: "ACCA", uds: 52 },
-    { tienda: "CARRETERA NACIONAL", code: "MTCN", uds: 43 },
-    { tienda: "PROL JALISCO", code: "MMPJ", uds: 36 },
-  ],
+const PROMO_TOTAL = {
+  may25: 1946,
+  abr26: 2203,
+  may26: 2565,
+  liftVsMay25: 31.8,
+  liftVsAbr26: 16.4,
+  pvp25: 74922,
+  pvp26: 98746,
+  deltaPvp: 23823,
 };
 
-const PLAN_ACCION = {
-  urgente: [
-    {
-      accion: "Revisar surtido Pacífico",
-      detalle: "Zona cayó -30.3% YoY — Culiacán y Mazatlán lideran pero la zona pierde fuerza",
-      impacto: "Recuperar ~530 uds/cuatrimestre",
-    },
-    {
-      accion: "Monitorear Street Elote",
-      detalle: "Único SKU plano (-0.4%). Verificar exhibición y rotación en tiendas top",
-      impacto: "Proteger 20% de la venta",
-    },
+const ACTIVACION = {
+  uds: 1759,
+  posiciones: 568,
+  tiendas: 303,
+  stockCedis: 3051,
+  zonasTop: [
+    { zona: "OCCIDENTE", pos: 176, uds: 540 },
+    { zona: "NOROESTE",  pos: 162, uds: 498 },
+    { zona: "NORTE",     pos: 101, uds: 322 },
+    { zona: "PENÍNSULA", pos: 53,  uds: 163 },
+    { zona: "METRO",     pos: 40,  uds: 124 },
+    { zona: "SUR",       pos: 36,  uds: 112 },
   ],
-  estaSemana: [
-    {
-      accion: "Reforzar Centro-Sur",
-      detalle: "Zona cayó -8.2% YoY — revisar disponibilidad y surtido",
-      impacto: "Estabilizar 560 uds/cuatrimestre",
-    },
-    {
-      accion: "Investigar caída Rodajitas Abr",
-      detalle: "Rodajitas bajó de 921 (Mar) a 798 (Abr) — tendencia a monitorear",
-      impacto: "Rodajitas es 30.6% de la venta total",
-    },
-  ],
-  esteMes: [
-    {
-      accion: "Catalogar top 10 tiendas no catalogadas",
-      detalle: "266 tiendas venden sin catálogo formal — 14.7% de la venta total",
-      impacto: "+1,928 uds YTD recuperables en catálogo",
-    },
-    {
-      accion: "Capitalizar crecimiento Metro",
-      detalle: "Metro creció +48.9% — la mayor alza relativa. Evaluar expansión",
-      impacto: "840 uds con momentum positivo",
-    },
-  ],
-  estrategico: [
-    {
-      accion: "Consolidar Chicharrón y Classic White",
-      detalle: "Ambos crecen +20% YoY — los motores de crecimiento del portafolio",
-      impacto: "5,630 uds combinadas con tendencia positiva",
-    },
-    {
-      accion: "Evaluar expansión Noroeste",
-      detalle: "Zona nueva con 824 uds en primer cuatrimestre — potencial significativo",
-      impacto: "Zona en fase de construcción, asegurar cobertura",
-    },
-  ],
+  // Upside estimado: si activamos 50% de las posiciones a velocidad mediana (2 uds/mes)
+  upsideUdsMes: 568,
+  upsidePvpMes: 21500,
 };
 
 /* ================================================================
@@ -227,38 +113,8 @@ const VarBadge = ({ v }: { v: number }) => (
   </span>
 );
 
-const PriorBadge = ({ p }: { p: string }) => {
-  const colors: Record<string, string> = {
-    Urgente: "bg-red-100 text-red-700 border-red-300",
-    "Esta semana": "bg-yellow-100 text-yellow-700 border-yellow-300",
-    "Este mes": "bg-green-100 text-green-700 border-green-300",
-    Estratégico: "bg-blue-100 text-blue-700 border-blue-300",
-  };
-  return (
-    <span
-      className={`px-2 py-0.5 rounded text-xs font-semibold border ${
-        colors[p] || ""
-      }`}
-    >
-      {p}
-    </span>
-  );
-};
-
-const ZonaBadge = ({ crece }: { crece: boolean }) => (
-  <span
-    className={`px-2 py-0.5 rounded text-xs font-semibold ${
-      crece ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-    }`}
-  >
-    {crece ? "Crece" : "Cae"}
-  </span>
-);
-
-const MESES_TEND = ["Feb", "Mar", "Abr"];
-
 /* ================================================================
-   SLIDES
+   SLIDE 1 — PORTADA
    ================================================================ */
 
 function Slide1() {
@@ -271,66 +127,149 @@ function Slide1() {
         height={180}
         className="h-24 w-auto mb-6 rounded-xl shadow-lg"
       />
-      <h1 className="text-3xl font-extrabold text-orange-900 mb-1">
-        Reporte de Ventas — 4BUDDIES x FDA
+      <h1 className="text-3xl font-extrabold text-orange-900 mb-1 text-center">
+        Update Ejecutivo — 4BUDDIES x FDA
       </h1>
       <p className="text-orange-600 text-lg mb-1">
         Farmacias del Ahorro
       </p>
       <p className="text-orange-500 text-sm mb-6">
-        Enero – Abril 2026 | 410 tiendas catalogadas
+        Cierre al 25-Mayo 2026 | 410 tiendas catalogadas | 4 SKUs core
       </p>
 
-      <div className="flex gap-4 mb-6">
-        {[
-          {
-            label: "Unidades YTD",
-            value: fmtU(KPI.udsYtd26),
-            sub: <VarBadge v={KPI.varUds} />,
-          },
-          {
-            label: "Est. PVP YTD",
-            value: fmtPVP(KPI.estPvp26),
-            sub: <span className="text-[10px] text-gray-400">precio anaquel estimado</span>,
-          },
-          {
-            label: "Tiendas activas",
-            value: `${KPI.tiendasActivas} / ${KPI.tiendasCatalogadas}`,
-            sub: <span className="text-xs text-orange-500">catalogadas</span>,
-          },
-          {
-            label: "SKUs Core",
-            value: "4",
-            sub: <span className="text-xs text-orange-500">activos</span>,
-          },
-        ].map((k, i) => (
-          <div
-            key={i}
-            className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[160px]"
-          >
-            <p className="text-xs text-orange-500 font-medium mb-1">
-              {k.label}
-            </p>
-            <p className="text-2xl font-extrabold text-orange-900">
-              {k.value}
-            </p>
-            <div className="mt-1">{k.sub}</div>
-          </div>
-        ))}
+      <div className="flex gap-4 mb-6 flex-wrap justify-center">
+        <div className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[170px]">
+          <p className="text-xs text-orange-500 font-medium mb-1">Unidades YTD</p>
+          <p className="text-2xl font-extrabold text-orange-900">{fmtU(KPI.udsYtd26)}</p>
+          <div className="mt-1"><VarBadge v={KPI.varUds} /></div>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[170px]">
+          <p className="text-xs text-orange-500 font-medium mb-1">Est. PVP YTD</p>
+          <p className="text-2xl font-extrabold text-orange-900">{fmtPVP(KPI.estPvp26)}</p>
+          <span className="text-[10px] text-gray-400">precio anaquel estimado</span>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 px-5 py-4 text-center min-w-[170px]">
+          <p className="text-xs text-orange-500 font-medium mb-1">Tiendas activas</p>
+          <p className="text-2xl font-extrabold text-orange-900">{KPI.tiendasActivas} / {KPI.tiendasCatalogadas}</p>
+          <span className="text-xs text-orange-500">99.8% penetración</span>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-green-300 px-5 py-4 text-center min-w-[170px]">
+          <p className="text-xs text-green-600 font-medium mb-1">Lift Promo Mayo</p>
+          <p className="text-2xl font-extrabold text-green-700">+{KPI.liftPromo.toFixed(1)}%</p>
+          <span className="text-xs text-green-600">vs May-25 comparable</span>
+        </div>
       </div>
 
-      <p className="text-[10px] text-gray-400">
-        * Estimado PVP: precio de anaquel estimado, no facturación real. Solo unidades — FDA no reporta monto en pesos.
+      <div className="bg-white border-l-4 border-orange-600 rounded px-5 py-3 shadow max-w-3xl">
+        <p className="text-sm text-orange-900 font-semibold mb-1">Agenda</p>
+        <p className="text-xs text-gray-600">
+          1) KPIs YTD &nbsp;·&nbsp; 2) Tendencia Mensual &nbsp;·&nbsp; 3) Impacto Promo Mayo &nbsp;·&nbsp; 4) Próximo Salto
+        </p>
+      </div>
+
+      <p className="text-[10px] text-gray-400 mt-4">
+        Estimado PVP: precio de anaquel referencial, no facturación real. Solo unidades — FDA no reporta monto en pesos.
       </p>
     </div>
   );
 }
 
-function Slide2() {
-  const dataMeses = VENTAS_MES.filter((m) => m.u2025 > 0 || m.u2026 > 0);
-  const ytd25 = VENTAS_MES.slice(0, 4).reduce((s, m) => s + m.u2025, 0);
-  const ytd26 = VENTAS_MES.slice(0, 4).reduce((s, m) => s + m.u2026, 0);
+/* ================================================================
+   SLIDE 2 — KPIs YTD + VENTA POR PRODUCTO
+   ================================================================ */
 
+function Slide2() {
+  return (
+    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
+      <div className="flex items-center gap-3 mb-1">
+        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
+        <h2 className="text-xl font-extrabold text-orange-900">
+          ¿Cómo vamos? — KPIs YTD 2026 vs 2025
+        </h2>
+      </div>
+      <p className="text-xs text-orange-500 mb-3">
+        Ene 1 → May 25 comparable | 410 tiendas catalogadas | 4 SKUs core
+      </p>
+
+      {/* KPIs row */}
+      <div className="grid grid-cols-4 gap-3 mb-4">
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
+          <p className="text-[11px] text-orange-500 font-medium mb-1">Unidades YTD 2026</p>
+          <p className="text-3xl font-extrabold text-orange-900">{fmtU(KPI.udsYtd26)}</p>
+          <p className="text-xs text-gray-500 mt-1">vs {fmtU(KPI.udsYtd25)} en 2025</p>
+          <div className="mt-2"><VarBadge v={KPI.varUds} /></div>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
+          <p className="text-[11px] text-orange-500 font-medium mb-1">Estimado PVP YTD</p>
+          <p className="text-3xl font-extrabold text-orange-900">{fmtPVP(KPI.estPvp26)}</p>
+          <p className="text-xs text-gray-500 mt-1">precio anaquel × uds</p>
+          <p className="text-[10px] text-gray-400 mt-2">referencial, no facturación</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
+          <p className="text-[11px] text-orange-500 font-medium mb-1">Penetración tiendas</p>
+          <p className="text-3xl font-extrabold text-orange-900">99.8%</p>
+          <p className="text-xs text-gray-500 mt-1">{KPI.tiendasActivas} de {KPI.tiendasCatalogadas}</p>
+          <p className="text-[10px] text-green-600 mt-2 font-semibold">solo 1 tienda sin venta</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-green-300 p-4">
+          <p className="text-[11px] text-green-600 font-medium mb-1">Velocidad May vs Abr</p>
+          <p className="text-3xl font-extrabold text-green-700">+16.4%</p>
+          <p className="text-xs text-gray-500 mt-1">{fmtU(PROMO_TOTAL.abr26)} → {fmtU(PROMO_TOTAL.may26)} uds</p>
+          <p className="text-[10px] text-green-600 mt-2 font-semibold">aceleración con promo</p>
+        </div>
+      </div>
+
+      {/* Productos */}
+      <div className="bg-white rounded-xl shadow border border-orange-200 p-4 flex-1 min-h-0">
+        <p className="text-sm font-bold text-orange-900 mb-2">Venta por Producto — YTD 2026 vs 2025</p>
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-orange-600 text-white">
+              <th className="p-2 text-left rounded-tl-lg">Producto</th>
+              <th className="p-2 text-right">YTD 2026</th>
+              <th className="p-2 text-right">YTD 2025</th>
+              <th className="p-2 text-right">Var YoY</th>
+              <th className="p-2 text-right">% Part</th>
+              <th className="p-2 text-right rounded-tr-lg">Lectura</th>
+            </tr>
+          </thead>
+          <tbody>
+            {PRODUCTOS_YTD.map((p, i) => (
+              <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
+                <td className="p-2 font-semibold">{p.corto}</td>
+                <td className="p-2 text-right font-bold">{fmtU(p.uds26)}</td>
+                <td className="p-2 text-right text-gray-500">{fmtU(p.uds25)}</td>
+                <td className="p-2 text-right"><VarBadge v={p.varYtd} /></td>
+                <td className="p-2 text-right">{p.pctTotal}%</td>
+                <td className="p-2 text-right text-gray-600">
+                  {p.varYtd > 20 ? "Acelera fuerte" : p.varYtd > 5 ? "Crece sano" : "Estable, espacio para crecer"}
+                </td>
+              </tr>
+            ))}
+            <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
+              <td className="p-2">TOTAL YTD</td>
+              <td className="p-2 text-right">{fmtU(KPI.udsYtd26)}</td>
+              <td className="p-2 text-right">{fmtU(KPI.udsYtd25)}</td>
+              <td className="p-2 text-right"><VarBadge v={KPI.varUds} /></td>
+              <td className="p-2 text-right">100%</td>
+              <td className="p-2 text-right text-green-700">Crecimiento sólido</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-3 bg-green-50 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
+        <strong>✓ Highlight:</strong> Los 4 SKUs core crecen vs 2025. Chicharrón (+22.1%) y Classic White (+23.6%) son los motores del crecimiento.
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================
+   SLIDE 3 — TENDENCIA MENSUAL 2025 vs 2026
+   ================================================================ */
+
+function Slide3() {
   return (
     <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
       <div className="flex items-center gap-3 mb-1">
@@ -340,469 +279,286 @@ function Slide2() {
         </h2>
       </div>
       <p className="text-xs text-orange-500 mb-3">
-        Solo unidades — FDA no reporta monto en pesos | 410 tiendas catalogadas
+        Solo unidades — 4 SKUs core | 410 tiendas catalogadas | *Mayo 1-25 comparable
       </p>
 
       <div className="flex gap-4 flex-1 min-h-0">
         <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-4">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dataMeses} barGap={2}>
+            <BarChart data={VENTAS_MES} barGap={4}>
               <CartesianGrid strokeDasharray="3 3" stroke="#fde8d0" />
-              <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip formatter={(v: number) => fmtU(v)} />
-              <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar dataKey="u2025" name="2025" fill="#fdba74" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="u2026" name="2026" fill="#ea580c" radius={[3, 3, 0, 0]} />
+              <XAxis dataKey="mes" tick={{ fontSize: 12 }} />
+              <YAxis tick={{ fontSize: 11 }} domain={[0, 3500]} />
+              <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
+              <Legend wrapperStyle={{ fontSize: 12 }} />
+              <Bar dataKey="u2025" name="2025" fill="#fdba74" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="u2026" name="2026" fill="#ea580c" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="w-[300px] bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
+        <div className="w-[340px] bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-orange-600 text-white">
-                <th className="p-1.5 text-left rounded-tl-lg">Mes</th>
-                <th className="p-1.5 text-right">2025</th>
-                <th className="p-1.5 text-right">2026</th>
-                <th className="p-1.5 text-right rounded-tr-lg">Var %</th>
+                <th className="p-2 text-left rounded-tl-lg">Mes</th>
+                <th className="p-2 text-right">2025</th>
+                <th className="p-2 text-right">2026</th>
+                <th className="p-2 text-right rounded-tr-lg">Var %</th>
               </tr>
             </thead>
             <tbody>
-              {VENTAS_MES.slice(0, 4).map((m, i) => {
-                const v = m.u2025 > 0 ? ((m.u2026 - m.u2025) / m.u2025) * 100 : 0;
-                return (
-                  <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                    <td className="p-1.5 font-medium">{m.mes}</td>
-                    <td className="p-1.5 text-right">{fmtU(m.u2025)}</td>
-                    <td className="p-1.5 text-right font-semibold">{fmtU(m.u2026)}</td>
-                    <td className="p-1.5 text-right">
-                      <VarBadge v={v} />
-                    </td>
-                  </tr>
-                );
-              })}
-              <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
-                <td className="p-1.5">YTD</td>
-                <td className="p-1.5 text-right">{fmtU(ytd25)}</td>
-                <td className="p-1.5 text-right">{fmtU(ytd26)}</td>
-                <td className="p-1.5 text-right">
-                  <VarBadge v={KPI.varUds} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div className="mt-3 text-[10px] text-gray-500">
-            <p>2025 completo: {fmtU(VENTAS_MES.reduce((s, m) => s + m.u2025, 0))} uds (12 meses)</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-3 bg-orange-100 border border-orange-300 rounded-lg px-4 py-2 text-xs text-orange-800">
-        <strong>Accionable:</strong> Pacífico cayó -30.3% YoY → revisar surtido y disponibilidad.
-        Metro creció +48.9% → oportunidad de refuerzo con exhibición adicional.
-      </div>
-    </div>
-  );
-}
-
-function Slide3() {
-  return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
-      <div className="flex items-center gap-3 mb-1">
-        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
-        <h2 className="text-xl font-extrabold text-orange-900">
-          Venta por Producto — 4 SKUs Core
-        </h2>
-      </div>
-      <p className="text-xs text-orange-500 mb-3">YTD Ene–Abr 2026 vs 2025 | 410 tiendas catalogadas</p>
-
-      <div className="flex gap-4 flex-1 min-h-0">
-        <div className="w-[280px] bg-white rounded-xl shadow border border-orange-200 p-4 flex flex-col">
-          <div className="flex-1">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={PIE_PRODUCTOS}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={90}
-                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  labelLine={{ strokeWidth: 1 }}
-                  fontSize={11}
-                >
-                  {PIE_PRODUCTOS.map((_, i) => (
-                    <Cell key={i} fill={PIE_COLORS[i]} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <p className="text-xs text-center text-orange-600 mt-2">
-            Rodajitas lidera con 30.6% de participación
-          </p>
-        </div>
-
-        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-orange-600 text-white">
-                <th className="p-1.5 text-left rounded-tl-lg">Producto</th>
-                <th className="p-1.5 text-right">YTD 26</th>
-                <th className="p-1.5 text-right">YTD 25</th>
-                <th className="p-1.5 text-right">Var</th>
-                <th className="p-1.5 text-right">% Part</th>
-                <th className="p-1.5 text-center" colSpan={3}>Feb → Mar → Abr</th>
-                <th className="p-1.5 text-right rounded-tr-lg">PVP*</th>
-              </tr>
-            </thead>
-            <tbody>
-              {PRODUCTOS.map((p, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                  <td className="p-1.5 font-medium">{p.corto}</td>
-                  <td className="p-1.5 text-right font-semibold">{fmtU(p.uds26)}</td>
-                  <td className="p-1.5 text-right text-gray-500">{fmtU(p.uds25)}</td>
-                  <td className="p-1.5 text-right"><VarBadge v={p.var} /></td>
-                  <td className="p-1.5 text-right">{p.pctTotal}%</td>
-                  {p.tend3m.map((t, j) => (
-                    <td key={j} className="p-1.5 text-center text-gray-600">{fmtU(t)}</td>
-                  ))}
-                  <td className="p-1.5 text-right text-gray-400">{fmtPVP(p.precioPvp)}</td>
+              {VENTAS_MES.map((m, i) => (
+                <tr key={i} className={i === 4 ? "bg-green-50 border-l-4 border-green-500" : i % 2 === 0 ? "bg-orange-50" : ""}>
+                  <td className="p-2 font-semibold">{m.mes}</td>
+                  <td className="p-2 text-right">{fmtU(m.u2025)}</td>
+                  <td className="p-2 text-right font-bold">{fmtU(m.u2026)}</td>
+                  <td className="p-2 text-right"><VarBadge v={m.var} /></td>
                 </tr>
               ))}
+              <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
+                <td className="p-2">YTD</td>
+                <td className="p-2 text-right">{fmtU(KPI.udsYtd25)}</td>
+                <td className="p-2 text-right">{fmtU(KPI.udsYtd26)}</td>
+                <td className="p-2 text-right"><VarBadge v={KPI.varUds} /></td>
+              </tr>
             </tbody>
           </table>
-          <p className="text-[10px] text-gray-400 mt-2">
-            *PVP = Precio estimado de anaquel, no facturación real
-          </p>
-
-          <div className="mt-3 space-y-1.5">
-            <div className="flex items-start gap-2">
-              <TrendingUp size={14} className="text-green-600 mt-0.5 shrink-0" />
-              <p className="text-xs text-gray-700">
-                <strong>Chicharrón</strong> (+21.8%) y <strong>Classic White</strong> (+19.6%) son los motores de crecimiento del portafolio.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <TrendingDown size={14} className="text-amber-600 mt-0.5 shrink-0" />
-              <p className="text-xs text-gray-700">
-                <strong>Street Elote</strong> plano (-0.4%) — monitorear exhibición. <strong>Rodajitas</strong> bajó en abril (921→798).
-              </p>
-            </div>
+          <div className="mt-3 text-[10px] text-gray-500 space-y-1">
+            <p><strong>*May:</strong> comparativo día por día (1-25)</p>
+            <p>Mayo es el mes con mayor aceleración del año (+31.8%) → efecto promoción</p>
           </div>
         </div>
+      </div>
+
+      <div className="mt-3 bg-green-50 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
+        <strong>✓ Tendencia:</strong> Crecimiento sostenido cada mes en 2026. Abril ya venía +19.6%, y Mayo aceleró a +31.8% con la activación promocional.
       </div>
     </div>
   );
 }
+
+/* ================================================================
+   SLIDE 4 — IMPACTO PROMO MAYO
+   ================================================================ */
 
 function Slide4() {
-  const zonasChart = ZONAS.filter((z) => z.u26 > 0);
+  const chartData = PROMO_DATA.map(p => ({
+    sku: p.sku.split(" ")[0],
+    May25: p.may25,
+    Abr26: p.abr26,
+    May26: p.may26,
+  }));
 
   return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
+    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-green-50 to-orange-50">
       <div className="flex items-center gap-3 mb-1">
         <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
-        <h2 className="text-xl font-extrabold text-orange-900">
-          Venta por Zona Geográfica
+        <h2 className="text-xl font-extrabold text-orange-900 flex items-center gap-2">
+          <Sparkles size={22} className="text-green-600" />
+          Impacto de la Promoción de Mayo
         </h2>
       </div>
-      <p className="text-xs text-orange-500 mb-3">YTD Ene–Abr 2026 vs 2025 | Unidades</p>
+      <p className="text-xs text-orange-500 mb-3">
+        Mecánicas activas: 20% desc (3 SKUs) + 2x$30 (Classic White) | Comparativo May 1-25 día por día
+      </p>
 
-      <div className="flex gap-4 flex-1 min-h-0">
-        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-4">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={zonasChart} layout="vertical" barGap={2}>
+      {/* KPIs row */}
+      <div className="grid grid-cols-4 gap-3 mb-3">
+        <div className="bg-white rounded-xl shadow border-2 border-green-400 p-3 text-center">
+          <p className="text-[10px] text-green-600 font-medium">Lift vs May-25</p>
+          <p className="text-3xl font-extrabold text-green-700">+{PROMO_TOTAL.liftVsMay25.toFixed(1)}%</p>
+          <p className="text-[10px] text-gray-500">{fmtU(PROMO_TOTAL.may25)} → {fmtU(PROMO_TOTAL.may26)} uds</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-center">
+          <p className="text-[10px] text-orange-500 font-medium">Lift vs Abr-26</p>
+          <p className="text-3xl font-extrabold text-orange-700">+{PROMO_TOTAL.liftVsAbr26.toFixed(1)}%</p>
+          <p className="text-[10px] text-gray-500">mes previo sin promo</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-center">
+          <p className="text-[10px] text-orange-500 font-medium">Δ Estimado PVP</p>
+          <p className="text-3xl font-extrabold text-orange-900">+{fmtPVP(PROMO_TOTAL.deltaPvp)}</p>
+          <p className="text-[10px] text-gray-500">vs mismo periodo 2025</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-center">
+          <p className="text-[10px] text-orange-500 font-medium">SKUs en promo</p>
+          <p className="text-3xl font-extrabold text-orange-900">4 / 4</p>
+          <p className="text-[10px] text-green-600 font-semibold">todos crecieron</p>
+        </div>
+      </div>
+
+      <div className="flex gap-3 flex-1 min-h-0">
+        {/* Chart */}
+        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3">
+          <p className="text-xs font-bold text-orange-900 mb-1">Unidades vendidas — comparativo por SKU</p>
+          <ResponsiveContainer width="100%" height="92%">
+            <BarChart data={chartData} barGap={3}>
               <CartesianGrid strokeDasharray="3 3" stroke="#fde8d0" />
-              <XAxis type="number" tick={{ fontSize: 10 }} />
-              <YAxis dataKey="zona" type="category" tick={{ fontSize: 10 }} width={100} />
+              <XAxis dataKey="sku" tick={{ fontSize: 11 }} />
+              <YAxis tick={{ fontSize: 10 }} />
               <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar dataKey="u25" name="2025" fill="#fdba74" radius={[0, 3, 3, 0]} />
-              <Bar dataKey="u26" name="2026" fill="#ea580c" radius={[0, 3, 3, 0]} />
+              <Bar dataKey="May25" name="May-25 (1-25)" fill="#fdba74" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="Abr26" name="Abr-26 (1-25)" fill="#fb923c" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="May26" name="May-26 (1-25) PROMO" fill="#16a34a" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div className="w-[420px] bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
-          <table className="w-full text-xs">
+        {/* Tabla SKU detalle */}
+        <div className="w-[420px] bg-white rounded-xl shadow border border-orange-200 p-3">
+          <p className="text-xs font-bold text-orange-900 mb-2">Detalle por SKU</p>
+          <table className="w-full text-[11px]">
             <thead>
               <tr className="bg-orange-600 text-white">
-                <th className="p-1.5 text-left rounded-tl-lg">Zona</th>
-                <th className="p-1.5 text-right">2025</th>
-                <th className="p-1.5 text-right">2026</th>
-                <th className="p-1.5 text-right">Var %</th>
-                <th className="p-1.5 text-center rounded-tr-lg">Estado</th>
+                <th className="p-1.5 text-left rounded-tl-lg">SKU</th>
+                <th className="p-1.5 text-left">Mec</th>
+                <th className="p-1.5 text-right">May-25</th>
+                <th className="p-1.5 text-right">May-26</th>
+                <th className="p-1.5 text-right rounded-tr-lg">Lift</th>
               </tr>
             </thead>
             <tbody>
-              {ZONAS.map((z, i) => (
+              {PROMO_DATA.map((p, i) => (
                 <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                  <td className="p-1.5 font-medium">{z.zona}</td>
-                  <td className="p-1.5 text-right">{fmtU(z.u25)}</td>
-                  <td className="p-1.5 text-right font-semibold">{fmtU(z.u26)}</td>
-                  <td className="p-1.5 text-right">
-                    {z.u25 > 0 ? <VarBadge v={z.var} /> : <span className="text-xs text-blue-500">Nueva</span>}
-                  </td>
-                  <td className="p-1.5 text-center">
-                    {z.u25 > 0 ? (
-                      <ZonaBadge crece={z.var >= 0} />
-                    ) : (
-                      <span className="px-2 py-0.5 rounded text-xs font-semibold bg-blue-100 text-blue-700">
-                        Nueva
-                      </span>
-                    )}
-                  </td>
+                  <td className="p-1.5 font-semibold">{p.sku.replace(" 125g","").replace(" 25g","").replace(" 30g","").replace(" 75g","")}</td>
+                  <td className="p-1.5 text-gray-600">{p.mec}</td>
+                  <td className="p-1.5 text-right text-gray-500">{fmtU(p.may25)}</td>
+                  <td className="p-1.5 text-right font-bold">{fmtU(p.may26)}</td>
+                  <td className="p-1.5 text-right"><VarBadge v={p.lift} /></td>
                 </tr>
               ))}
+              <tr className="bg-green-100 font-bold border-t-2 border-green-400">
+                <td className="p-1.5" colSpan={2}>TOTAL</td>
+                <td className="p-1.5 text-right">{fmtU(PROMO_TOTAL.may25)}</td>
+                <td className="p-1.5 text-right">{fmtU(PROMO_TOTAL.may26)}</td>
+                <td className="p-1.5 text-right"><VarBadge v={PROMO_TOTAL.liftVsMay25} /></td>
+              </tr>
             </tbody>
           </table>
 
-          <div className="mt-3 space-y-1">
-            <div className="flex items-start gap-2">
-              <MapPin size={13} className="text-red-500 mt-0.5 shrink-0" />
-              <p className="text-[11px] text-gray-700">
-                <strong>Pacífico</strong> cae -30.3% — la mayor caída. Revisar surtido en CEDIS PEBO.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <MapPin size={13} className="text-green-500 mt-0.5 shrink-0" />
-              <p className="text-[11px] text-gray-700">
-                <strong>Metro</strong> +48.9% y <strong>Península</strong> +24.8% — zonas con mayor momentum.
-              </p>
-            </div>
-            <div className="flex items-start gap-2">
-              <MapPin size={13} className="text-blue-500 mt-0.5 shrink-0" />
-              <p className="text-[11px] text-gray-700">
-                <strong>Noroeste</strong> (824 uds) y <strong>Sur</strong> (97 uds) — zonas nuevas en 2026.
-              </p>
-            </div>
+          <div className="mt-3 space-y-1.5 text-[11px]">
+            <p className="flex items-start gap-2">
+              <span className="text-green-600 font-bold">★</span>
+              <span><strong>Street Elote 125g</strong> es el gran ganador: +50.8% vs 2025. El 20% desc en SKU premium funciona muy bien.</span>
+            </p>
+            <p className="flex items-start gap-2">
+              <span className="text-green-600 font-bold">★</span>
+              <span><strong>Classic White</strong> respondió fuerte al 2x$30 (+46%). La mecánica de pack genera ticket más alto.</span>
+            </p>
           </div>
         </div>
+      </div>
+
+      <div className="mt-3 bg-green-100 border-2 border-green-400 rounded-lg px-4 py-2.5 text-xs text-green-900">
+        <strong className="text-sm">🎯 Conclusión:</strong> Las promociones de mayo funcionaron en los 4 SKUs sin excepción.
+        Generaron <strong>+619 unidades</strong> y <strong>+{fmtPVP(PROMO_TOTAL.deltaPvp)}</strong> de venta incremental vs 2025.
+        Es la mejor evidencia para repetir y escalar la mecánica.
       </div>
     </div>
   );
 }
+
+/* ================================================================
+   SLIDE 5 — OPORTUNIDAD DE ACTIVACIÓN (Próximo Salto)
+   ================================================================ */
 
 function Slide5() {
   return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
+    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-amber-50">
       <div className="flex items-center gap-3 mb-1">
         <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
-        <h2 className="text-xl font-extrabold text-orange-900">
-          Top 20 Tiendas Catalogadas — YTD 2026
+        <h2 className="text-xl font-extrabold text-orange-900 flex items-center gap-2">
+          <Target size={22} className="text-orange-600" />
+          Próximo Salto — Activar las Tiendas Dormidas
         </h2>
       </div>
-      <p className="text-xs text-orange-500 mb-3">Unidades vendidas Ene–Abr 2026</p>
-
-      <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="bg-orange-600 text-white">
-              <th className="p-1 text-center rounded-tl-lg w-8">#</th>
-              <th className="p-1 text-left">Sucursal</th>
-              <th className="p-1 text-left">Zona</th>
-              <th className="p-1 text-left">Plaza</th>
-              <th className="p-1 text-right">Uds</th>
-              <th className="p-1 text-right">Est. PVP*</th>
-              <th className="p-1 text-left rounded-tr-lg w-[180px]"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {TOP20_TIENDAS.map((t, i) => {
-              const maxUds = TOP20_TIENDAS[0].uds;
-              const pct = (t.uds / maxUds) * 100;
-              return (
-                <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
-                  <td className="p-1 text-center font-bold text-orange-600">
-                    {i + 1}
-                  </td>
-                  <td className="p-1 font-medium">{t.tienda}</td>
-                  <td className="p-1 text-gray-600">{t.zona}</td>
-                  <td className="p-1 text-gray-600">{t.plaza}</td>
-                  <td className="p-1 text-right font-semibold">{fmtU(t.uds)}</td>
-                  <td className="p-1 text-right text-gray-500">{fmtPVP(t.estPvp)}</td>
-                  <td className="p-1">
-                    <div className="w-full bg-orange-100 rounded-full h-3">
-                      <div
-                        className="bg-orange-500 h-3 rounded-full"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-
-      <p className="text-[10px] text-gray-400 mt-2">
-        *Estimado PVP: precio de anaquel estimado, no facturación real. Norte domina con 10 tiendas en el top 20.
+      <p className="text-xs text-orange-500 mb-3">
+        Inventario al 25-May | 410 tiendas catalogadas | Oportunidad para amplificar la próxima promoción
       </p>
-    </div>
-  );
-}
 
-function Slide6() {
-  return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
-      <div className="flex items-center gap-3 mb-1">
-        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
-        <h2 className="text-xl font-extrabold text-orange-900">
-          Oportunidades de Crecimiento
-        </h2>
+      {/* KPIs */}
+      <div className="grid grid-cols-4 gap-3 mb-3">
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-center">
+          <p className="text-[10px] text-orange-500 font-medium">Unidades en piso sin rotar</p>
+          <p className="text-3xl font-extrabold text-orange-900">{fmtU(ACTIVACION.uds)}</p>
+          <p className="text-[10px] text-gray-500">stock con &gt;30 días sin venta</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-center">
+          <p className="text-[10px] text-orange-500 font-medium">Tiendas con potencial</p>
+          <p className="text-3xl font-extrabold text-orange-900">{ACTIVACION.tiendas}</p>
+          <p className="text-[10px] text-gray-500">de 410 catalogadas</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border border-green-300 p-3 text-center">
+          <p className="text-[10px] text-green-600 font-medium">Stock CEDIS disponible</p>
+          <p className="text-3xl font-extrabold text-green-700">{fmtU(ACTIVACION.stockCedis)}</p>
+          <p className="text-[10px] text-green-600 font-semibold">producto NO es problema</p>
+        </div>
+        <div className="bg-white rounded-xl shadow border-2 border-green-400 p-3 text-center">
+          <p className="text-[10px] text-green-600 font-medium">Upside mensual potencial</p>
+          <p className="text-3xl font-extrabold text-green-700">~{fmtU(ACTIVACION.upsideUdsMes)}</p>
+          <p className="text-[10px] text-green-600 font-semibold">+{fmtPVP(ACTIVACION.upsidePvpMes)} PVP/mes</p>
+        </div>
       </div>
-      <p className="text-xs text-orange-500 mb-4">Tiendas vendiendo fuera de catálogo</p>
 
-      <div className="flex gap-4 flex-1 min-h-0">
-        <div className="flex-1 bg-white rounded-xl shadow border border-green-200 p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Store size={18} className="text-green-600" />
-            <h3 className="text-sm font-bold text-green-800">
-              Tiendas Sin Catalogar
-            </h3>
-            <span className="px-2 py-0.5 rounded text-xs font-semibold bg-green-100 text-green-700 border border-green-300">
-              Oportunidad
-            </span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3 mb-4">
-            <div className="bg-green-50 rounded-lg p-3 text-center">
-              <p className="text-2xl font-extrabold text-green-800">{OPORTUNIDADES.tiendasNoCatVendiendo}</p>
-              <p className="text-[10px] text-green-600">tiendas vendiendo</p>
-            </div>
-            <div className="bg-green-50 rounded-lg p-3 text-center">
-              <p className="text-2xl font-extrabold text-green-800">{fmtU(OPORTUNIDADES.udsNoCat)}</p>
-              <p className="text-[10px] text-green-600">uds YTD</p>
-            </div>
-            <div className="bg-green-50 rounded-lg p-3 text-center">
-              <p className="text-2xl font-extrabold text-green-800">{OPORTUNIDADES.pctNoCat}%</p>
-              <p className="text-[10px] text-green-600">de la venta total</p>
-            </div>
-          </div>
-
-          <h4 className="text-xs font-bold text-gray-700 mb-2">Top 5 por venta:</h4>
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="bg-green-600 text-white">
-                <th className="p-1.5 text-left rounded-tl-lg">Sucursal</th>
-                <th className="p-1.5 text-left">Código</th>
-                <th className="p-1.5 text-right rounded-tr-lg">Uds YTD</th>
-              </tr>
-            </thead>
-            <tbody>
-              {OPORTUNIDADES.top5NoCat.map((t, i) => (
-                <tr key={i} className={i % 2 === 0 ? "bg-green-50" : ""}>
-                  <td className="p-1.5 font-medium">{t.tienda}</td>
-                  <td className="p-1.5 text-gray-500">{t.code}</td>
-                  <td className="p-1.5 text-right font-semibold">{fmtU(t.uds)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="flex gap-3 flex-1 min-h-0">
+        {/* Zonas */}
+        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3">
+          <p className="text-xs font-bold text-orange-900 mb-2">Distribución por Zona — Donde está la oportunidad</p>
+          <ResponsiveContainer width="100%" height="85%">
+            <BarChart data={ACTIVACION.zonasTop} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" stroke="#fde8d0" />
+              <XAxis type="number" tick={{ fontSize: 10 }} />
+              <YAxis type="category" dataKey="zona" tick={{ fontSize: 11 }} width={80} />
+              <Tooltip formatter={(v: number) => fmtU(v)} />
+              <Bar dataKey="uds" name="Uds en piso" fill="#f97316" radius={[0, 4, 4, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
 
-        <div className="flex-1 flex flex-col gap-4">
-          <div className="bg-white rounded-xl shadow border border-orange-200 p-5 flex-1">
-            <div className="flex items-center gap-2 mb-3">
-              <Target size={18} className="text-orange-600" />
-              <h3 className="text-sm font-bold text-orange-800">
-                Contexto del Portafolio
-              </h3>
-            </div>
-            <div className="space-y-3">
-              <div className="bg-orange-50 rounded-lg p-3">
-                <p className="text-xs font-bold text-orange-800 mb-1">Crecimiento sólido</p>
-                <p className="text-xs text-gray-600">
-                  El portafolio crece +10% YTD. 3 de 4 SKUs en positivo. Chicharrón (+21.8%) y Classic White (+19.6%) lideran.
-                </p>
+        {/* Insight + Plan */}
+        <div className="w-[440px] flex flex-col gap-3">
+          <div className="bg-white rounded-xl shadow border-2 border-green-400 p-3">
+            <p className="text-xs font-bold text-green-700 mb-1.5 flex items-center gap-1">
+              <Zap size={14} /> La hipótesis positiva
+            </p>
+            <p className="text-[11px] text-gray-700 leading-relaxed">
+              Tenemos <strong>{fmtU(ACTIVACION.uds)} unidades</strong> ya en piso esperando rotar.
+              La promoción de mayo demostró que <strong>cuando se activa el producto, sí se vende (+31.8%)</strong>.
+            </p>
+            <p className="text-[11px] text-gray-700 leading-relaxed mt-2">
+              Si replicamos esa activación con foco en exhibición en las <strong>{ACTIVACION.tiendas} tiendas dormidas</strong>,
+              <strong className="text-green-700"> la próxima promoción podría duplicar el lift</strong> sin requerir compra adicional.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl shadow border border-orange-200 p-3 flex-1">
+            <p className="text-xs font-bold text-orange-900 mb-2">Plan propuesto para próxima promo</p>
+            <div className="space-y-1.5 text-[11px]">
+              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
+                <span className="text-orange-600 font-bold">1</span>
+                <p><strong>Foco Occidente + Noroeste</strong> (59% del stock dormido). Coordinar visita en piso.</p>
               </div>
-              <div className="bg-orange-50 rounded-lg p-3">
-                <p className="text-xs font-bold text-orange-800 mb-1">Cobertura casi total</p>
-                <p className="text-xs text-gray-600">
-                  409 de 410 tiendas catalogadas activas. Solo 1 tienda sin venta en el periodo.
-                </p>
+              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
+                <span className="text-orange-600 font-bold">2</span>
+                <p><strong>Repetir mecánica ganadora</strong>: 20% desc en SKU premium + 2x$30 en 25g.</p>
               </div>
-              <div className="bg-orange-50 rounded-lg p-3">
-                <p className="text-xs font-bold text-orange-800 mb-1">Zonas nuevas</p>
-                <p className="text-xs text-gray-600">
-                  Noroeste (824 uds) y Sur (97 uds) son zonas nuevas en 2026 con potencial de crecimiento.
-                </p>
+              <div className="flex items-start gap-2 bg-orange-50 p-1.5 rounded">
+                <span className="text-orange-600 font-bold">3</span>
+                <p><strong>Apoyar exhibición</strong> en las 303 tiendas dormidas con material PoP.</p>
+              </div>
+              <div className="flex items-start gap-2 bg-green-50 p-1.5 rounded border border-green-300">
+                <span className="text-green-700 font-bold">4</span>
+                <p><strong>Stock CEDIS suficiente</strong> ({fmtU(ACTIVACION.stockCedis)} uds) → no requiere compra adicional para activar.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-3 bg-green-100 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
-        <strong>Accionable:</strong> Proponer catalogar las top 10 tiendas no catalogadas con mayor venta — representan venta incremental recurrente sin inversión adicional.
-      </div>
-    </div>
-  );
-}
-
-function Slide7() {
-  const sections = [
-    {
-      title: "URGENTE",
-      color: "border-red-300 bg-red-50",
-      titleColor: "text-red-700",
-      icon: <Zap size={16} className="text-red-600" />,
-      items: PLAN_ACCION.urgente,
-    },
-    {
-      title: "ESTA SEMANA",
-      color: "border-yellow-300 bg-yellow-50",
-      titleColor: "text-yellow-700",
-      icon: <Zap size={16} className="text-yellow-600" />,
-      items: PLAN_ACCION.estaSemana,
-    },
-    {
-      title: "ESTE MES",
-      color: "border-green-300 bg-green-50",
-      titleColor: "text-green-700",
-      icon: <Target size={16} className="text-green-600" />,
-      items: PLAN_ACCION.esteMes,
-    },
-    {
-      title: "ESTRATÉGICO",
-      color: "border-blue-300 bg-blue-50",
-      titleColor: "text-blue-700",
-      icon: <TrendingUp size={16} className="text-blue-600" />,
-      items: PLAN_ACCION.estrategico,
-    },
-  ];
-
-  return (
-    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
-      <div className="flex items-center gap-3 mb-1">
-        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
-        <h2 className="text-xl font-extrabold text-orange-900">Plan de Acción</h2>
-      </div>
-      <p className="text-xs text-orange-500 mb-4">Prioridades por nivel de urgencia</p>
-
-      <div className="grid grid-cols-2 gap-3 flex-1">
-        {sections.map((s, i) => (
-          <div key={i} className={`rounded-xl border-2 ${s.color} p-4`}>
-            <div className="flex items-center gap-2 mb-3">
-              {s.icon}
-              <h3 className={`text-sm font-extrabold ${s.titleColor}`}>{s.title}</h3>
-            </div>
-            <div className="space-y-2.5">
-              {s.items.map((item, j) => (
-                <div key={j} className="bg-white/70 rounded-lg p-2.5">
-                  <p className="text-xs font-bold text-gray-800">{item.accion}</p>
-                  <p className="text-[11px] text-gray-600 mt-0.5">{item.detalle}</p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">Impacto: {item.impacto}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="mt-3 bg-orange-600 text-white rounded-lg px-4 py-2.5 text-xs">
+        <strong>🚀 Mensaje clave:</strong> Si activamos las {ACTIVACION.tiendas} tiendas dormidas en la próxima promoción,
+        la combinación <em>promo + activación de piso</em> puede llevarnos de +31.8% a un lift histórico para 4BUDDIES en FDA.
       </div>
     </div>
   );
@@ -812,15 +568,13 @@ function Slide7() {
    MAIN — CAROUSEL
    ================================================================ */
 
-const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7];
+const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5];
 const SLIDE_NAMES = [
   "Portada",
-  "Sell-Out Mensual",
-  "Productos",
-  "Zonas",
-  "Top 20 Tiendas",
-  "Oportunidades",
-  "Plan de Acción",
+  "KPIs YTD",
+  "Tendencia Mensual",
+  "Impacto Promo",
+  "Próximo Salto",
 ];
 
 export default function Home() {
@@ -857,7 +611,6 @@ export default function Home() {
       <div className="relative w-[1280px] aspect-video rounded-2xl overflow-hidden shadow-2xl border-2 border-orange-700">
         <CurrentSlide />
 
-        {/* Navigation */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-orange-900/90 backdrop-blur rounded-full px-4 py-1.5 shadow-lg flex items-center gap-3">
           <button
             onClick={prev}
