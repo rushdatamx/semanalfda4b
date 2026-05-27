@@ -218,8 +218,8 @@ function Slide2() {
         <div className="bg-white rounded-xl shadow border-2 border-orange-400 p-4">
           <p className="text-[11px] text-orange-600 font-medium mb-1">Venta MXN YTD 2026</p>
           <p className="text-3xl font-extrabold text-orange-900">{fmtPVP(KPI.estMxn26)}</p>
-          <p className="text-xs text-gray-500 mt-1">precio anaquel × uds</p>
-          <p className="text-[10px] text-gray-400 mt-2">incluye ajuste promo Mayo</p>
+          <p className="text-xs text-gray-500 mt-1">vs {fmtPVP(KPI.estMxn25)} en 2025 mismo periodo</p>
+          <div className="mt-2"><VarBadge v={KPI.varMxn} /></div>
         </div>
         <div className="bg-white rounded-xl shadow border border-orange-200 p-4">
           <p className="text-[11px] text-orange-500 font-medium mb-1">SKUs core activos</p>
