@@ -239,15 +239,14 @@ function Slide2() {
       <div className="flex gap-3 flex-1 min-h-0">
         {/* Tabla pivote mensual */}
         <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
-          <p className="text-sm font-bold text-orange-900 mb-2">Pivote Mensual — Unidades y MXN 2026 vs Uds 2025</p>
+          <p className="text-sm font-bold text-orange-900 mb-2">Unidades Mensuales — 2026 vs 2025</p>
           <table className="w-full text-xs">
             <thead>
               <tr className="bg-orange-600 text-white">
                 <th className="p-1.5 text-left rounded-tl-lg">Mes</th>
                 <th className="p-1.5 text-right">Uds 2026</th>
-                <th className="p-1.5 text-right">MXN 2026</th>
                 <th className="p-1.5 text-right">Uds 2025</th>
-                <th className="p-1.5 text-right rounded-tr-lg">Var Uds</th>
+                <th className="p-1.5 text-right rounded-tr-lg">Var</th>
               </tr>
             </thead>
             <tbody>
@@ -257,7 +256,6 @@ function Slide2() {
                   <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
                     <td className="p-1.5 font-semibold">{m.mes}</td>
                     <td className="p-1.5 text-right font-bold">{fmtU(m.u26)}</td>
-                    <td className="p-1.5 text-right font-bold text-orange-900">{fmtPVP(m.mxn26)}</td>
                     <td className="p-1.5 text-right text-gray-500">{fmtU(m.u25)}</td>
                     <td className="p-1.5 text-right"><VarBadge v={varUds} /></td>
                   </tr>
@@ -266,14 +264,13 @@ function Slide2() {
               <tr className="bg-orange-100 font-bold border-t-2 border-orange-300">
                 <td className="p-1.5">YTD</td>
                 <td className="p-1.5 text-right">{fmtU(KPI.udsYtd26)}</td>
-                <td className="p-1.5 text-right">{fmtPVP(KPI.estMxn26)}</td>
                 <td className="p-1.5 text-right">{fmtU(KPI.udsYtd25)}</td>
                 <td className="p-1.5 text-right"><VarBadge v={KPI.varUds} /></td>
               </tr>
             </tbody>
           </table>
           <p className="text-[10px] text-gray-400 mt-2">
-            *May = 1-25 comparable día por día | MXN 2026 ajustado por promo en Mayo (2x$30 Classic White + 20% desc otros 3 SKUs)
+            *May = 1-25 comparable día por día | Total MXN 2026 visible en el KPI superior
           </p>
         </div>
 
