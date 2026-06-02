@@ -26,21 +26,21 @@ import {
 import Image from "next/image";
 
 /* ================================================================
-   DATA CONSTANTS — FDA Cierre al 25-May 2026
+   DATA CONSTANTS — FDA Cierre al 31-May 2026
    Solo 410 tiendas catalogadas | Solo 4 SKUs core
    ================================================================ */
 
 const KPI = {
-  udsYtd26: 13915,
-  udsYtd25: 12261,
-  varUds: 13.5,
-  estMxn26: 507318,
-  estMxn25: 461268,
-  varMxn: 10.0,
-  deltaMxn: 46050,
+  udsYtd26: 14569,
+  udsYtd25: 12804,
+  varUds: 13.8,
+  estMxn26: 527523,
+  estMxn25: 481548,
+  varMxn: 9.5,
+  deltaMxn: 45975,
   tiendasActivas: 409,
   tiendasCatalogadas: 410,
-  liftPromo: 31.8,
+  liftPromo: 29.3,
 };
 
 const VENTAS_MES = [
@@ -48,22 +48,22 @@ const VENTAS_MES = [
   { mes: "Feb", u2025: 2510, u2026: 2775, var: 10.6 },
   { mes: "Mar", u2025: 2656, u2026: 2867, var: 7.9 },
   { mes: "Abr", u2025: 2270, u2026: 2714, var: 19.6 },
-  { mes: "May*", u2025: 1946, u2026: 2565, var: 31.8 },
+  { mes: "May", u2025: 2489, u2026: 3219, var: 29.3 },
 ];
 
 const PRODUCTOS_YTD = [
-  { corto: "Rodajitas",      uds26: 4162, uds25: 3991, varYtd: 4.3,  pctTotal: 29.9, mxn26: 110671, mxn25: 109752, varMxn: 0.8 },
-  { corto: "Chicharrón",     uds26: 3443, uds25: 2819, varYtd: 22.1, pctTotal: 24.7, mxn26: 192398, mxn25: 163502, varMxn: 17.7 },
-  { corto: "Classic White",  uds26: 3441, uds25: 2783, varYtd: 23.6, pctTotal: 24.7, mxn26: 75262,  mxn25: 62618,  varMxn: 20.2 },
-  { corto: "Street Elote",   uds26: 2869, uds25: 2668, varYtd: 7.5,  pctTotal: 20.6, mxn26: 128987, mxn25: 125396, varMxn: 2.9 },
+  { corto: "Rodajitas",      uds26: 4347, uds25: 4159, varYtd: 4.5,  pctTotal: 29.8, mxn26: 110671, mxn25: 109752, varMxn: 0.8 },
+  { corto: "Chicharrón",     uds26: 3588, uds25: 2941, varYtd: 22.0, pctTotal: 24.6, mxn26: 192398, mxn25: 163502, varMxn: 17.7 },
+  { corto: "Classic White",  uds26: 3597, uds25: 2918, varYtd: 23.3, pctTotal: 24.7, mxn26: 75262,  mxn25: 62618,  varMxn: 20.2 },
+  { corto: "Street Elote",   uds26: 3037, uds25: 2786, varYtd: 9.0,  pctTotal: 20.8, mxn26: 128987, mxn25: 125396, varMxn: 2.9 },
 ];
 
 const PIVOTE_MENSUAL = [
-  { mes: "Ene",  u26: 2994, mxn26: 112588, u25: 2879, mxn25: 108589, varMxn: 3.7 },
-  { mes: "Feb",  u26: 2775, mxn26: 103996, u25: 2510, mxn25: 93590,  varMxn: 11.1 },
-  { mes: "Mar",  u26: 2867, mxn26: 106976, u25: 2656, mxn25: 99173,  varMxn: 7.9 },
-  { mes: "Abr",  u26: 2714, mxn26: 104108, u25: 2270, mxn25: 84993,  varMxn: 22.5 },
-  { mes: "May*", u26: 2565, mxn26: 79649,  u25: 1946, mxn25: 74922,  varMxn: 6.3 },
+  { mes: "Ene", u26: 2994, mxn26: 112588, u25: 2879, mxn25: 108589, varMxn: 3.7 },
+  { mes: "Feb", u26: 2775, mxn26: 103996, u25: 2510, mxn25: 93590,  varMxn: 11.1 },
+  { mes: "Mar", u26: 2867, mxn26: 106976, u25: 2656, mxn25: 99173,  varMxn: 7.9 },
+  { mes: "Abr", u26: 2714, mxn26: 104108, u25: 2270, mxn25: 84993,  varMxn: 22.5 },
+  { mes: "May", u26: 3219, mxn26: 99854,  u25: 2489, mxn25: 95202,  varMxn: 4.9 },
 ];
 
 const FULL_2025 = { uds: 31729, mxn: 1190816 };
@@ -71,38 +71,38 @@ const FULL_2025 = { uds: 31729, mxn: 1190816 };
 const PIE_COLORS = ["#ea580c", "#f97316", "#fb923c", "#fdba74"];
 
 const PROMO_DATA = [
-  { sku: "Street Elote 125g", mec: "20% desc",   may25: 413, abr26: 473, may26: 623, lift: 50.8, pvp: 47.0 },
-  { sku: "Classic White 25g", mec: "2x$30",      may25: 428, abr26: 516, may26: 625, lift: 46.0, pvp: 22.5 },
-  { sku: "Chicharrón 75g",    mec: "20% desc",   may25: 508, abr26: 587, may26: 629, lift: 23.8, pvp: 58.0 },
-  { sku: "Rodajitas 30g",     mec: "20% desc",   may25: 597, abr26: 627, may26: 688, lift: 15.2, pvp: 27.5 },
+  { sku: "Street Elote 125g", mec: "20% desc",   may25: 531, abr26: 558, may26: 791, lift: 49.0, pvp: 47.0 },
+  { sku: "Classic White 25g", mec: "2x$30",      may25: 563, abr26: 643, may26: 781, lift: 38.7, pvp: 22.5 },
+  { sku: "Chicharrón 75g",    mec: "20% desc",   may25: 630, abr26: 715, may26: 774, lift: 22.9, pvp: 58.0 },
+  { sku: "Rodajitas 30g",     mec: "20% desc",   may25: 765, abr26: 798, may26: 873, lift: 14.1, pvp: 27.5 },
 ];
 
 const PROMO_TOTAL = {
-  may25: 1946,
-  abr26: 2203,
-  may26: 2565,
-  liftVsMay25: 31.8,
-  liftVsAbr26: 16.4,
-  pvp25: 74922,
-  pvp26: 98746,
-  deltaPvp: 23823,
+  may25: 2489,
+  abr26: 2714,
+  may26: 3219,
+  liftVsMay25: 29.3,
+  liftVsAbr26: 18.6,
+  pvp25: 95202,
+  pvp26: 99854,
+  deltaPvp: 4652,
 };
 
 const ACTIVACION = {
-  uds: 1759,
-  posiciones: 568,
-  tiendas: 303,
-  stockCedis: 3051,
+  uds: 1705,
+  posiciones: 551,
+  tiendas: 299,
+  stockCedis: 3878,
   zonasTop: [
-    { zona: "OCCIDENTE", pos: 176, uds: 540 },
-    { zona: "NOROESTE",  pos: 162, uds: 498 },
-    { zona: "NORTE",     pos: 101, uds: 322 },
-    { zona: "PENÍNSULA", pos: 53,  uds: 163 },
-    { zona: "METRO",     pos: 40,  uds: 124 },
-    { zona: "SUR",       pos: 36,  uds: 112 },
+    { zona: "OCCIDENTE", pos: 170, uds: 522 },
+    { zona: "NOROESTE",  pos: 159, uds: 490 },
+    { zona: "NORTE",     pos: 89,  uds: 283 },
+    { zona: "PENÍNSULA", pos: 61,  uds: 186 },
+    { zona: "METRO",     pos: 39,  uds: 122 },
+    { zona: "SUR",       pos: 33,  uds: 102 },
   ],
   // Upside estimado: si activamos 50% de las posiciones a velocidad mediana (2 uds/mes)
-  upsideUdsMes: 568,
+  upsideUdsMes: 551,
   upsidePvpMes: 21500,
 };
 
@@ -150,7 +150,7 @@ function Slide1() {
         Farmacias del Ahorro
       </p>
       <p className="text-orange-500 text-sm mb-6">
-        Cierre al 25-Mayo 2026 | 410 tiendas catalogadas | 4 SKUs core
+        Cierre al 31-Mayo 2026 | 410 tiendas catalogadas | 4 SKUs core
       </p>
 
       <div className="flex gap-4 mb-6 flex-wrap justify-center">
@@ -270,7 +270,7 @@ function Slide2() {
             </tbody>
           </table>
           <p className="text-[10px] text-gray-400 mt-2">
-            *May = 1-25 comparable día por día | Total MXN 2026 visible en el KPI superior
+            Mayo cerrado (mes completo) | Total MXN 2026 visible en el KPI superior
           </p>
         </div>
 
@@ -329,7 +329,7 @@ function Slide3() {
         </h2>
       </div>
       <p className="text-xs text-orange-500 mb-3">
-        Solo unidades — 4 SKUs core | 410 tiendas catalogadas | *Mayo 1-25 comparable
+        Solo unidades — 4 SKUs core | 410 tiendas catalogadas | Mayo mes completo
       </p>
 
       <div className="flex gap-4 flex-1 min-h-0">
@@ -375,7 +375,7 @@ function Slide3() {
             </tbody>
           </table>
           <div className="mt-3 text-[10px] text-gray-500 space-y-1">
-            <p><strong>*May:</strong> comparativo día por día (1-25)</p>
+            <p><strong>May:</strong> mes completo 2026 vs 2025</p>
             <p>Mayo es el mes con mayor aceleración del año (+31.8%) → efecto promoción</p>
           </div>
         </div>
@@ -410,7 +410,7 @@ function Slide4() {
         </h2>
       </div>
       <p className="text-xs text-orange-500 mb-3">
-        Mecánicas activas: 20% desc (3 SKUs) + 2x$30 (Classic White) | Comparativo May 1-25 día por día
+        Mecánicas activas: 20% desc (3 SKUs) + 2x$30 (Classic White) | Mayo mes completo vs 2025
       </p>
 
       {/* KPIs row */}
@@ -448,9 +448,9 @@ function Slide4() {
               <YAxis tick={{ fontSize: 10 }} />
               <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar dataKey="May25" name="May-25 (1-25)" fill="#fdba74" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="Abr26" name="Abr-26 (1-25)" fill="#fb923c" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="May26" name="May-26 (1-25) PROMO" fill="#16a34a" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="May25" name="May-25" fill="#fdba74" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="Abr26" name="Abr-26" fill="#fb923c" radius={[3, 3, 0, 0]} />
+              <Bar dataKey="May26" name="May-26 PROMO" fill="#16a34a" radius={[3, 3, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -524,7 +524,7 @@ function Slide5() {
         </h2>
       </div>
       <p className="text-xs text-orange-500 mb-3">
-        Inventario al 25-May | 410 tiendas catalogadas | Oportunidad para amplificar la próxima promoción
+        Inventario al 31-May | 410 tiendas catalogadas | Oportunidad para amplificar la próxima promoción
       </p>
 
       {/* KPIs */}
