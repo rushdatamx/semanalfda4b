@@ -9,6 +9,8 @@ import {
   Zap,
   ArrowUpRight,
   ArrowDownRight,
+  Award,
+  Store,
 } from "lucide-react";
 import {
   BarChart,
@@ -22,6 +24,8 @@ import {
   PieChart,
   Pie,
   Cell,
+  LineChart,
+  Line,
 } from "recharts";
 import Image from "next/image";
 
@@ -121,6 +125,64 @@ const PROXIMO = {
   ],
 };
 
+// Detalle Top Productos: cobertura (tiendas con venta YTD26) y velocidad (uds/tienda/mes)
+const PRODUCTOS_DETALLE = [
+  { corto: "Rodajitas",     tiendas: 397, velocidad: 2.2,  junYoy: 20.1 },
+  { corto: "Chicharrón",    tiendas: 398, velocidad: 1.82, junYoy: 14.7 },
+  { corto: "Classic White", tiendas: 397, velocidad: 1.76, junYoy: -10.6 },
+  { corto: "Street Elote",  tiendas: 374, velocidad: 1.65, junYoy: 27.6 },
+];
+
+// Tendencia mensual 2026 por SKU (uds, Ene-Jun)
+const SKU_MENSUAL = [
+  { mes: "Ene", Rodajitas: 846, Chicharrón: 751, "Classic White": 812, "Street Elote": 585 },
+  { mes: "Feb", Rodajitas: 909, Chicharrón: 681, "Classic White": 661, "Street Elote": 524 },
+  { mes: "Mar", Rodajitas: 921, Chicharrón: 667, "Classic White": 700, "Street Elote": 579 },
+  { mes: "Abr", Rodajitas: 798, Chicharrón: 715, "Classic White": 643, "Street Elote": 558 },
+  { mes: "May", Rodajitas: 873, Chicharrón: 774, "Classic White": 781, "Street Elote": 791 },
+  { mes: "Jun", Rodajitas: 883, Chicharrón: 757, "Classic White": 593, "Street Elote": 661 },
+];
+
+const SKU_LINE_COLORS: Record<string, string> = {
+  Rodajitas: "#ea580c",
+  Chicharrón: "#16a34a",
+  "Classic White": "#f59e0b",
+  "Street Elote": "#0ea5e9",
+};
+
+// Top 15 tiendas YTD 2026 (uds) — solo catalogadas, 4 SKUs core
+const TOP_TIENDAS = [
+  { rk: 1,  tienda: "León, Clouthier",              zona: "OCCIDENTE", uds26: 204, uds25: 144, mxn: 6440 },
+  { rk: 2,  tienda: "Mazatlán, Mediterráneo",       zona: "NOROESTE",  uds26: 186, uds25: 47,  mxn: 7750 },
+  { rk: 3,  tienda: "Monterrey Ote, Corporativo",   zona: "NORTE",     uds26: 182, uds25: 102, mxn: 6393 },
+  { rk: 4,  tienda: "Monterrey Ote, Obispado",      zona: "NORTE",     uds26: 179, uds25: 108, mxn: 6129 },
+  { rk: 5,  tienda: "Culiacán, Celenes",            zona: "PACIFICO",  uds26: 168, uds25: 42,  mxn: 4924 },
+  { rk: 6,  tienda: "Monterrey Ote, Glorieta Calz", zona: "NORTE",     uds26: 141, uds25: 119, mxn: 4956 },
+  { rk: 7,  tienda: "Cancún, Colosio",              zona: "PENINSULA", uds26: 128, uds25: 135, mxn: 5425 },
+  { rk: 8,  tienda: "México Centro, Luis Barragán", zona: "METRO",     uds26: 127, uds25: 119, mxn: 5407 },
+  { rk: 9,  tienda: "Monterrey Ote, Plaza 404",     zona: "NORTE",     uds26: 127, uds25: 172, mxn: 4106 },
+  { rk: 10, tienda: "León, Prol. Campestre",        zona: "OCCIDENTE", uds26: 125, uds25: 58,  mxn: 3802 },
+  { rk: 11, tienda: "Monterrey Ote, UMA",           zona: "NORTE",     uds26: 118, uds25: 93,  mxn: 3787 },
+  { rk: 12, tienda: "Monterrey Ote, Valle Alto",    zona: "NORTE",     uds26: 116, uds25: 96,  mxn: 4046 },
+  { rk: 13, tienda: "Mérida, Dzityá Real Montejo",  zona: "PENINSULA", uds26: 113, uds25: 23,  mxn: 4174 },
+  { rk: 14, tienda: "Monterrey Ote, Calzada",       zona: "NORTE",     uds26: 111, uds25: 56,  mxn: 3922 },
+  { rk: 15, tienda: "Monterrey Ote, R. Garza Sada", zona: "NORTE",     uds26: 109, uds25: 111, mxn: 3398 },
+];
+
+// Venta por zona YTD 2026 (uds)
+const ZONAS_YTD = [
+  { zona: "NORTE",        uds: 6098, pct: 34.9 },
+  { zona: "OCCIDENTE",    uds: 2930, pct: 16.8 },
+  { zona: "NOROESTE",     uds: 2698, pct: 15.5 },
+  { zona: "PENÍNSULA",    uds: 2391, pct: 13.7 },
+  { zona: "METRO",        uds: 1250, pct: 7.2 },
+  { zona: "PACÍFICO",     uds: 1227, pct: 7.0 },
+  { zona: "CENTRO-SUR",   uds: 560,  pct: 3.2 },
+  { zona: "SUR",          uds: 309,  pct: 1.8 },
+];
+
+const TOP15_SHARE = 12.2; // % del total YTD26 que concentra el top 15
+
 /* ================================================================
    HELPERS
    ================================================================ */
@@ -194,7 +256,7 @@ function Slide1() {
       <div className="bg-white border-l-4 border-orange-600 rounded px-5 py-3 shadow max-w-3xl">
         <p className="text-sm text-orange-900 font-semibold mb-1">Agenda</p>
         <p className="text-xs text-gray-600">
-          1) KPIs YTD &nbsp;·&nbsp; 2) Tendencia Mensual &nbsp;·&nbsp; 3) Impacto Promo Mayo &nbsp;·&nbsp; 4) Próximo Salto: Julio
+          1) KPIs YTD &nbsp;·&nbsp; 2) Tendencia Mensual &nbsp;·&nbsp; 3) Top Productos &nbsp;·&nbsp; 4) Top Tiendas &nbsp;·&nbsp; 5) Impacto Promo Mayo &nbsp;·&nbsp; 6) Próximo Salto: Julio
         </p>
       </div>
 
@@ -398,6 +460,179 @@ function Slide3() {
 
       <div className="mt-3 bg-green-50 border border-green-300 rounded-lg px-4 py-2 text-xs text-green-800">
         <strong>✓ Tendencia:</strong> 6 meses consecutivos por arriba de 2025. Mayo despegó con promo (+29.3%) y Junio <strong>sostuvo el nivel sin promoción</strong> (+12.3%): la promo dejó una base de venta más alta. Con la promo de Julio confirmada, el siguiente escalón está a la vista.
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================
+   SLIDE — TOP PRODUCTOS (detalle YTD)
+   ================================================================ */
+
+function SlideTopProductos() {
+  return (
+    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
+      <div className="flex items-center gap-3 mb-1">
+        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
+        <h2 className="text-xl font-extrabold text-orange-900 flex items-center gap-2">
+          <Award size={22} className="text-orange-600" />
+          Top Productos — Detalle YTD 2026
+        </h2>
+      </div>
+      <p className="text-xs text-orange-500 mb-3">
+        Ene → Jun | 410 tiendas catalogadas | Cobertura = tiendas con venta | Velocidad = uds/tienda/mes
+      </p>
+
+      {/* Tabla detalle por SKU */}
+      <div className="bg-white rounded-xl shadow border border-orange-200 p-3 mb-3">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-orange-600 text-white">
+              <th className="p-1.5 text-left rounded-tl-lg">Producto</th>
+              <th className="p-1.5 text-right">Uds YTD 26</th>
+              <th className="p-1.5 text-right">Uds YTD 25</th>
+              <th className="p-1.5 text-right">Var</th>
+              <th className="p-1.5 text-right">% Mix</th>
+              <th className="p-1.5 text-right">Est. PVP 26</th>
+              <th className="p-1.5 text-right">Cobertura</th>
+              <th className="p-1.5 text-right">Velocidad</th>
+              <th className="p-1.5 text-right rounded-tr-lg">Jun YoY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {PRODUCTOS_YTD.map((p, i) => {
+              const det = PRODUCTOS_DETALLE.find(d => d.corto === p.corto)!;
+              return (
+                <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
+                  <td className="p-1.5 font-semibold">{p.corto}</td>
+                  <td className="p-1.5 text-right font-bold">{fmtU(p.uds26)}</td>
+                  <td className="p-1.5 text-right text-gray-500">{fmtU(p.uds25)}</td>
+                  <td className="p-1.5 text-right"><VarBadge v={p.varYtd} /></td>
+                  <td className="p-1.5 text-right font-semibold">{p.pctTotal.toFixed(1)}%</td>
+                  <td className="p-1.5 text-right">{fmtPVP(p.mxn26)}</td>
+                  <td className="p-1.5 text-right">{det.tiendas}/410</td>
+                  <td className="p-1.5 text-right">{det.velocidad.toFixed(1)}</td>
+                  <td className="p-1.5 text-right"><VarBadge v={det.junYoy} /></td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex gap-3 flex-1 min-h-0">
+        {/* Line chart mensual por SKU */}
+        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3">
+          <p className="text-xs font-bold text-orange-900 mb-1">Unidades mensuales por producto — 2026</p>
+          <ResponsiveContainer width="100%" height="90%">
+            <LineChart data={SKU_MENSUAL}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#fde8d0" />
+              <XAxis dataKey="mes" tick={{ fontSize: 11 }} />
+              <YAxis tick={{ fontSize: 10 }} domain={[400, 1000]} />
+              <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
+              <Legend wrapperStyle={{ fontSize: 11 }} />
+              {Object.keys(SKU_LINE_COLORS).map(sku => (
+                <Line key={sku} type="monotone" dataKey={sku} stroke={SKU_LINE_COLORS[sku]} strokeWidth={2.5} dot={{ r: 3 }} />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* Insights */}
+        <div className="w-[380px] flex flex-col gap-2.5">
+          <div className="bg-white rounded-xl shadow border border-orange-200 p-3 text-[11px] space-y-2">
+            <p className="text-sm font-bold text-orange-900">Lecturas clave</p>
+            <p><span className="text-orange-600 font-bold">🥇 Rodajitas</span> — líder en volumen (29.9% del mix) y en velocidad (2.2 uds/tienda/mes). El motor constante del portafolio.</p>
+            <p><span className="text-green-700 font-bold">💰 Chicharrón</span> — #1 en pesos ({fmtPVP(252010)} Est. PVP, 38% del valor) y el que más crece: <strong>+20.7% YTD</strong>.</p>
+            <p><span className="text-sky-700 font-bold">📈 Street Elote</span> — mejor junio del portafolio (+27.6% YoY) pero la <strong>menor cobertura (374 tiendas)</strong>: hay 36 tiendas catalogadas donde aún no vende.</p>
+            <p><span className="text-amber-700 font-bold">⚠️ Classic White</span> — creció +17% YTD pero <strong>junio cayó -10.6% YoY</strong> tras el pico del 2x$30 de mayo. A vigilar en julio.</p>
+          </div>
+          <div className="bg-orange-600 text-white rounded-xl shadow p-3 text-[11px]">
+            <p className="font-bold mb-1">Oportunidad</p>
+            <p>Cerrar la cobertura de Street Elote (374 → 397 tiendas, nivel del resto) agregaría ~<strong>230 uds/mes</strong> a velocidad actual.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ================================================================
+   SLIDE — TOP TIENDAS
+   ================================================================ */
+
+function SlideTopTiendas() {
+  return (
+    <div className="flex flex-col h-full p-6 bg-gradient-to-br from-orange-50 to-orange-100">
+      <div className="flex items-center gap-3 mb-1">
+        <Image src="/4buddies-logo.jpeg" alt="" width={40} height={40} className="h-8 w-auto rounded-lg" />
+        <h2 className="text-xl font-extrabold text-orange-900 flex items-center gap-2">
+          <Store size={22} className="text-orange-600" />
+          Top 15 Tiendas — YTD 2026
+        </h2>
+      </div>
+      <p className="text-xs text-orange-500 mb-3">
+        Ene → Jun | Unidades, 4 SKUs core | Solo tiendas catalogadas | Est. PVP referencial
+      </p>
+
+      <div className="flex gap-3 flex-1 min-h-0">
+        {/* Tabla top 15 */}
+        <div className="flex-1 bg-white rounded-xl shadow border border-orange-200 p-3 overflow-auto">
+          <table className="w-full text-[11px]">
+            <thead>
+              <tr className="bg-orange-600 text-white">
+                <th className="p-1.5 text-left rounded-tl-lg">#</th>
+                <th className="p-1.5 text-left">Tienda</th>
+                <th className="p-1.5 text-left">Zona</th>
+                <th className="p-1.5 text-right">Uds 26</th>
+                <th className="p-1.5 text-right">Uds 25</th>
+                <th className="p-1.5 text-right">Var</th>
+                <th className="p-1.5 text-right rounded-tr-lg">Est. PVP</th>
+              </tr>
+            </thead>
+            <tbody>
+              {TOP_TIENDAS.map((t, i) => {
+                const v = ((t.uds26 - t.uds25) / t.uds25) * 100;
+                return (
+                  <tr key={i} className={i % 2 === 0 ? "bg-orange-50" : ""}>
+                    <td className="p-1.5 font-bold text-orange-600">{t.rk}</td>
+                    <td className="p-1.5 font-semibold">{t.tienda}</td>
+                    <td className="p-1.5 text-gray-600">{t.zona}</td>
+                    <td className="p-1.5 text-right font-bold">{fmtU(t.uds26)}</td>
+                    <td className="p-1.5 text-right text-gray-500">{fmtU(t.uds25)}</td>
+                    <td className="p-1.5 text-right"><VarBadge v={v} /></td>
+                    <td className="p-1.5 text-right">{fmtPVP(t.mxn)}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Panel derecho: zonas + highlights */}
+        <div className="w-[380px] flex flex-col gap-2.5 min-h-0">
+          <div className="bg-white rounded-xl shadow border border-orange-200 p-3 flex-1 min-h-0 flex flex-col">
+            <p className="text-xs font-bold text-orange-900 mb-1">Venta por Zona — % uds YTD 2026</p>
+            <div className="flex-1 min-h-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={ZONAS_YTD} layout="vertical" margin={{ left: 8 }}>
+                  <XAxis type="number" tick={{ fontSize: 9 }} />
+                  <YAxis type="category" dataKey="zona" tick={{ fontSize: 10 }} width={78} />
+                  <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
+                  <Bar dataKey="uds" fill="#f97316" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl shadow border border-green-300 p-3 text-[11px] space-y-1.5">
+            <p className="text-sm font-bold text-green-700">Highlights</p>
+            <p>• <strong>8 de 15</strong> tiendas top son de <strong>Monterrey (NORTE)</strong> — la plaza más fuerte.</p>
+            <p>• Emergentes: <strong>Mérida Dzityá (+391%)</strong>, <strong>Culiacán Celenes (+300%)</strong> y <strong>Mazatlán Mediterráneo (+296%)</strong> escalaron al top este año.</p>
+            <p>• El top 15 concentra solo <strong>{TOP15_SHARE}%</strong> de la venta total: crecimiento bien distribuido, sin dependencia de pocas tiendas.</p>
+            <p className="text-amber-700">• A vigilar: <strong>Mty Plaza 404 (-26%)</strong> y <strong>Cancún Colosio (-5%)</strong> vs 2025.</p>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -613,11 +848,13 @@ function Slide5() {
    MAIN — CAROUSEL
    ================================================================ */
 
-const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5];
+const SLIDES = [Slide1, Slide2, Slide3, SlideTopProductos, SlideTopTiendas, Slide4, Slide5];
 const SLIDE_NAMES = [
   "Portada",
   "KPIs YTD",
   "Tendencia Mensual",
+  "Top Productos",
+  "Top Tiendas",
   "Impacto Promo",
   "Próximo Salto",
 ];
