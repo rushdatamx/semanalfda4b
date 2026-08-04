@@ -16,7 +16,7 @@ const PRODUCTOS = [{"nombre": "Rodajitas Spicy Limon 30g", "corto": "Rodajitas",
 const TOP20 = [{"code": "LGCL", "tienda": "F A LEON, CLOUTHIER", "zona": "OCCIDENTE", "plaza": "LEON", "uds": 244, "estPvp": 7617}, {"code": "MAME", "tienda": "F A MAZATLAN, MEDITERRANEO", "zona": "PACIFICO", "plaza": "MAZATLAN", "uds": 225, "estPvp": 9332}, {"code": "MTCW", "tienda": "F A MONTERREY OTE, CORPORA", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 210, "estPvp": 7476}, {"code": "MTHD", "tienda": "F A MONTERREY OTE, OBISPAD", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 198, "estPvp": 6696}, {"code": "CLCL", "tienda": "F A CULIACAN, CELENES", "zona": "PACIFICO", "plaza": "CULIACAN", "uds": 181, "estPvp": 5297}, {"code": "LGPC", "tienda": "F A LEON, PROL CAMPESTRE", "zona": "OCCIDENTE", "plaza": "LEON", "uds": 171, "estPvp": 5123}, {"code": "CNCL", "tienda": "F A CANCUN, COLOSIO", "zona": "PENINSULA", "plaza": "CANCUN", "uds": 164, "estPvp": 6776}, {"code": "MTP4", "tienda": "F A MONTERREY OTE, PLAZA 4", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 160, "estPvp": 5189}, {"code": "MTGT", "tienda": "F A MONTERREY OTE, GLORIET", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 158, "estPvp": 5472}, {"code": "LGPA", "tienda": "F A LEON, PASEO DEL MORAL", "zona": "OCCIDENTE", "plaza": "LEON", "uds": 157, "estPvp": 4629}, {"code": "MTUA", "tienda": "F A MONTERREY OTE, UMA", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 150, "estPvp": 4772}, {"code": "MTVL", "tienda": "F A MONTERREY OTE, VALLE A", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 140, "estPvp": 4841}, {"code": "MXBN", "tienda": "F A MEXICO CENTRO, LUIS BA", "zona": "METRO", "plaza": "MEXICO CENTRO", "uds": 140, "estPvp": 5979}, {"code": "MTCA", "tienda": "F A MONTERREY OTE, CALZADA", "zona": "NORTE", "plaza": "NUEVA 2025", "uds": 137, "estPvp": 4776}, {"code": "MAOP", "tienda": "F A MAZATLAN, OSCAR PEREZ", "zona": "PACIFICO", "plaza": "MAZATLAN", "uds": 122, "estPvp": 4575}, {"code": "MEDZ", "tienda": "F A MERIDA, DZITYA REAL MO", "zona": "PENINSULA", "plaza": "MERIDA", "uds": 122, "estPvp": 4566}, {"code": "MTRS", "tienda": "F A MONTERREY OTE, ROBERTO", "zona": "NORTE", "plaza": "MONTERREY ORIENTE", "uds": 122, "estPvp": 3874}, {"code": "PEMZ", "tienda": "F A PUEBLA, MARZALA", "zona": "CENTRO - SUR", "plaza": "PUEBLA", "uds": 121, "estPvp": 4061}, {"code": "CHLV", "tienda": "F A SALTILLO, LOS VALDEZ", "zona": "NORTE", "plaza": "SALTILLO", "uds": 120, "estPvp": 4463}, {"code": "TLGR", "tienda": "F A TOLUCA FORANEAS, GENER", "zona": "METRO", "plaza": "TOLUCA FORANEAS", "uds": 116, "estPvp": 4121}];
 const PROMO_SKU = [{"sku": "Classic White 25g", "mec": "2 x $30", "baseline": 672, "jul26": 900, "lift": 33.9, "incr": 228, "liftSS": 33.6, "incrSS": 216, "yoy": 27.5, "p2jun": 11.3, "p2jul": 27.8, "incrPvp": 5122}, {"sku": "Street Elote 125g", "mec": "20% desc", "baseline": 670, "jul26": 871, "lift": 30.0, "incr": 201, "liftSS": 29.9, "incrSS": 196, "yoy": 68.1, "p2jun": 9.1, "p2jul": 10.3, "incrPvp": 9447}, {"sku": "Chicharron 75g", "mec": "20% desc", "baseline": 749, "jul26": 921, "lift": 23.0, "incr": 172, "liftSS": 21.6, "incrSS": 156, "yoy": 36.8, "p2jun": 10.0, "p2jul": 13.1, "incrPvp": 9995}, {"sku": "Rodajitas 30g", "mec": "20% desc", "baseline": 851, "jul26": 1000, "lift": 17.5, "incr": 149, "liftSS": 16.8, "incrSS": 139, "yoy": 28.5, "p2jun": 14.8, "p2jul": 15.1, "incrPvp": 4088}];
 const PROMO_TOT = {"baseline": 2942, "jul26": 3692, "lift": 25.5, "incr": 750, "baselineSS": 2848, "jul26SS": 3554, "liftSS": 24.8, "incrSS": 706, "nSameStore": 359, "jul25": 2675, "yoy": 38.0, "incrPvp": 28652, "tiendasBase": 391, "tiendasJul": 399, "liftTiendas": 2.0, "liftIntensidad": 23.0};
-const PROMO_SEM = [{"sem": "S23", "ini": "06-01", "uds": 675, "cwUds": 127, "p2": 13.4}, {"sem": "S24", "ini": "06-08", "uds": 665, "cwUds": 129, "p2": 11.4}, {"sem": "S25", "ini": "06-15", "uds": 656, "cwUds": 145, "p2": 7.6}, {"sem": "S26", "ini": "06-22", "uds": 677, "cwUds": 147, "p2": 12.6}, {"sem": "S27", "ini": "06-29", "uds": 792, "cwUds": 165, "p2": 22.8}, {"sem": "S28", "ini": "07-06", "uds": 754, "cwUds": 200, "p2": 20.9}, {"sem": "S29", "ini": "07-13", "uds": 853, "cwUds": 206, "p2": 32.9}, {"sem": "S30", "ini": "07-20", "uds": 874, "cwUds": 196, "p2": 32.6}, {"sem": "S31", "ini": "07-27", "uds": 640, "cwUds": 178, "p2": 25.8}];
+const PROMO_SEM = [{"sem": "S23", "ini": "06-01", "uds": 675, "dias": 7, "udsDia": 96.4, "p2": 13.4, "parcial": false}, {"sem": "S24", "ini": "06-08", "uds": 665, "dias": 7, "udsDia": 95.0, "p2": 11.4, "parcial": false}, {"sem": "S25", "ini": "06-15", "uds": 656, "dias": 7, "udsDia": 93.7, "p2": 7.6, "parcial": false}, {"sem": "S26", "ini": "06-22", "uds": 677, "dias": 7, "udsDia": 96.7, "p2": 12.6, "parcial": false}, {"sem": "S27", "ini": "06-29", "uds": 792, "dias": 7, "udsDia": 113.1, "p2": 22.8, "parcial": false}, {"sem": "S28", "ini": "07-06", "uds": 754, "dias": 7, "udsDia": 107.7, "p2": 20.9, "parcial": false}, {"sem": "S29", "ini": "07-13", "uds": 853, "dias": 7, "udsDia": 121.9, "p2": 32.9, "parcial": false}, {"sem": "S30", "ini": "07-20", "uds": 874, "dias": 7, "udsDia": 124.9, "p2": 32.6, "parcial": false}, {"sem": "S31", "ini": "07-27", "uds": 640, "dias": 5, "udsDia": 128.0, "p2": 25.8, "parcial": true}];
 const PROMO_MIX = [{"mes": "Junio (sin promo)", "p1": 84.9, "p2": 11.4, "p3": 3.7}, {"mes": "Julio (promo)", "p1": 79.2, "p2": 16.2, "p3": 4.6}];
 const PIE_PRODUCTOS = PRODUCTOS.map((p) => ({ name: p.corto, value: p.uds26 }));
 const PIE_COLORS = ["#ea580c", "#f97316", "#fb923c", "#fdba74"];
@@ -171,7 +171,7 @@ const S3 = () => (
     </div>
 
     <div className="flex gap-3 flex-1 min-h-0">
-      <Card cls="flex-1">
+      <Card cls="flex-1 flex flex-col">
         <p className="text-[11px] font-bold text-orange-900 mb-1">Desempeño por SKU y mecanica</p>
         <table className="w-full text-[10px]">
           <thead><tr className="bg-orange-600 text-white">
@@ -223,23 +223,68 @@ const S3 = () => (
             El crecimiento NO viene de mas puntos de venta: viene de que cada tienda vende mas.
           </p>
         </div>
+
+        <div className="mt-2 flex-1 bg-amber-50 border border-amber-300 rounded p-2 flex flex-col justify-center">
+          <p className="text-[10px] font-bold text-amber-900 mb-1.5">
+            Rendimiento por mecanica — promedio de lift
+          </p>
+          <div className="flex gap-2 items-stretch">
+            <div className="flex-1 bg-white rounded p-2 border-2 border-amber-500">
+              <p className="text-[9px] text-gray-500 font-semibold">2 x $30 (NxS)</p>
+              <p className="text-2xl font-bold text-amber-700">
+                {fmtPct(PROMO_SKU.filter((p) => p.mec === "2 x $30").reduce((a, p) => a + p.lift, 0) /
+                  PROMO_SKU.filter((p) => p.mec === "2 x $30").length)}
+              </p>
+              <p className="text-[8px] text-gray-500">1 SKU · Classic White</p>
+              <p className="text-[9px] font-bold text-amber-800 mt-1">
+                +16.5 pts en compras de 2 pzas
+              </p>
+            </div>
+            <div className="flex-1 bg-white rounded p-2 border border-gray-300">
+              <p className="text-[9px] text-gray-500 font-semibold">20% descuento</p>
+              <p className="text-2xl font-bold text-gray-600">
+                {fmtPct(PROMO_SKU.filter((p) => p.mec === "20% desc").reduce((a, p) => a + p.lift, 0) /
+                  PROMO_SKU.filter((p) => p.mec === "20% desc").length)}
+              </p>
+              <p className="text-[8px] text-gray-500">3 SKUs · promedio</p>
+              <p className="text-[9px] font-bold text-gray-600 mt-1">
+                +0.3 a +3.1 pts en compras de 2 pzas
+              </p>
+            </div>
+          </div>
+          <p className="text-[9px] text-amber-900 mt-1.5">
+            Ambas mecanicas vendieron mas, pero solo el 2xN cambio <b>cuantas piezas</b> se lleva el cliente.
+            Con el mismo costo promocional, la mecanica NxS es la palanca mas eficiente.
+          </p>
+        </div>
       </Card>
 
       <Card cls="w-[380px]">
-        <p className="text-[11px] font-bold text-orange-900 mb-1">Arranque semanal (uds 4 SKUs)</p>
+        <p className="text-[11px] font-bold text-orange-900 mb-1">
+          Arranque semanal — unidades por dia
+        </p>
         <div className="h-[150px]">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={PROMO_SEM} margin={{ top: 5, right: 8, bottom: 0, left: -22 }}>
+            <LineChart data={PROMO_SEM} margin={{ top: 5, right: 8, bottom: 0, left: -18 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" />
               <XAxis dataKey="ini" tick={{ fontSize: 9 }} />
-              <YAxis tick={{ fontSize: 9 }} domain={[550, 950]} />
-              <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
-              <Line type="monotone" dataKey="uds" stroke="#ea580c" strokeWidth={2.5} dot={{ r: 3 }} name="Uds" />
+              <YAxis tick={{ fontSize: 9 }} domain={[85, 135]} />
+              <Tooltip
+                formatter={(v: number) => v.toFixed(1) + " uds/dia"}
+                labelFormatter={(l: string) => {
+                  const w = PROMO_SEM.find((x) => x.ini === l);
+                  return `Semana ${l} (${w?.dias} dias)`;
+                }}
+              />
+              <Line type="monotone" dataKey="udsDia" stroke="#ea580c" strokeWidth={2.5}
+                dot={{ r: 3 }} name="Uds/dia" />
             </LineChart>
           </ResponsiveContainer>
         </div>
         <p className="text-[9px] text-gray-500">
-          Junio se mueve plano en ~665 uds/sem. Desde la semana del 29-jun sube a 790-875 uds/sem.
+          Junio se mueve plano en ~95 uds/dia. Desde la semana del 29-jun sube a 108-128 uds/dia y
+          <b> no baja</b>: la ultima semana es la mas alta del periodo.
+          Se grafica por dia porque la semana del 27-jul solo tiene 5 dias.
         </p>
         <div className="mt-2 bg-amber-50 border border-amber-300 rounded p-2">
           <p className="text-[10px] font-bold text-amber-900">Cambio en el mix de piezas</p>
@@ -282,22 +327,38 @@ const S5 = () => (
   <div className="flex flex-col h-full p-6">
     <Head t="Venta por Producto — 4 SKUs Core" s="YTD ene-jul 2026 vs 2025. Solo tiendas catalogadas." icon={<Box size={18} />} />
     <div className="flex gap-3 flex-1 min-h-0">
-      <Card cls="w-[290px] flex flex-col">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie data={PIE_PRODUCTOS} dataKey="value" nameKey="name" cx="50%" cy="48%" outerRadius={78}
-              label={(p: { name?: string; percent?: number }) => `${p.name} ${((p.percent ?? 0) * 100).toFixed(0)}%`}
-              labelLine={false} style={{ fontSize: 9 }}>
-              {PIE_PRODUCTOS.map((e, i) => <Cell key={e.name} fill={PIE_COLORS[i]} />)}
-            </Pie>
-            <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
-          </PieChart>
-        </ResponsiveContainer>
-        <p className="text-[10px] text-orange-800 text-center font-semibold">
-          Portafolio balanceado: ningun SKU pasa del 30%.
-        </p>
+      <Card cls="w-[300px] flex flex-col">
+        <p className="text-[11px] font-bold text-orange-900 mb-1">Participacion YTD 2026</p>
+        <div className="h-[215px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie data={PIE_PRODUCTOS} dataKey="value" nameKey="name" cx="50%" cy="50%"
+                outerRadius={85} innerRadius={42} paddingAngle={2}
+                label={({ percent }: { percent?: number }) => `${((percent ?? 0) * 100).toFixed(0)}%`}
+                labelLine={false} fontSize={11} fontWeight={700} fill="#7c2d12">
+                {PIE_PRODUCTOS.map((e, i) => <Cell key={e.name} fill={PIE_COLORS[i]} />)}
+              </Pie>
+              <Tooltip formatter={(v: number) => fmtU(v) + " uds"} />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <div className="space-y-1 mt-1">
+          {PRODUCTOS.map((p, i) => (
+            <div key={p.upc} className="flex items-center gap-1.5 text-[10px]">
+              <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: PIE_COLORS[i] }} />
+              <span className="flex-1 text-gray-700">{p.corto}</span>
+              <span className="font-bold text-orange-900">{fmtU(p.uds26)}</span>
+              <span className="text-gray-400 w-9 text-right">{p.pctTotal}%</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-auto pt-2 bg-orange-50 border border-orange-200 rounded p-2">
+          <p className="text-[10px] text-orange-900 font-semibold">
+            Portafolio balanceado: ningun SKU pasa del 30%. Reduce el riesgo de depender de un solo producto.
+          </p>
+        </div>
       </Card>
-      <Card cls="flex-1">
+      <Card cls="flex-1 flex flex-col">
         <table className="w-full text-[11px]">
           <thead><tr className="bg-orange-600 text-white">
             <th className="p-1.5 text-left">Producto</th><th className="p-1.5 text-right">YTD 26</th>
@@ -338,6 +399,33 @@ const S5 = () => (
             <p className="text-[10px] font-bold text-amber-800">A vigilar</p>
             <p className="text-[10px] text-amber-900">Rodajitas {fmtPct(PRODUCTOS.find((p) => p.corto === "Rodajitas")!.var)}: es el SKU lider pero el de menor crecimiento.</p>
           </div>
+        </div>
+
+        <div className="mt-2 flex-1 bg-white border-2 border-orange-200 rounded-lg p-2.5 flex flex-col justify-center">
+          <p className="text-[11px] font-bold text-orange-900 mb-2">
+            El salto de julio por producto — junio vs julio 2026
+          </p>
+          <div className="grid grid-cols-4 gap-2">
+            {PRODUCTOS.map((p) => {
+              const jun = p.tend3m[1];
+              const jul = p.tend3m[2];
+              const d = ((jul - jun) / jun) * 100;
+              return (
+                <div key={p.upc} className="bg-orange-50 border border-orange-200 rounded p-2 text-center">
+                  <p className="text-[9px] text-gray-600 font-semibold leading-tight h-6">{p.corto}</p>
+                  <p className="text-lg font-bold text-orange-800 leading-none">{fmtU(jul)}</p>
+                  <p className="text-[8px] text-gray-400 mb-1">jun: {fmtU(jun)}</p>
+                  <span className="inline-block px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-green-100 text-green-700">
+                    {fmtPct(d)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-[10px] text-orange-900 mt-2">
+            Los 4 SKUs subieron en julio. Classic White fue el mayor salto mensual
+            (+51.8%) — es el que llevaba la mecanica 2x$30.
+          </p>
         </div>
       </Card>
     </div>
