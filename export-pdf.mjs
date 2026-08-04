@@ -3,10 +3,10 @@ import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs';
 
-const TOTAL_SLIDES = 6;
+const TOTAL_SLIDES = 7;
 const WIDTH = 1280;
 const HEIGHT = 720;
-const OUTPUT = path.resolve('../../outputs/presentacion_FDA_4BUDDIES_Q1_2026.pdf');
+const OUTPUT = path.resolve('../outputs/presentacion_FDA_4BUDDIES_2026-07-06.pdf');
 
 // Ensure output dir exists
 fs.mkdirSync(path.dirname(OUTPUT), { recursive: true });

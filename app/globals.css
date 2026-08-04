@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+/* Forzar light mode: evita que el navegador en dark mode invierta textos */
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #431407;
+}
