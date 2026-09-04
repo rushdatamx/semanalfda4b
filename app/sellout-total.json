@@ -68,6 +68,84 @@
       "var": 18.3
     }
   ],
+  "promo": {
+    "meses": [
+      {
+        "mes": "May",
+        "u2025": 3041,
+        "u2026": 3657,
+        "var": 20.3,
+        "mismasTiendas": 431,
+        "varMismasTiendas": 14.4
+      },
+      {
+        "mes": "Jul",
+        "u2025": 3235,
+        "u2026": 3943,
+        "var": 21.9,
+        "mismasTiendas": 397,
+        "varMismasTiendas": 26.0
+      }
+    ],
+    "productos": [
+      {
+        "mes": "May",
+        "producto": "Rodajitas",
+        "u2025": 1081,
+        "u2026": 1087,
+        "var": 0.6
+      },
+      {
+        "mes": "May",
+        "producto": "Classic White",
+        "u2025": 657,
+        "u2026": 846,
+        "var": 28.8
+      },
+      {
+        "mes": "May",
+        "producto": "Chicharrón",
+        "u2025": 704,
+        "u2026": 837,
+        "var": 18.9
+      },
+      {
+        "mes": "May",
+        "producto": "Street Elote 125g",
+        "u2025": 599,
+        "u2026": 887,
+        "var": 48.1
+      },
+      {
+        "mes": "Jul",
+        "producto": "Rodajitas",
+        "u2025": 1091,
+        "u2026": 1069,
+        "var": -2.0
+      },
+      {
+        "mes": "Jul",
+        "producto": "Classic White",
+        "u2025": 798,
+        "u2026": 963,
+        "var": 20.7
+      },
+      {
+        "mes": "Jul",
+        "producto": "Chicharrón",
+        "u2025": 763,
+        "u2026": 970,
+        "var": 27.1
+      },
+      {
+        "mes": "Jul",
+        "producto": "Street Elote 125g",
+        "u2025": 583,
+        "u2026": 941,
+        "var": 61.4
+      }
+    ]
+  },
   "products": [
     {
       "upc": "7500462860042",
