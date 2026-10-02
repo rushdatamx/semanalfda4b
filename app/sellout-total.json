@@ -1,96 +1,96 @@
 {
-  "scope": "Universo total de sucursales con venta (no limitado a las 410 catalogadas)",
+  "scope": "Universo total de ventas y sucursales (todos los productos; no limitado a las 410 catalogadas)",
   "fechaMaxVenta": "2026-09-30",
   "periodo": "Enero–Sep 2026",
   "kpi": {
-    "udsYtd26": 31938,
-    "udsYtd25": 28676,
-    "varUds": 11.4,
+    "udsYtd26": 31942,
+    "udsYtd25": 32402,
+    "varUds": -1.4,
     "estPvp26": 1206026,
-    "tiendasActivas": 738,
-    "tiendas2025": 830,
-    "mismasTiendas": 637,
-    "varMismasTiendas": 7.7,
+    "tiendasActivas": 740,
+    "tiendas2025": 848,
+    "mismasTiendas": 641,
+    "varMismasTiendas": -4.7,
     "udsAgo26": 4355,
-    "udsAgo25": 3023,
-    "varAgo": 44.1,
+    "udsAgo25": 3086,
+    "varAgo": 41.1,
     "catalogadasYtd": 409,
-    "noCatalogadasYtd": 329,
-    "udsNoCatalogadas": 3315
+    "noCatalogadasYtd": 331,
+    "udsNoCatalogadas": 3318
   },
   "monthly": [
     {
       "mes": "Ene",
-      "u2025": 3727,
-      "u2026": 3470,
-      "var": -6.9
+      "u2025": 4392,
+      "u2026": 3473,
+      "var": -20.9
     },
     {
       "mes": "Feb",
-      "u2025": 3218,
+      "u2025": 3760,
       "u2026": 3231,
-      "var": 0.4
+      "var": -14.1
     },
     {
       "mes": "Mar",
-      "u2025": 3375,
+      "u2025": 3960,
       "u2026": 3377,
-      "var": 0.1
+      "var": -14.7
     },
     {
       "mes": "Abr",
-      "u2025": 2942,
+      "u2025": 3437,
       "u2026": 3200,
-      "var": 8.8
+      "var": -6.9
     },
     {
       "mes": "May",
-      "u2025": 3041,
+      "u2025": 3567,
       "u2026": 3657,
-      "var": 20.3
+      "var": 2.5
     },
     {
       "mes": "Jun",
-      "u2025": 3111,
-      "u2026": 3150,
-      "var": 1.3
+      "u2025": 3585,
+      "u2026": 3151,
+      "var": -12.1
     },
     {
       "mes": "Jul",
-      "u2025": 3235,
+      "u2025": 3500,
       "u2026": 3943,
-      "var": 21.9
+      "var": 12.7
     },
     {
       "mes": "Ago",
-      "u2025": 3004,
+      "u2025": 3115,
       "u2026": 3555,
-      "var": 18.3
+      "var": 14.1
     },
     {
       "mes": "Sep",
-      "u2025": 3023,
+      "u2025": 3086,
       "u2026": 4355,
-      "var": 44.1
+      "var": 41.1
     }
   ],
   "promo": {
     "meses": [
       {
         "mes": "May",
-        "u2025": 3041,
+        "u2025": 3567,
         "u2026": 3657,
-        "var": 20.3,
-        "mismasTiendas": 431,
-        "varMismasTiendas": 14.4
+        "var": 2.5,
+        "mismasTiendas": 435,
+        "varMismasTiendas": -2.4
       },
       {
         "mes": "Jul",
-        "u2025": 3235,
+        "u2025": 3500,
         "u2026": 3943,
-        "var": 21.9,
-        "mismasTiendas": 397,
-        "varMismasTiendas": 26.0
+        "var": 12.7,
+        "mismasTiendas": 401,
+        "varMismasTiendas": 16.6
       }
     ],
     "productos": [
@@ -212,56 +212,101 @@
         703,
         948
       ]
+    },
+    {
+      "upc": "7500462860066",
+      "nombre": "4BUDDIES PALOMITAS DE MAIZ CHILE PIQUIN 25G 0066",
+      "corto": "Palomitas CHILE PIQUIN 25G 0066",
+      "precioPvp": null,
+      "uds25": 3726,
+      "uds26": 4,
+      "var": -99.9,
+      "pctTotal": 0.0,
+      "tend3m": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "upc": "7500462860035",
+      "nombre": "4BUDDIES PALOMITAS DE MAIZ SPICY NOPAL 25G 0035",
+      "corto": "Palomitas SPICY NOPAL 25G 0035",
+      "precioPvp": null,
+      "uds25": 0,
+      "uds26": 0,
+      "var": null,
+      "pctTotal": 0.0,
+      "tend3m": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "upc": "7503028921133",
+      "nombre": "4BUDDIES PALOMITAS DE MAIZ CLASSIC SWEET 25G 1133",
+      "corto": "Palomitas CLASSIC SWEET 25G 1133",
+      "precioPvp": null,
+      "uds25": 0,
+      "uds26": 0,
+      "var": null,
+      "pctTotal": 0.0,
+      "tend3m": [
+        0,
+        0,
+        0
+      ]
     }
   ],
   "cedis": [
     {
       "cedis": "MTNA",
-      "u2025": 9780,
-      "u2026": 10334,
-      "var": 5.7
+      "u2025": 11147,
+      "u2026": 10335,
+      "var": -7.3
     },
     {
       "cedis": "MRTL",
-      "u2025": 7708,
-      "u2026": 9032,
-      "var": 17.2
+      "u2025": 8503,
+      "u2026": 9034,
+      "var": 6.2
     },
     {
       "cedis": "CLCD",
-      "u2025": 4918,
+      "u2025": 5669,
       "u2026": 5708,
-      "var": 16.1
+      "var": 0.7
     },
     {
       "cedis": "MEAM",
-      "u2025": 2398,
+      "u2025": 2631,
       "u2026": 2767,
-      "var": 15.4
+      "var": 5.2
     },
     {
       "cedis": "PEBO",
-      "u2025": 2097,
-      "u2026": 1986,
-      "var": -5.3
+      "u2025": 2431,
+      "u2026": 1987,
+      "var": -18.3
     },
     {
       "cedis": "TJBO",
-      "u2025": 1114,
+      "u2025": 1312,
       "u2026": 1373,
-      "var": 23.2
+      "var": 4.6
     },
     {
       "cedis": "TXNT",
-      "u2025": 661,
+      "u2025": 709,
       "u2026": 738,
-      "var": 11.6
+      "var": 4.1
     }
   ],
   "zones2026": [
     {
       "zona": "NORTE",
-      "uds": 10831
+      "uds": 10832
     },
     {
       "zona": "NOROESTE",
@@ -277,7 +322,7 @@
     },
     {
       "zona": "METRO",
-      "uds": 2601
+      "uds": 2603
     },
     {
       "zona": "PACIFICO",
@@ -289,27 +334,27 @@
     },
     {
       "zona": "CENTRO - SUR",
-      "uds": 739
+      "uds": 740
     }
   ],
   "formats": [
     {
       "formato": "PLUS",
-      "u2025": 28376,
-      "u2026": 31416,
-      "var": 10.7
+      "u2025": 32062,
+      "u2026": 31420,
+      "var": -2.0
     },
     {
       "formato": "TRADICIONAL",
-      "u2025": 210,
+      "u2025": 242,
       "u2026": 375,
-      "var": 78.6
+      "var": 55.0
     },
     {
       "formato": "CONTACTO",
-      "u2025": 69,
+      "u2025": 73,
       "u2026": 147,
-      "var": 113.0
+      "var": 101.4
     }
   ],
   "topStores": [
