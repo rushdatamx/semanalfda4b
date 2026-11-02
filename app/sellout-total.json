@@ -1,22 +1,22 @@
 {
   "scope": "Universo total de ventas y sucursales (todos los productos; no limitado a las 410 catalogadas)",
-  "fechaMaxVenta": "2026-09-30",
-  "periodo": "Enero–Sep 2026",
+  "fechaMaxVenta": "2026-10-31",
+  "periodo": "Enero–Oct 2026",
   "kpi": {
-    "udsYtd26": 31942,
-    "udsYtd25": 32402,
-    "varUds": -1.4,
-    "estPvp26": 1206026,
-    "tiendasActivas": 740,
-    "tiendas2025": 848,
-    "mismasTiendas": 641,
-    "varMismasTiendas": -4.7,
-    "udsAgo26": 4355,
-    "udsAgo25": 3086,
-    "varAgo": 41.1,
+    "udsYtd26": 36123,
+    "udsYtd25": 35651,
+    "varUds": 1.3,
+    "estPvp26": 1365054.5,
+    "tiendasActivas": 756,
+    "tiendas2025": 854,
+    "mismasTiendas": 649,
+    "varMismasTiendas": -2.0,
+    "udsMesReciente26": 4181,
+    "udsMesReciente25": 3249,
+    "varMesReciente": 28.7,
     "catalogadasYtd": 409,
-    "noCatalogadasYtd": 331,
-    "udsNoCatalogadas": 3318
+    "noCatalogadasYtd": 347,
+    "udsNoCatalogadas": 3611
   },
   "monthly": [
     {
@@ -72,6 +72,12 @@
       "u2025": 3086,
       "u2026": 4355,
       "var": 41.1
+    },
+    {
+      "mes": "Oct",
+      "u2025": 3249,
+      "u2026": 4181,
+      "var": 28.7
     }
   ],
   "promo": {
@@ -158,29 +164,14 @@
       "nombre": "Rodajitas Spicy Limón 30g",
       "corto": "Rodajitas",
       "precioPvp": 27.5,
-      "uds25": 10154,
-      "uds26": 9894,
+      "uds25": 11246,
+      "uds26": 10958,
       "var": -2.6,
-      "pctTotal": 31.0,
+      "pctTotal": 30.3,
       "tend3m": [
-        1069,
         1089,
-        1070
-      ]
-    },
-    {
-      "upc": "7503028921317",
-      "nombre": "Chicharrón de Cerdo 75g",
-      "corto": "Chicharrón",
-      "precioPvp": 58.0,
-      "uds25": 6462,
-      "uds26": 7692,
-      "var": 19.0,
-      "pctTotal": 24.1,
-      "tend3m": [
-        970,
-        930,
-        1078
+        1070,
+        1064
       ]
     },
     {
@@ -188,14 +179,29 @@
       "nombre": "Palomitas Classic White 25g",
       "corto": "Classic White",
       "precioPvp": 22.5,
-      "uds25": 6538,
-      "uds26": 7622,
-      "var": 16.6,
-      "pctTotal": 23.9,
+      "uds25": 7337,
+      "uds26": 8779,
+      "var": 19.7,
+      "pctTotal": 24.3,
       "tend3m": [
-        963,
         833,
-        1259
+        1259,
+        1157
+      ]
+    },
+    {
+      "upc": "7503028921317",
+      "nombre": "Chicharrón de Cerdo 75g",
+      "corto": "Chicharrón",
+      "precioPvp": 58.0,
+      "uds25": 7170,
+      "uds26": 8748,
+      "var": 22.0,
+      "pctTotal": 24.2,
+      "tend3m": [
+        930,
+        1078,
+        1056
       ]
     },
     {
@@ -203,14 +209,14 @@
       "nombre": "Palomitas Street Elote 125g",
       "corto": "Street Elote 125g",
       "precioPvp": 47.0,
-      "uds25": 5522,
-      "uds26": 6730,
-      "var": 21.9,
+      "uds25": 6137,
+      "uds26": 7634,
+      "var": 24.4,
       "pctTotal": 21.1,
       "tend3m": [
-        941,
         703,
-        948
+        948,
+        904
       ]
     },
     {
@@ -218,7 +224,7 @@
       "nombre": "4BUDDIES PALOMITAS DE MAIZ CHILE PIQUIN 25G 0066",
       "corto": "Palomitas CHILE PIQUIN 25G 0066",
       "precioPvp": null,
-      "uds25": 3726,
+      "uds25": 3761,
       "uds26": 4,
       "var": -99.9,
       "pctTotal": 0.0,
@@ -262,67 +268,79 @@
   "cedis": [
     {
       "cedis": "MTNA",
-      "u2025": 11147,
-      "u2026": 10335,
-      "var": -7.3
+      "u2025": 12251,
+      "u2026": 11456,
+      "var": -6.5
     },
     {
       "cedis": "MRTL",
-      "u2025": 8503,
-      "u2026": 9034,
-      "var": 6.2
+      "u2025": 9357,
+      "u2026": 9763,
+      "var": 4.3
     },
     {
       "cedis": "CLCD",
-      "u2025": 5669,
-      "u2026": 5708,
-      "var": 0.7
+      "u2025": 6202,
+      "u2026": 6476,
+      "var": 4.4
     },
     {
       "cedis": "MEAM",
-      "u2025": 2631,
-      "u2026": 2767,
-      "var": 5.2
+      "u2025": 2905,
+      "u2026": 3108,
+      "var": 7.0
     },
     {
       "cedis": "PEBO",
-      "u2025": 2431,
-      "u2026": 1987,
-      "var": -18.3
+      "u2025": 2659,
+      "u2026": 2248,
+      "var": -15.5
     },
     {
       "cedis": "TJBO",
-      "u2025": 1312,
-      "u2026": 1373,
-      "var": 4.6
+      "u2025": 1469,
+      "u2026": 1544,
+      "var": 5.1
     },
     {
       "cedis": "TXNT",
-      "u2025": 709,
-      "u2026": 738,
-      "var": 4.1
+      "u2025": 808,
+      "u2026": 844,
+      "var": 4.5
+    },
+    {
+      "cedis": "GDRA",
+      "u2025": 0,
+      "u2026": 482,
+      "var": null
+    },
+    {
+      "cedis": "CIUA",
+      "u2025": 0,
+      "u2026": 202,
+      "var": null
     }
   ],
   "zones2026": [
     {
       "zona": "NORTE",
-      "uds": 10832
+      "uds": 12075
     },
     {
       "zona": "NOROESTE",
-      "uds": 6192
+      "uds": 7370
     },
     {
       "zona": "OCCIDENTE",
-      "uds": 5422
+      "uds": 6150
     },
     {
       "zona": "PENINSULA",
-      "uds": 4047
+      "uds": 4557
     },
     {
       "zona": "METRO",
-      "uds": 2603
+      "uds": 2972
     },
     {
       "zona": "PACIFICO",
@@ -330,7 +348,7 @@
     },
     {
       "zona": "SUR",
-      "uds": 871
+      "uds": 1024
     },
     {
       "zona": "CENTRO - SUR",
@@ -340,21 +358,21 @@
   "formats": [
     {
       "formato": "PLUS",
-      "u2025": 32062,
-      "u2026": 31420,
-      "var": -2.0
+      "u2025": 35272,
+      "u2026": 35536,
+      "var": 0.7
     },
     {
       "formato": "TRADICIONAL",
-      "u2025": 242,
-      "u2026": 375,
-      "var": 55.0
+      "u2025": 269,
+      "u2026": 424,
+      "var": 57.6
     },
     {
       "formato": "CONTACTO",
-      "u2025": 73,
-      "u2026": 147,
-      "var": 101.4
+      "u2025": 85,
+      "u2026": 163,
+      "var": 91.8
     }
   ],
   "topStores": [
@@ -363,160 +381,160 @@
       "tienda": "LGCL CLOUTHIER",
       "zona": "OCCIDENTE",
       "cedis": "MRTL",
-      "uds": 351,
-      "estPvp": 10720
+      "uds": 381,
+      "estPvp": 11699
     },
     {
       "code": "MAME",
       "tienda": "MAME MEDITERRANEO",
       "zona": "PACIFICO",
       "cedis": "CLCD",
-      "uds": 294,
-      "estPvp": 12417.5
+      "uds": 325,
+      "estPvp": 13756
     },
     {
       "code": "MTCW",
       "tienda": "MTCW CORPORATIVO",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 284,
-      "estPvp": 10132.5
+      "uds": 318,
+      "estPvp": 11390.5
     },
     {
       "code": "MTHD",
       "tienda": "MTHD OBISPADO",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 258,
-      "estPvp": 8535.5
+      "uds": 297,
+      "estPvp": 9592
     },
     {
       "code": "LGPC",
       "tienda": "LGPC PROL CAMPESTRE",
       "zona": "OCCIDENTE",
       "cedis": "MRTL",
-      "uds": 247,
-      "estPvp": 7374.5
-    },
-    {
-      "code": "MTP4",
-      "tienda": "MTP4 PLAZA 404",
-      "zona": "NORTE",
-      "cedis": "MTNA",
-      "uds": 225,
-      "estPvp": 7347.5
+      "uds": 294,
+      "estPvp": 8763
     },
     {
       "code": "CNCL",
       "tienda": "CNCL COLOSIO",
       "zona": "PENINSULA",
       "cedis": "MEAM",
-      "uds": 221,
-      "estPvp": 8803.5
+      "uds": 261,
+      "estPvp": 10218.5
     },
     {
       "code": "LGPA",
       "tienda": "LGPA PASEO DEL MORAL",
       "zona": "OCCIDENTE",
       "cedis": "MRTL",
-      "uds": 215,
-      "estPvp": 6354
+      "uds": 240,
+      "estPvp": 7026.5
     },
     {
-      "code": "MTGT",
-      "tienda": "MTGT GLORIETA CALZADA",
+      "code": "MTP4",
+      "tienda": "MTP4 PLAZA 404",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 203,
-      "estPvp": 7211
+      "uds": 239,
+      "estPvp": 7792.5
     },
     {
       "code": "MXBN",
       "tienda": "MXBN LUIS BARRAGAN",
       "zona": "METRO",
       "cedis": "MRTL",
-      "uds": 201,
-      "estPvp": 8387.5
+      "uds": 235,
+      "estPvp": 9795
     },
     {
       "code": "MTUA",
       "tienda": "MTUA UMA",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 200,
-      "estPvp": 6225
+      "uds": 226,
+      "estPvp": 7084.5
+    },
+    {
+      "code": "MTGT",
+      "tienda": "MTGT GLORIETA CALZADA",
+      "zona": "NORTE",
+      "cedis": "MTNA",
+      "uds": 216,
+      "estPvp": 7767
     },
     {
       "code": "GDLR",
       "tienda": "GDLR LA RIOJA",
       "zona": "OCCIDENTE",
       "cedis": "MRTL",
-      "uds": 189,
-      "estPvp": 8639.5
-    },
-    {
-      "code": "CLCL",
-      "tienda": "CLCL CELENES",
-      "zona": "PACIFICO",
-      "cedis": "CLCD",
-      "uds": 184,
-      "estPvp": 5460.5
-    },
-    {
-      "code": "MTVL",
-      "tienda": "MTVL VALLE ALTO",
-      "zona": "NORTE",
-      "cedis": "MTNA",
-      "uds": 180,
-      "estPvp": 6378
+      "uds": 207,
+      "estPvp": 9414.5
     },
     {
       "code": "MTRS",
       "tienda": "MTRS ROBERTO GARZA SADA",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 170,
-      "estPvp": 5500.5
+      "uds": 197,
+      "estPvp": 6525
+    },
+    {
+      "code": "MTVL",
+      "tienda": "MTVL VALLE ALTO",
+      "zona": "NORTE",
+      "cedis": "MTNA",
+      "uds": 194,
+      "estPvp": 6866
+    },
+    {
+      "code": "CLCL",
+      "tienda": "CLCL CELENES",
+      "zona": "PACIFICO",
+      "cedis": "CLCD",
+      "uds": 188,
+      "estPvp": 5681.5
     },
     {
       "code": "MTCA",
       "tienda": "MTCA CALZADA",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 159,
-      "estPvp": 5460
+      "uds": 177,
+      "estPvp": 6111.5
     },
     {
       "code": "MEDZ",
       "tienda": "MEDZ DZITYA REAL MONTEJO",
       "zona": "PENINSULA",
       "cedis": "MEAM",
-      "uds": 157,
-      "estPvp": 5689
+      "uds": 174,
+      "estPvp": 6231
     },
     {
-      "code": "MTBV",
-      "tienda": "MTBV PLUS SUCHIATE",
-      "zona": "NORTE",
-      "cedis": "MTNA",
-      "uds": 152,
-      "estPvp": 5640
+      "code": "TLGR",
+      "tienda": "TLGR GENERAL REGULARES",
+      "zona": "METRO",
+      "cedis": "MRTL",
+      "uds": 168,
+      "estPvp": 6055
     },
     {
-      "code": "MTJN",
-      "tienda": "MTJN PLAZA SAN JERONIMO",
-      "zona": "NORTE",
-      "cedis": "MTNA",
-      "uds": 149,
-      "estPvp": 5313
+      "code": "MAOP",
+      "tienda": "MAOP OSCAR PEREZ",
+      "zona": "PACIFICO",
+      "cedis": "CLCD",
+      "uds": 166,
+      "estPvp": 6187
     },
     {
       "code": "MTVP",
       "tienda": "MTVP VASCONCELOS PONIENTE",
       "zona": "NORTE",
       "cedis": "MTNA",
-      "uds": 148,
-      "estPvp": 4903.5
+      "uds": 165,
+      "estPvp": 5429.5
     }
   ]
 }
