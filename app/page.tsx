@@ -1,39 +1,180 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowDownRight, ArrowUpRight, ChevronLeft, ChevronRight, Target, TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import data from "./sellout-total.json";
 
-const orange = ["#ea580c", "#f97316", "#fb923c", "#fdba74"];
-const fmtU = (n: number) => n.toLocaleString("es-MX", { maximumFractionDigits: 0 });
-const fmtPct = (n: number | null) => n === null ? "—" : `${n >= 0 ? "+" : ""}${n.toFixed(1)}%`;
-function Badge({ value }: { value: number | null }) { const up = value !== null && value >= 0; return <span className={`inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-black ${up ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"}`}>{up ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}{fmtPct(value)}</span>; }
-function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) { return <section className={`rounded-2xl border border-orange-200 bg-white p-4 shadow-sm ${className}`}>{children}</section>; }
-function Header({ title, subtitle }: { title: string; subtitle: string }) { return <header className="mb-4 flex items-center gap-3"><img src="/4buddies-logo.jpeg" alt="4BUDDIES" className="h-10 rounded-xl shadow" /><div><p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-orange-600">4BUDDIES × Farmacias del Ahorro</p><h2 className="text-2xl font-black tracking-tight text-orange-950">{title}</h2><p className="text-xs text-orange-700">{subtitle}</p></div></header>; }
-function Footer({ children }: { children: React.ReactNode }) { return <div className="mt-3 rounded-xl bg-orange-600 px-4 py-2 text-sm font-bold text-white">{children}</div>; }
-function Table({ children }: { children: React.ReactNode }) { return <div className="overflow-hidden rounded-xl border border-orange-200"><table className="w-full text-xs">{children}</table></div>; }
+const fmt = (n: number) => n.toLocaleString("es-MX", { maximumFractionDigits: 0 });
+const pct = (n: number) => `${n > 0 ? "+" : ""}${n.toFixed(1)}%`;
+const coreProducts = data.products.filter((p) => p.precioPvp !== null);
 
-function Cover() { const k = data.kpi; return <div className="flex h-full flex-col justify-center p-10"><div className="flex items-start justify-between"><div><p className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-orange-600">Reporte ejecutivo de sell-out</p><h1 className="mt-3 text-5xl font-black tracking-tight text-orange-950">FDA: cómo vamos en 2026</h1><p className="mt-2 text-xl text-orange-700">Enero–octubre 2026 vs enero–octubre 2025</p><p className="mt-2 text-xs text-slate-500">Corte de ventas: {data.fechaMaxVenta} · Universo total de sucursales y productos</p></div><img src="/4buddies-logo.jpeg" alt="4BUDDIES" className="h-24 rounded-2xl shadow-lg" /></div><div className="mt-10 grid grid-cols-4 gap-4"><Card><p className="text-xs font-bold uppercase text-orange-600">Unidades YTD 2026</p><p className="mt-2 text-4xl font-black text-orange-950">{fmtU(k.udsYtd26)}</p><Badge value={k.varUds} /></Card><Card><p className="text-xs font-bold uppercase text-orange-600">Crecimiento comparable</p><p className="mt-2 text-4xl font-black text-orange-950">{fmtPct(k.varMismasTiendas)}</p><p className="text-xs text-slate-500">{fmtU(k.mismasTiendas)} mismas tiendas</p></Card><Card><p className="text-xs font-bold uppercase text-orange-600">Sucursales activas</p><p className="mt-2 text-4xl font-black text-orange-950">{fmtU(k.tiendasActivas)}</p><p className="text-xs text-slate-500">con venta en 2026</p></Card><Card><p className="text-xs font-bold uppercase text-orange-600">Octubre</p><p className="mt-2 text-4xl font-black text-orange-950">{fmtU(k.udsMesReciente26)}</p><Badge value={k.varMesReciente} /></Card></div><Footer>El acumulado total está en {fmtPct(k.varUds)} YTD, pero octubre crece {fmtPct(k.varMesReciente)}. El acumulado crece, mientras las mismas tiendas comparables caen 2.0%.</Footer><p className="mt-3 text-[10px] text-slate-500">Los valores PVP son estimados de anaquel y no representan facturación oficial. Las ventas incluyen todas las sucursales y todos los productos registrados.</p></div>; }
+function Header({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <header className="flex items-center gap-4 border-b border-orange-200 pb-4">
+      <img src="/4buddies-logo.jpeg" alt="4BUDDIES" className="h-12 w-12 rounded-xl object-cover" />
+      <div>
+        <p className="font-mono text-[11px] font-bold uppercase tracking-[0.18em] text-orange-700">Farmacias del Ahorro · Sell-out</p>
+        <h2 className="text-3xl font-black tracking-tight text-orange-950">{title}</h2>
+        <p className="mt-0.5 text-sm text-orange-800">{subtitle}</p>
+      </div>
+    </header>
+  );
+}
 
-function Monthly() { return <div className="flex h-full flex-col p-6"><Header title="Tendencia mensual: el segundo semestre acelera" subtitle="Unidades vendidas · comparación directa 2025 vs 2026" /><div className="flex min-h-0 flex-1 gap-4"><Card className="flex-1"><ResponsiveContainer width="100%" height="100%"><BarChart data={data.monthly} margin={{ top: 22, left: -12 }}><CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" /><XAxis dataKey="mes" tick={{ fontSize: 11 }} /><YAxis tick={{ fontSize: 10 }} /><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /><Legend wrapperStyle={{ fontSize: 11 }} /><Bar dataKey="u2025" name="2025" fill="#fdba74" radius={[4,4,0,0]} /><Bar dataKey="u2026" name="2026" fill="#ea580c" radius={[4,4,0,0]} /></BarChart></ResponsiveContainer></Card><Card className="w-[360px]"><p className="font-mono text-xs font-bold uppercase text-orange-600">Variación por mes</p><div className="mt-3 space-y-2">{data.monthly.map(m => <div key={m.mes} className="flex items-center justify-between rounded-lg bg-orange-50 px-3 py-2"><span className="font-bold text-orange-950">{m.mes}</span><span>{fmtU(m.u2026)} uds</span><Badge value={m.var} /></div>)}</div></Card></div><Footer>2026 inicia debajo de 2025 en enero, se estabiliza en febrero–marzo y toma una trayectoria claramente positiva desde abril. Octubre crece {fmtPct(data.kpi.varMesReciente)}.</Footer></div>; }
+function Cover() {
+  const k = data.kpi;
+  return (
+    <div className="flex h-full flex-col p-10">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-orange-700">Reporte ejecutivo · Enero–octubre 2026</p>
+          <h1 className="mt-4 max-w-4xl text-5xl font-black leading-[1.04] tracking-tight text-orange-950">El sell-out crece; las mismas tiendas aún retroceden</h1>
+          <p className="mt-3 text-lg text-orange-800">Todas las sucursales con venta · comparación contra enero–octubre 2025</p>
+        </div>
+        <img src="/4buddies-logo.jpeg" alt="4BUDDIES" className="h-20 w-20 rounded-2xl object-cover shadow" />
+      </div>
+      <div className="mt-auto grid grid-cols-4 divide-x divide-orange-200 border-y border-orange-200 py-7">
+        <div className="px-5 first:pl-0"><p className="text-sm font-bold uppercase tracking-wide text-orange-700">Unidades YTD</p><p className="mt-2 text-4xl font-black text-orange-950">{fmt(k.udsYtd26)}</p></div>
+        <div className="px-5"><p className="text-sm font-bold uppercase tracking-wide text-orange-700">Vs. año anterior</p><p className="mt-2 text-4xl font-black text-emerald-700">{pct(k.varUds)}</p></div>
+        <div className="px-5"><p className="text-sm font-bold uppercase tracking-wide text-orange-700">Mismas tiendas</p><p className="mt-2 text-4xl font-black text-red-700">{pct(k.varMismasTiendas)}</p><p className="text-xs text-slate-600">{fmt(k.mismasTiendas)} sucursales comparables</p></div>
+        <div className="px-5 pr-0"><p className="text-sm font-bold uppercase tracking-wide text-orange-700">Octubre vs. 2025</p><p className="mt-2 text-4xl font-black text-emerald-700">{pct(k.varMesReciente)}</p><p className="text-xs text-slate-600">{fmt(k.udsMesReciente26)} unidades</p></div>
+      </div>
+      <p className="mt-4 text-xs text-slate-500">Corte de ventas: {data.fechaMaxVenta} · Incluye todas las sucursales y productos registrados.</p>
+    </div>
+  );
+}
 
-function Products() { return <div className="flex h-full flex-col p-6"><Header title="Portafolio: crecimiento concentrado en tres productos" subtitle="YTD 2026 vs YTD 2025 · todos los productos registrados" /><div className="flex min-h-0 flex-1 gap-4"><Card className="w-[350px]"><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={data.products} dataKey="uds26" nameKey="corto" cx="50%" cy="45%" outerRadius={105} label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}>{data.products.map((_, i) => <Cell key={i} fill={orange[i % orange.length]} />)}</Pie><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /></PieChart></ResponsiveContainer></Card><Card className="flex-1"><Table><thead className="bg-orange-600 text-white"><tr><th className="p-2 text-left">Producto</th><th className="p-2 text-right">2025</th><th className="p-2 text-right">2026</th><th className="p-2 text-right">Var.</th><th className="p-2 text-right">Mix</th></tr></thead><tbody>{data.products.map((p, i) => <tr key={p.upc} className={i % 2 ? "bg-orange-50" : ""}><td className="p-2 font-bold text-orange-950">{p.corto}</td><td className="p-2 text-right">{fmtU(p.uds25)}</td><td className="p-2 text-right font-bold">{fmtU(p.uds26)}</td><td className="p-2 text-right"><Badge value={p.var} /></td><td className="p-2 text-right">{p.pctTotal}%</td></tr>)}</tbody></Table><div className="mt-4 h-[150px]"><ResponsiveContainer width="100%" height="100%"><LineChart data={data.products.flatMap(p => p.tend3m.map((v, i) => ({ mes: data.monthly.slice(-3).map(m => m.mes)[i], producto: p.corto, uds: v })))}><XAxis dataKey="mes" tick={{ fontSize: 10 }} /><YAxis tick={{ fontSize: 10 }} /><Tooltip /><Line dataKey="uds" stroke="#ea580c" strokeWidth={2} dot={{ r: 3 }} /></LineChart></ResponsiveContainer></div></Card></div><Footer>Rodajitas representa {data.products[0].pctTotal}% del mix y cae {fmtPct(data.products[0].var)}. Chicharrón, Classic White y Street Elote 125g crecen a doble dígito; Chile Piquín prácticamente desaparece frente a 2025.</Footer></div>; }
+function Monthly() {
+  return (
+    <div className="flex h-full flex-col p-8">
+      <Header title="Tendencia mensual" subtitle="Unidades vendidas · todas las sucursales" />
+      <div className="mt-5 min-h-0 flex-1 rounded-2xl bg-white/80 p-5">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data.monthly} margin={{ top: 12, right: 18, left: 8, bottom: 4 }}>
+            <CartesianGrid vertical={false} stroke="#fed7aa" />
+            <XAxis dataKey="mes" tick={{ fontSize: 13, fill: "#7c2d12" }} axisLine={false} tickLine={false} />
+            <YAxis tick={{ fontSize: 12, fill: "#7c2d12" }} axisLine={false} tickLine={false} width={55} />
+            <Tooltip formatter={(v: number) => `${fmt(v)} uds`} />
+            <Legend wrapperStyle={{ fontSize: 13, paddingTop: 12 }} />
+            <Bar dataKey="u2025" name="2025" fill="#fdba74" radius={[5, 5, 0, 0]} maxBarSize={28} />
+            <Bar dataKey="u2026" name="2026" fill="#ea580c" radius={[5, 5, 0, 0]} maxBarSize={28} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-4 flex items-center justify-between text-sm">
+        <span className="font-semibold text-orange-950">Últimos cuatro meses arriba de 2025</span>
+        <span className="font-black text-orange-700">Jul {pct(data.monthly[6].var)} · Ago {pct(data.monthly[7].var)} · Sep {pct(data.monthly[8].var)} · Oct {pct(data.monthly[9].var)}</span>
+      </div>
+    </div>
+  );
+}
 
-function Mix() { const top = [...data.products].sort((a, b) => b.uds26 - a.uds26); return <div className="flex h-full flex-col p-6"><Header title="El crecimiento de 2026 viene de una mezcla más balanceada" subtitle="Participación por SKU y contribución al crecimiento" /><div className="grid min-h-0 flex-1 grid-cols-2 gap-4"><Card><p className="mb-3 font-mono text-xs font-bold uppercase text-orange-600">Unidades por producto</p><ResponsiveContainer width="100%" height="90%"><BarChart data={top} layout="vertical" margin={{ left: 20, right: 20 }}><CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" /><XAxis type="number" tick={{ fontSize: 10 }} /><YAxis type="category" dataKey="corto" width={105} tick={{ fontSize: 10 }} /><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /><Bar dataKey="uds26" fill="#ea580c" radius={[0, 4, 4, 0]} /></BarChart></ResponsiveContainer></Card><Card><p className="font-mono text-xs font-bold uppercase text-orange-600">Lectura ejecutiva</p><div className="mt-4 space-y-3 text-sm leading-relaxed text-slate-700"><p><b>Chicharrón:</b> {fmtPct(data.products.find(p => p.corto === "Chicharrón")?.var ?? null)} y {fmtU(data.products.find(p => p.corto === "Chicharrón")?.uds26 ?? 0)} uds.</p><p><b>Classic White:</b> {fmtPct(data.products.find(p => p.corto === "Classic White")?.var ?? null)}. La promoción de 25g está respondiendo.</p><p><b>Street Elote 125g:</b> {fmtPct(data.products.find(p => p.corto === "Street Elote 125g")?.var ?? null)}. Es el SKU con mayor crecimiento relativo.</p><p><b>Rodajitas:</b> sigue siendo el SKU más grande, pero requiere recuperar rotación.</p></div><div className="mt-5 rounded-xl bg-emerald-50 p-3 text-sm font-bold text-emerald-800">Acción: proteger disponibilidad y exhibición de los tres SKUs en crecimiento, mientras se corrige la caída de Rodajitas.</div></Card></div><Footer>La cartera crece sin depender de un solo SKU: el avance incremental está repartido entre tres productos, lo que mejora la calidad del crecimiento.</Footer></div>; }
+function Products() {
+  return (
+    <div className="flex h-full flex-col p-8">
+      <Header title="Desempeño por producto" subtitle="Los cuatro productos principales · unidades YTD" />
+      <div className="mt-4 flex items-end justify-between">
+        <p className="text-lg font-bold text-orange-950">Tres productos crecen; Rodajitas sigue siendo el mayor volumen.</p>
+        <p className="text-sm text-slate-600">Rodajitas: 30.3% del sell-out total</p>
+      </div>
+      <div className="mt-3 min-h-0 flex-1 rounded-2xl bg-white/80 px-5 py-3">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={coreProducts} layout="vertical" margin={{ top: 10, right: 45, left: 18, bottom: 4 }} barGap={5}>
+            <CartesianGrid horizontal={false} stroke="#fed7aa" />
+            <XAxis type="number" tick={{ fontSize: 12, fill: "#7c2d12" }} axisLine={false} tickLine={false} />
+            <YAxis type="category" dataKey="corto" width={150} tick={{ fontSize: 14, fill: "#431407", fontWeight: 700 }} axisLine={false} tickLine={false} />
+            <Tooltip formatter={(v: number) => `${fmt(v)} uds`} />
+            <Legend wrapperStyle={{ fontSize: 13 }} />
+            <Bar dataKey="uds25" name="2025" fill="#fdba74" radius={[0, 5, 5, 0]} maxBarSize={24} />
+            <Bar dataKey="uds26" name="2026" fill="#ea580c" radius={[0, 5, 5, 0]} maxBarSize={24} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-3 grid grid-cols-4 gap-4 text-sm">
+        {coreProducts.map((p) => <div key={p.upc} className="flex justify-between border-t border-orange-200 pt-2"><span className="font-semibold text-orange-950">{p.corto}</span><b className={p.var !== null && p.var < 0 ? "text-red-700" : "text-emerald-700"}>{p.var === null ? "—" : pct(p.var)}</b></div>)}
+      </div>
+    </div>
+  );
+}
 
-function Promotions() { const promo = data.promo; return <div className="flex h-full flex-col p-6"><Header title="Las promociones sí están elevando la venta" subtitle="Meses promocionales y respuesta por producto · 2026 vs 2025" /><div className="flex min-h-0 flex-1 gap-4"><Card className="flex-1"><ResponsiveContainer width="100%" height="100%"><BarChart data={promo.meses} margin={{ top: 20, left: -12 }}><CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" /><XAxis dataKey="mes" /><YAxis tick={{ fontSize: 10 }} /><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /><Legend wrapperStyle={{ fontSize: 11 }} /><Bar dataKey="u2025" name="2025" fill="#fdba74" /><Bar dataKey="u2026" name="2026" fill="#ea580c" /></BarChart></ResponsiveContainer></Card><Card className="w-[400px]"><p className="font-mono text-xs font-bold uppercase text-orange-600">Respuesta en meses promocionales</p><div className="mt-4 space-y-3">{promo.meses.map(m => <div key={m.mes} className="rounded-xl bg-orange-50 p-3"><div className="flex justify-between font-bold"><span>{m.mes}</span><Badge value={m.var} /></div><p className="mt-1 text-xs text-slate-600">Mismas tiendas: {fmtPct(m.varMismasTiendas)} · {fmtU(m.mismasTiendas)} tiendas comparables</p></div>)}</div><p className="mt-5 text-sm leading-relaxed text-slate-700">La señal más fuerte es julio: crecimiento de doble dígito tanto en universo total como en mismas tiendas.</p></Card></div><Footer>La promoción coincidió con una aceleración real. Conviene replicar el mecanismo con medición específica por SKU, tienda y CEDIS.</Footer></div>; }
+function Stores() {
+  const declining = data.cedis.filter((c) => c.var !== null && c.var < 0).sort((a, b) => a.var! - b.var!);
+  const growing = data.cedis.filter((c) => c.var !== null && c.var >= 0);
+  return (
+    <div className="flex h-full flex-col p-8">
+      <Header title="Sucursales y distribución" subtitle="Universo completo de tiendas con venta" />
+      <div className="mt-8 grid flex-1 grid-cols-2 gap-10">
+        <section className="flex flex-col justify-center border-r border-orange-200 pr-10">
+          <p className="text-sm font-bold uppercase tracking-wide text-orange-700">Sucursales activas en 2026</p>
+          <p className="mt-2 text-7xl font-black tracking-tight text-orange-950">{fmt(data.kpi.tiendasActivas)}</p>
+          <p className="mt-2 text-base text-slate-700">con al menos una venta en el periodo</p>
+          <p className="mt-8 text-sm font-bold uppercase tracking-wide text-orange-700">Sucursales comparables</p>
+          <p className="mt-2 text-4xl font-black text-red-700">{pct(data.kpi.varMismasTiendas)}</p>
+          <p className="mt-1 text-base text-slate-700">en {fmt(data.kpi.mismasTiendas)} tiendas activas en ambos periodos</p>
+        </section>
+        <section className="flex flex-col justify-center">
+          <p className="text-sm font-bold uppercase tracking-wide text-orange-700">Desempeño por CEDIS</p>
+          <p className="mt-3 text-xl font-bold text-orange-950">{growing.length} CEDIS con crecimiento · {declining.length} con caída</p>
+          {declining.map((c) => <div key={c.cedis} className="mt-5 flex items-center justify-between border-b border-orange-200 pb-3"><span className="text-lg font-semibold text-orange-950">{c.cedis}</span><span className="text-2xl font-black text-red-700">{pct(c.var!)}</span></div>)}
+          <p className="mt-5 text-sm leading-relaxed text-slate-600">Priorizar revisión en MTNA y PEBO. Los CEDIS que aparecen solo en 2026 se mantienen fuera de la comparación interanual.</p>
+        </section>
+      </div>
+    </div>
+  );
+}
 
-function Geography() { return <div className="flex h-full flex-col p-6"><Header title="La venta crece en la mayoría de los CEDIS" subtitle="Comparación YTD por CEDIS · se usa CEDIS para evitar distorsiones por reclasificación de zonas" /><div className="flex min-h-0 flex-1 gap-4"><Card className="flex-1"><ResponsiveContainer width="100%" height="100%"><BarChart data={data.cedis} layout="vertical" margin={{ left: 12 }}><CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" /><XAxis type="number" tick={{ fontSize: 10 }} /><YAxis type="category" dataKey="cedis" width={45} tick={{ fontSize: 11 }} /><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /><Legend wrapperStyle={{ fontSize: 11 }} /><Bar dataKey="u2025" name="2025" fill="#fdba74" /><Bar dataKey="u2026" name="2026" fill="#ea580c" /></BarChart></ResponsiveContainer></Card><Card className="w-[350px]"><p className="font-mono text-xs font-bold uppercase text-orange-600">CEDIS y variación</p><div className="mt-3 space-y-2">{data.cedis.map(c => <div key={c.cedis} className="flex items-center justify-between rounded-lg bg-orange-50 px-3 py-2"><span className="font-bold">{c.cedis}</span><span>{fmtU(c.u2026)}</span><Badge value={c.var} /></div>)}</div></Card></div><Footer>Para comparar 2026 contra 2025 se usa CEDIS, no zona, porque FDA reclasificó zonas durante 2026. Así se evita interpretar cambios administrativos como caídas comerciales.</Footer></div>; }
+function Actions() {
+  const actions = [
+    { n: "01", title: "Revertir la caída en mismas tiendas", detail: `Revisar las ${fmt(data.kpi.mismasTiendas)} sucursales comparables y localizar dónde se concentra la pérdida de unidades.` },
+    { n: "02", title: "Sostener la aceleración reciente", detail: "Mantener el impulso observado de julio a octubre y medirlo por mes y producto." },
+    { n: "03", title: "Recuperar Rodajitas", detail: "Es el producto de mayor volumen y cae 2.6% YTD; revisar su ejecución comercial." },
+  ];
+  return (
+    <div className="flex h-full flex-col p-8">
+      <Header title="Prioridades ejecutivas" subtitle="Tres decisiones para el siguiente ciclo comercial" />
+      <div className="mt-7 flex flex-1 flex-col justify-center divide-y divide-orange-200">
+        {actions.map((a) => <div key={a.n} className="grid grid-cols-[70px_1fr] gap-5 py-5"><span className="font-mono text-3xl font-black text-orange-500">{a.n}</span><div><h3 className="text-2xl font-black text-orange-950">{a.title}</h3><p className="mt-1 max-w-4xl text-lg leading-snug text-slate-700">{a.detail}</p></div></div>)}
+      </div>
+      <p className="border-t border-orange-200 pt-3 text-xs text-slate-500">Sell-out en unidades · todas las sucursales con venta · corte al {data.fechaMaxVenta}</p>
+    </div>
+  );
+}
 
-function Formats() { return <div className="flex h-full flex-col p-6"><Header title="PLUS concentra la operación" subtitle="Desempeño por formato de sucursal · todas las ventas" /><div className="flex min-h-0 flex-1 gap-4"><Card className="w-[450px]"><ResponsiveContainer width="100%" height="100%"><BarChart data={data.formats}><CartesianGrid strokeDasharray="3 3" stroke="#fed7aa" /><XAxis dataKey="formato" tick={{ fontSize: 10 }} /><YAxis tick={{ fontSize: 10 }} /><Tooltip formatter={(v: number) => `${fmtU(v)} uds`} /><Legend wrapperStyle={{ fontSize: 11 }} /><Bar dataKey="u2025" name="2025" fill="#fdba74" /><Bar dataKey="u2026" name="2026" fill="#ea580c" /></BarChart></ResponsiveContainer></Card><Card className="flex-1"><Table><thead className="bg-orange-600 text-white"><tr><th className="p-2 text-left">Formato</th><th className="p-2 text-right">2025</th><th className="p-2 text-right">2026</th><th className="p-2 text-right">Var.</th></tr></thead><tbody>{data.formats.map((f, i) => <tr key={f.formato} className={i % 2 ? "bg-orange-50" : ""}><td className="p-2 font-bold">{f.formato}</td><td className="p-2 text-right">{fmtU(f.u2025)}</td><td className="p-2 text-right font-bold">{fmtU(f.u2026)}</td><td className="p-2 text-right"><Badge value={f.var} /></td></tr>)}</tbody></Table><div className="mt-5 rounded-xl bg-orange-50 p-4 text-sm leading-relaxed text-slate-700">La escala está en PLUS. El crecimiento debe defenderse con ejecución consistente en este formato antes de dispersar esfuerzos en formatos menores.</div></Card></div><Footer>Acción: priorizar material de exhibición, disponibilidad y seguimiento de rotación en PLUS, donde se concentra la mayor parte de la venta.</Footer></div>; }
+const slides = [Cover, Monthly, Products, Stores, Actions];
+const titles = ["Resumen", "Tendencia", "Productos", "Sucursales", "Prioridades"];
 
-function Coverage() { const k = data.kpi; return <div className="flex h-full flex-col p-6"><Header title="El universo total amplía la lectura del negocio" subtitle="Ventas de todas las sucursales vs cobertura formal catalogada" /><div className="grid min-h-0 flex-1 grid-cols-2 gap-4"><Card><p className="font-mono text-xs font-bold uppercase text-orange-600">Sucursales con venta</p><div className="mt-5 space-y-4"><div><div className="flex justify-between text-sm font-bold"><span>Activas 2026</span><span>{fmtU(k.tiendasActivas)}</span></div><div className="mt-1 h-4 rounded-full bg-orange-100"><div className="h-4 rounded-full bg-orange-600" style={{ width: "100%" }} /></div></div><div><div className="flex justify-between text-sm font-bold"><span>Activas 2025</span><span>{fmtU(k.tiendas2025)}</span></div><div className="mt-1 h-4 rounded-full bg-orange-100"><div className="h-4 rounded-full bg-orange-300" style={{ width: `${(k.tiendas2025 / k.tiendasActivas) * 100}%` }} /></div></div><div><div className="flex justify-between text-sm font-bold"><span>Catalogadas con venta 2026</span><span>{fmtU(k.catalogadasYtd)} de 410</span></div><div className="mt-1 h-4 rounded-full bg-orange-100"><div className="h-4 rounded-full bg-emerald-500" style={{ width: `${(k.catalogadasYtd / 410) * 100}%` }} /></div></div></div></Card><Card><p className="font-mono text-xs font-bold uppercase text-orange-600">Oportunidad de formalización</p><p className="mt-4 text-5xl font-black text-orange-950">{fmtU(k.noCatalogadasYtd)}</p><p className="text-sm text-slate-600">sucursales no catalogadas con venta en 2026</p><p className="mt-5 text-3xl font-black text-orange-950">{fmtU(k.udsNoCatalogadas)} uds</p><p className="text-sm text-slate-600">vendidas por ese universo</p><div className="mt-5 rounded-xl bg-emerald-50 p-3 text-sm font-bold text-emerald-800">Estas ventas se incluyen en todos los KPIs y comparativos de esta presentación.</div></Card></div><Footer>La cobertura formal no representa todo el negocio. El análisis principal incluye todas las ventas; la catalogación es una oportunidad de crecimiento y control, no un filtro del desempeño.</Footer></div>; }
-
-function Stores() { return <div className="flex h-full flex-col p-6"><Header title="Top 20 sucursales por venta" subtitle="YTD 2026 · universo completo de sucursales con venta" /><Card className="min-h-0 flex-1"><Table><thead className="bg-orange-600 text-white"><tr><th className="p-2 text-left">#</th><th className="p-2 text-left">Sucursal</th><th className="p-2 text-left">Código</th><th className="p-2 text-left">CEDIS</th><th className="p-2 text-right">Uds</th><th className="p-2 text-right">Estimado PVP</th></tr></thead><tbody>{data.topStores.map((s, i) => <tr key={s.code} className={i % 2 ? "bg-orange-50" : ""}><td className="p-1.5 font-bold text-orange-600">{i + 1}</td><td className="p-1.5 font-bold">{s.tienda}</td><td className="p-1.5">{s.code}</td><td className="p-1.5">{s.cedis}</td><td className="p-1.5 text-right font-bold">{fmtU(s.uds)}</td><td className="p-1.5 text-right">${fmtU(s.estPvp)}</td></tr>)}</tbody></Table><p className="mt-2 text-[10px] text-slate-500">Estimado PVP de los 4 SKUs core; no es facturación oficial ni incluye otros productos.</p></Card><Footer>Usar este ranking para priorizar seguimiento de rotación, exhibición y replicación de buenas prácticas. La muestra incluye sucursales catalogadas y no catalogadas.</Footer></div>; }
-
-function Actions() { return <div className="flex h-full flex-col p-7"><Header title="Conclusiones y plan de acción" subtitle="Qué hacer con la lectura 2026 vs 2025" /><div className="grid flex-1 grid-cols-2 gap-4"><Card className="border-l-4 border-l-emerald-500"><p className="font-mono text-xs font-bold uppercase text-emerald-700">Lo positivo</p><ul className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700"><li><TrendingUp className="mr-2 inline text-emerald-600" size={16} />Octubre crece {fmtPct(data.kpi.varMesReciente)} vs 2025.</li><li><TrendingUp className="mr-2 inline text-emerald-600" size={16} />Chicharrón, Classic White y Street Elote crecen a doble dígito.</li><li><TrendingUp className="mr-2 inline text-emerald-600" size={16} />Julio creció 12.7% total y 16.6% en mismas tiendas; mayo avanzó 2.5% total.</li><li><TrendingUp className="mr-2 inline text-emerald-600" size={16} />La lectura incluye todas las sucursales y productos.</li></ul></Card><Card className="border-l-4 border-l-orange-500"><p className="font-mono text-xs font-bold uppercase text-orange-700">Prioridades</p><ul className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700"><li><Target className="mr-2 inline text-orange-600" size={16} /><b>Revertir la caída comparable:</b> identificar las sucursales que explican el -2.0% en mismas tiendas.</li><li><Target className="mr-2 inline text-orange-600" size={16} /><b>Recuperar Rodajitas:</b> revisar exhibición, disponibilidad y tiendas con caída.</li><li><Target className="mr-2 inline text-orange-600" size={16} /><b>Revisar Chile Piquín:</b> separar el efecto de discontinuación del desempeño core.</li><li><Target className="mr-2 inline text-orange-600" size={16} /><b>Formalizar cobertura:</b> convertir ventas no catalogadas en distribución controlada.</li></ul></Card></div><Footer>Decisión sugerida: sostener el crecimiento total, revertir la caída en mismas tiendas y recuperar Rodajitas.</Footer></div>; }
-
-const slides = [Cover, Monthly, Products, Mix, Promotions, Geography, Formats, Coverage, Stores, Actions];
-const titles = ["Portada", "Tendencia", "Productos", "Mix", "Promoción", "CEDIS", "Formatos", "Cobertura", "Top tiendas", "Acciones"];
-export default function Page() { const [current, setCurrent] = useState(0); useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "ArrowRight" || e.key === " ") setCurrent(c => Math.min(c + 1, slides.length - 1)); if (e.key === "ArrowLeft") setCurrent(c => Math.max(c - 1, 0)); }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []); const Slide = slides[current]; return <main className="flex min-h-screen items-center justify-center bg-orange-950 p-4"><div className="relative aspect-video w-[1280px] overflow-hidden rounded-2xl border-2 border-orange-700 bg-gradient-to-br from-orange-50 to-orange-100 shadow-2xl"><Slide /><nav className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-orange-950/90 px-4 py-1.5 text-white shadow-lg"><button onClick={() => setCurrent(c => Math.max(c - 1, 0))} disabled={!current} aria-label="Anterior" className="disabled:opacity-30"><ChevronLeft size={17} /></button>{slides.map((_, i) => <button key={i} onClick={() => setCurrent(i)} title={titles[i]} aria-label={titles[i]} className={`h-2 rounded-full transition-all ${i === current ? "w-6 bg-orange-300" : "w-2 bg-orange-700 hover:bg-orange-400"}`} />)}<button onClick={() => setCurrent(c => Math.min(c + 1, slides.length - 1))} disabled={current === slides.length - 1} aria-label="Siguiente" className="disabled:opacity-30"><ChevronRight size={17} /></button><span className="ml-1 w-28 text-[10px] text-orange-200">{current + 1}/10 · {titles[current]}</span></nav></div></main>; }
+export default function Page() {
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === " ") setCurrent((c) => Math.min(c + 1, slides.length - 1));
+      if (e.key === "ArrowLeft") setCurrent((c) => Math.max(c - 1, 0));
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+  const Slide = slides[current];
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-orange-950 p-4">
+      <div className="relative aspect-video w-full max-w-[1280px] overflow-hidden rounded-2xl border-2 border-orange-700 bg-gradient-to-br from-orange-50 to-orange-100 shadow-2xl">
+        <Slide />
+        <nav className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-orange-950/90 px-4 py-2 text-white shadow-lg">
+          <button onClick={() => setCurrent((c) => Math.max(c - 1, 0))} disabled={!current} aria-label="Anterior" className="disabled:opacity-30"><ChevronLeft size={17} /></button>
+          {slides.map((_, i) => <button key={i} onClick={() => setCurrent(i)} title={titles[i]} aria-label={titles[i]} className={`h-2 rounded-full transition-all ${i === current ? "w-6 bg-orange-300" : "w-2 bg-orange-700 hover:bg-orange-400"}`} />)}
+          <button onClick={() => setCurrent((c) => Math.min(c + 1, slides.length - 1))} disabled={current === slides.length - 1} aria-label="Siguiente" className="disabled:opacity-30"><ChevronRight size={17} /></button>
+          <span className="ml-1 w-24 text-[10px] text-orange-200">{current + 1}/5 · {titles[current]}</span>
+        </nav>
+      </div>
+    </main>
+  );
+}
